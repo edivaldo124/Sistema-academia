@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel do Administrador</title>
+    <link rel="stylesheet" href="/static/css/pgAdm.css">
+</head>
+<body>
+    <div class="container-admin">
+        <h2>PAINEL DO ADMINISTRADOR</h2>
+        <br>
+
+        <div class="secao">
+            <h3>Gerenciar Planos da Academia</h3>
+            <form action="/admin/cadastrar_plano" method="POST" class="form-plano">
+                <input type="text" name="nome_plano" placeholder="Nome do Plano (Ex: Mensal, Anual)" required>
+                <input type="text" name="preco_plano" placeholder="Preço (Ex: 80.00)" required>
+                <button type="submit" class="btn-cadastrar">Cadastrar Plano</button>
+            </form>
+
+                    <h4>Planos Atuais:</h4>
+                    <ul>
+                        {% for plano in planos %}
+                            <li>
+                                <div>
+                                    <strong>{{ plano[0] }}</strong> — <span>R$ {{ plano[1] }}</span>
+                                </div>
+                                <a href="/admin/remover_plano/{{ plano[0] }}" class="btn btn-remover" style="padding: 4px 10px; font-size: 12px; margin: 0;" onclick="return confirm('Deseja realmente excluir o plano {{ plano[0] }}?')">Excluir</a>
+                            </li>
+                        {% else %}
+                            <li>Nenhum plano cadastrado ainda.</li>
+                        {% endfor %}
+                    </ul>
+        </div>
+
+        <div class="secao">
+            <h3>Alunos Cadastrados</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Login</th>
+                            <th>Email</th>
+                            <th>Plano Atual</th>
+                            <th>Situação</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for u in usuarios %}
+                        <tr>
+                            <td>{{ u.nome }}</td>
+                            <td>{{ u.login }}</td>
+                            <td>{{ u.email }}</td>
+                            <td>{{ u.plano }}</td>
+                            <td>{{ u.mensalidade }}</td>
+                            <td>
+                                <a href="/admin/mensalidade/{{ u.login }}/Em Dia" class="btn btn-status">Por Em Dia</a>
+                                <a href="/admin/mensalidade/{{ u.login }}/Pendente" class="btn btn-pendente">Negativar</a>
+                                <a href="/admin/remover/{{ u.login }}" class="btn btn-remover" onclick="return confirm('Tem certeza?')">Remover</a>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="6" style="text-align: center;">Nenhum aluno cadastrado.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <br>
+        <a href="/logout" class="link-logout">Sair</a>
+    </div>
+</body>
+</html>

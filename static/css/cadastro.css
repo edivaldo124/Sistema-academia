@@ -1,0 +1,115 @@
+/* Configurações Globais e Fundo */
+body {
+    background-color: #f7f9f6; /* Tom claro moderno e confortável */
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Centraliza o card verticalmente na tela */
+    position: relative; /* Necessário para posicionar o botão 'sair' */
+}
+
+/* Link Sair (Fica fixo no canto superior direito de forma elegante) */
+a[href="/logout"] {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: #cc0000; /* Vermelho para indicar saída */
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: color 0.2s ease;
+}
+
+a[href="/logout"]:hover {
+    color: #990000;
+    text-decoration: underline;
+}
+
+/* Card de Conteúdo do Cadastro */
+.conteudo {
+    background-color: #ffffff; /* Fundo branco profissional */
+    border-top: 5px solid #e6b800; /* Detalhe dourado na borda superior */
+    width: 340px;
+    height: auto; /* Altura flexível para caber todos os campos sem esmagar */
+    text-align: center;
+    padding: 30px 25px;
+    margin: 40px auto; /* Dá uma margem de segurança nas bordas em telas pequenas */
+    border-radius: 12px; /* Cantos arredondados modernos */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); /* Sombra suave de efeito flutuante */
+    box-sizing: border-box;
+}
+
+/* Título (A tag <p> que você usou) */
+.conteudo p {
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #1b4d3e; /* Verde escuro sofisticado */
+    letter-spacing: -0.5px;
+}
+
+/* Labels acima dos inputs */
+.conteudo label {
+    display: block;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 2px;
+    padding-left: 2px;
+}
+
+/* Inputs Estilizados e Simétricos */
+.conteudo input {
+    width: 100%; /* Ocupa toda a largura do card */
+    height: 36px; /* Altura confortável para digitação */
+    padding: 0 12px;
+    margin-top: 2px;
+    margin-bottom: 14px; /* Espaço até a próxima label */
+    border: 1px solid #dcdfe6;
+    border-radius: 6px;
+    background-color: #fff;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+/* Efeito ao focar no input */
+.conteudo input:focus {
+    border-color: #2e7d32;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.15);
+}
+
+/* Botão de Enviar Cadastro */
+.conteudo button {
+    background-color: #2e7d32; /* Verde padrão de ação */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    width: 100%; /* Alinhado perfeitamente com os inputs */
+    height: 42px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px rgba(46, 125, 50, 0.1);
+}
+
+.conteudo button:hover {
+    background-color: #1b5e20; /* Escurece no hover */
+    transform: translateY(-1px);
+    box-shadow: 0 6px 12px rgba(46, 125, 50, 0.2);
+}
+
+.conteudo button:active {
+    transform: translateY(0);
+}

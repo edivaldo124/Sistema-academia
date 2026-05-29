@@ -1,0 +1,113 @@
+/* Configurações Globais e Fundo */
+body {
+    background-color: #f7f9f6; /* Um tom claro moderno e limpo */
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Centraliza o card perfeitamente na tela inteira */
+}
+
+/* Card de Conteúdo Principal */
+.conteudo {
+    background-color: #ffffff; /* Fundo branco profissional */
+    border-top: 5px solid #e6b800; /* Detalhe dourado na borda superior */
+    width: 300px;
+    height: 380px;
+    text-align: center;
+    padding: 30px 25px;
+    border-radius: 12px; /* Cantos arredondados elegantes */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); /* Sombra suave de efeito flutuante */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Título */
+.conteudo h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #1b4d3e; /* Verde escuro sofisticado */
+    letter-spacing: -0.5px;
+}
+
+/* Alinhamento das Labels (Como tem <br> no HTML, o display block garante que elas fiquem acima do input) */
+.conteudo label {
+    display: block;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 2px;
+    padding-left: 2px;
+}
+
+/* Inputs Estilizados */
+.conteudo input {
+    width: 100%; /* Faz o input ocupar toda a largura interna disponível do card */
+    height: 38px; /* Altura moderna e confortável */
+    padding: 0 12px;
+    margin-top: 2px;
+    margin-bottom: 15px; /* Espaço até a próxima label */
+    border: 1px solid #dcdfe6;
+    border-radius: 6px;
+    background-color: #fff;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+/* Efeito ao clicar/focar no input */
+.conteudo input:focus {
+    border-color: #2e7d32;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.15);
+}
+
+/* Botão de Entrar */
+.conteudo button {
+    background-color: #2e7d32; /* Verde padrão de ação */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    width: 100%; /* Botão largo acompanhando os inputs */
+    height: 40px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px rgba(46, 125, 50, 0.1);
+}
+
+.conteudo button:hover {
+    background-color: #1b5e20; /* Escurece suavemente no hover */
+    transform: translateY(-1px);
+    box-shadow: 0 6px 12px rgba(46, 125, 50, 0.2);
+}
+
+.conteudo button:active {
+    transform: translateY(0);
+}
+
+/* Link Inferior (Não tem conta? Cadastre-se) */
+.meulink {
+    color: #2e7d32;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+    display: inline-block;
+    margin-top: 20px;
+    transition: color 0.2s ease;
+}
+
+.meulink:hover {
+    color: #1b5e20;
+    text-decoration: underline;
+}

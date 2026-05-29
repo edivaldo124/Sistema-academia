@@ -1,0 +1,121 @@
+/* Configurações Globais e Fundo */
+body {
+    background-color: #f7f9f6; /* Tom claro moderno e confortável */
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Centraliza o card perfeitamente na tela */
+}
+
+/* Card Principal (Usando a sua classe .formulario) */
+.formulario {
+    background-color: #ffffff; /* Fundo branco profissional */
+    border-top: 5px solid #e6b800; /* Detalhe dourado na borda superior */
+    width: 320px;
+    height: auto; /* Deixa a altura dinâmica para os dados do Jinja caberem perfeitamente */
+    text-align: center;
+    padding: 35px 25px;
+    border-radius: 12px; /* Cantos arredondados elegantes */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); /* Sombra suave flutuante */
+    box-sizing: border-box;
+}
+
+/* Título */
+.formulario h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #1b4d3e; /* Verde escuro sofisticado */
+    letter-spacing: -0.5px;
+}
+
+/* Estilização das informações do Perfil (Nome, Plano e Status) */
+.formulario label {
+    display: block;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 8px;
+    padding-left: 5px;
+}
+
+/* Destaque para a label de instrução do Select */
+.formulario label[for="plano"],
+.formulario form > label:nth-of-type(4) {
+    color: #1b4d3e;
+    font-size: 13px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+
+/* Estilização do Select de Planos (Sobrescreve o estilo inline do HTML com elegância) */
+.formulario select {
+    width: 100% !important; /* Força o select a ocupar toda a largura interna do card */
+    height: 40px !important; /* Altura moderna e confortável */
+    padding: 0 10px;
+    border: 1px solid #dcdfe6 !important;
+    border-radius: 8px !important;
+    background-color: #fff;
+    font-size: 14px;
+    color: #333;
+    box-sizing: border-box;
+    outline: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+/* Efeito ao clicar no Select */
+.formulario select:focus {
+    border-color: #2e7d32 !important;
+    box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.15);
+}
+
+/* Botão de Salvar Plano */
+.formulario button {
+    background-color: #2e7d32; /* Verde padrão de ação */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    width: 100%; /* Botão largo acompanhando o select */
+    height: 42px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px rgba(46, 125, 50, 0.1);
+}
+
+.formulario button:hover {
+    background-color: #1b5e20; /* Escurece suavemente no hover */
+    transform: translateY(-1px);
+    box-shadow: 0 6px 12px rgba(46, 125, 50, 0.2);
+}
+
+.formulario button:active {
+    transform: translateY(0);
+}
+
+/* Link Inferior (Voltar ao Início) */
+.meulink {
+    color: #2e7d32;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    display: inline-block;
+    margin-top: 15px;
+    transition: color 0.2s ease;
+}
+
+.meulink:hover {
+    color: #1b5e20;
+    text-decoration: underline;
+}

@@ -1,0 +1,89 @@
+/* Configurações Globais e Fundo */
+body {
+    background-color: #f7f9f6; /* Um cinza claro limpo com leve toque verde/creme, muito moderno */
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Centraliza o card perfeitamente no meio da tela inteira */
+}
+
+/* Card de Conteúdo Principal */
+.conteudo {
+    background-color: #ffffff; /* Fundo branco para dar o contraste profissional */
+    border-top: 5px solid #e6b800; /* Detalhe dourado elegante apenas na borda superior */
+    width: 300px;
+    height: 380px;
+    text-align: center;
+    padding: 45px 30px;
+    border-radius: 12px; /* Cantos arredondados modernos */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); /* Sombra suave de efeito flutuante */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Ajuste da Logo */
+.conteudo img {
+    margin-bottom: 35px; /* Espaço perfeito entre a logo e os botões */
+    object-fit: contain;
+}
+
+/* Container dos Botões */
+.botoes-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column; /* Coloca os botões um embaixo do outro */
+    gap: 12px; /* Cria o espaçamento perfeito entre eles */
+}
+
+/* Estilo Base de todos os Botões */
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%; /* Ocupa a largura simétrica do card */
+    height: 42px; /* Altura moderna e fácil de clicar */
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+/* Botão Entrar (Branco com borda e texto Verde Escuro) */
+.btn-login {
+    background-color: #ffffff;
+    color: #1b4d3e;
+    border: 1px solid #1b4d3e;
+}
+
+.btn-login:hover {
+    background-color: #f4f7f5;
+    transform: translateY(-1px); /* Efeito sutil de subir ao passar o mouse */
+}
+
+/* Botão Cadastrar (Verde Sólido com texto Branco) */
+.btn-cadastro {
+    background-color: #2e7d32;
+    color: #ffffff;
+    border: none;
+}
+
+.btn-cadastro:hover {
+    background-color: #1b5e20; /* Escurece um pouco ao passar o mouse */
+    box-shadow: 0 4px 12px rgba(46, 125, 50, 0.2);
+    transform: translateY(-1px);
+}
+
+/* Efeito de clique físico para ambos os botões */
+.btn:active {
+    transform: translateY(0);
+}

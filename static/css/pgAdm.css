@@ -1,0 +1,225 @@
+/* Reset e Configurações Globais Modernas */
+body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    background-color: #f4f6f9 !important; /* Força o fundo cinza claro moderno */
+    color: #333333;
+    margin: 0;
+    padding: 0;
+}
+
+.container-admin {
+    max-width: 1050px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+h2 {
+    color: #1a1a1a;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    letter-spacing: -0.5px;
+}
+
+/* Cards/Seções do Painel */
+.secao {
+    background-color: #ffffff !important;
+    margin-bottom: 30px;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.secao h3 {
+    margin-top: 0;
+    color: #2c3e50;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+/* Formulário de Cadastro de Planos */
+.form-plano {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+}
+
+.form-plano input {
+    height: 42px;
+    border-radius: 8px;
+    border: 1px solid #dcdfe6;
+    padding: 0 15px;
+    font-size: 14px;
+    background-color: #fff;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.form-plano input[name="nome_plano"] {
+    flex: 2;
+    min-width: 200px;
+}
+
+.form-plano input[name="preco_plano"] {
+    flex: 1;
+    min-width: 120px;
+}
+
+.form-plano input:focus {
+    border-color: #409eff;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(64, 158, 255, 0.2);
+}
+
+.form-plano .btn-cadastrar {
+    height: 42px;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #409eff;
+    color: white;
+    border: none;
+    padding: 0 20px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.form-plano .btn-cadastrar:hover {
+    background-color: #66b1ff;
+    transform: translateY(-1px);
+}
+
+/* Lista Visual de Planos Atuais */
+.secao h4 {
+    color: #606266;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.secao ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+}
+
+.secao ul li {
+    background-color: #f8f9fa;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border-left: 4px solid #409eff;
+    font-size: 14px;
+    color: #444;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Tabela de Alunos Responsiva e Elegante */
+.table-container {
+    overflow-x: auto;
+    border-radius: 8px;
+    border: 1px solid #ebeef5;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white !important;
+    color: #606266;
+}
+
+th, td {
+    padding: 14px 18px;
+    text-align: left;
+    font-size: 14px;
+}
+
+th {
+    background-color: #f5f7fa !important;
+    color: #909399;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #ebeef5;
+}
+
+td {
+    border-bottom: 1px solid #ebeef5;
+    background-color: white !important;
+    color: #333 !important;
+}
+
+tbody tr:hover td {
+    background-color: #fafdff !important;
+}
+
+/* Botões de Ação na Tabela (Estilo Badges Interativos) */
+.btn {
+    padding: 6px 14px;
+    text-decoration: none !important;
+    border-radius: 6px;
+    margin-right: 6px;
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.btn-status {
+    background-color: #e6f4ea !important;
+    color: #137333 !important;
+    border: 1px solid #ceead6;
+}
+
+.btn-status:hover {
+    background-color: #137333 !important;
+    color: white !important;
+}
+
+.btn-pendente {
+    background-color: #fef7e0 !important;
+    color: #b06000 !important;
+    border: 1px solid #feebd0;
+}
+
+.btn-pendente:hover {
+    background-color: #b06000 !important;
+    color: white !important;
+}
+
+.btn-remover {
+    background-color: #fce8e6 !important;
+    color: #c5221f !important;
+    border: 1px solid #fad2cf;
+}
+
+.btn-remover:hover {
+    background-color: #c5221f !important;
+    color: white !important;
+}
+
+/* Link de Logout */
+.link-logout {
+    color: #f56c6c;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    padding: 10px 20px;
+    border: 1px solid #f56c6c;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.link-logout:hover {
+    background-color: #f56c6c;
+    color: white;
+}
