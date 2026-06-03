@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Perfil</title>
-    <link rel="stylesheet" href="../static/css/cadastro.css">
+    <link rel="stylesheet" href="../static/css/pgUsuario.css">
 </head>
 <body>
     <div class="formulario">
@@ -19,9 +19,11 @@
 
             <select name="plano" style="width: 200px; height: 30px; border-radius: 6px; margin-top: 5px; margin-bottom: 10px;">
                 <option value="Nenhum">Selecione um plano</option>
-                {% for plano in planos %}
-                    <option value="{{ plano[0] }}">{{ plano[0] }} (R$ {{ plano[1] }})</option>
-                {% endfor %}
+
+                    {% for plano in planos %}
+                        <option value="{{ plano.id }}">{{ plano.nome_plano }} (R$ {{ plano.preco_plano }})</option>
+                    {% endfor %}
+
             </select><br>
 
             <button type="submit">SALVAR PLANO</button>

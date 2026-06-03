@@ -1,70 +1,69 @@
-from flask import Blueprint, render_template, request, session
-from dao.usuarioDAO import dao_usuario
+from flask import Blueprint, render_template, request, session, redirect
+from config import db
+from modelos.plano import Plano
+from dao.usuarioDAO import AlunoDAO
+from dao.planoDAO import PlanoDAO
 
 admin_bp = Blueprint('admin_blueprint', __name__)
 
 
 @admin_bp.route("/admin")
 def painel_adm():
-    if 'usuario_logado' not in session or session['usuario_logado'] != 'admin':
-        return render_template('login.html')
+    if 'usuario' not in session or session['usuario'] != 'admin':
+        return redirect('/login')
 
-    lista_usuarios = dao_usuario.listar_todos()
-    lista_planos = dao_usuario.listar_planos()
+    # PADRÃO DO PROFESSOR: Busca as listas usando as classes DAO estáticas
+    lista_usuarios = AlunoDAO.listar_todos()
+    lista_planos = PlanoDAO.listar_todos()
+
     return render_template("pgAdm.html", usuarios=lista_usuarios, planos=lista_planos)
 
 
 @admin_bp.route("/admin/cadastrar_plano", methods=["POST"])
 def cadastrar_plano():
-    if 'usuario_logado' not in session or session['usuario_logado'] != 'admin':
-        return render_template('login.html')
+    if 'usuario' not in session or session['usuario'] != 'admin':
+        return redirect('/login')
 
     nome_plano = request.form.get("nome_plano")
     preco_plano = request.form.get("preco_plano")
 
     if nome_plano and preco_plano:
-        dao_usuario.cadastrar_plano(nome_plano, preco_plano)
+        # PADRÃO DO PROFESSOR: Instancia o modelo e salva via DAO estático
+        novo_plano = Plano(nome_plano=nome_plano, preco_plano=float(preco_plano))
+        PlanoDAO.salvar(novo_plano)
 
-    lista_usuarios = dao_usuario.listar_todos()
-    lista_planos = dao_usuario.listar_planos()
-    return render_template("pgAdm.html", usuarios=lista_usuarios, planos=lista_planos)
-
-
-@admin_bp.route("/admin/remover/<login>")
-def remover_usuario(login):
-    if 'usuario_logado' not in session or session['usuario_logado'] != 'admin':
-        return render_template('login.html')
-
-    dao_usuario.remover(login)
-
-    lista_usuarios = dao_usuario.listar_todos()
-    lista_planos = dao_usuario.listar_planos()
-    return render_template("pgAdm.html", usuarios=lista_usuarios, planos=lista_planos)
+    return redirect('/admin')
 
 
-@admin_bp.route("/admin/mensalidade/<login>/<status>")
-def alterar_mensalidade(login, status):
-    if 'usuario_logado' not in session or session['usuario_logado'] != 'admin':
-        return render_template('login.html')
+@admin_bp.route("/admin/remover/<cpf>")
+def remover_usuario(cpf):
+    if 'usuario' not in session or session['usuario'] != 'admin':
+        return redirect('/login')
 
-    dao_usuario.alterar_status_mensalidade(login, status)
+    # TOTALMENTE ORM: Se você quiser inativar o aluno mudando o status
+    AlunoDAO.atualizar_mensalidade(cpf, 'Inativo')
 
-    lista_usuarios = dao_usuario.listar_todos()
-    lista_planos = dao_usuario.listar_planos()
-    return render_template("pgAdm.html", usuarios=lista_usuarios, planos=lista_planos)
+    # OBS: Se você preferir EXCLUIR ele definitivamente do banco de dados, descomente a linha abaixo:
+    # AlunoDAO.remover(cpf)
+
+    return redirect('/admin')
 
 
-@admin_bp.route('/admin/remover_plano/<nome_plano>')
-def remover_plano(nome_plano):
-    if 'usuario_logado' not in session or session['usuario_logado'] != 'admin':
-        return render_template('login.html')
+@admin_bp.route("/admin/mensalidade/<cpf>/<status>")
+def alterar_mensalidade(cpf, status):
+    if 'usuario' not in session or session['usuario'] != 'admin':
+        return redirect('/login')
 
-    # 1. Executa a remoção no DAO
-    dao_usuario.remover_plano(nome_plano)
+    # TOTALMENTE ORM: Atualiza o status/mensalidade chamando a função estática do DAO
+    AlunoDAO.atualizar_mensalidade(cpf, status)
 
-    # 2. Busca os dados atualizados do banco para preencher a página novamente
-    lista_usuarios = dao_usuario.listar_todos()
-    lista_planos = dao_usuario.listar_planos()
+    return redirect('/admin')
 
-    # 3. Renderiza passando os dados atualizados (evita que a página quebre ou fique vazia)
-    return render_template("pgAdm.html", usuarios=lista_usuarios, planos=lista_planos)
+
+@admin_bp.route('/admin/remover_plano/<int:plano_id>')
+def remover_plano(plano_id):
+    if 'usuario' not in session or session['usuario'] != 'admin':
+        return redirect('/login')
+
+    PlanoDAO.remover(plano_id)
+    return redirect('/admin')

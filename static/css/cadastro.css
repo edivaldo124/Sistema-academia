@@ -113,3 +113,23 @@ a[href="/logout"]:hover {
 .conteudo button:active {
     transform: translateY(0);
 }
+.msg {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 9999;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 12px 20px;
+    border-radius: 4px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    animation: sumir 4s forwards;
+}
+@keyframes sumir {
+    0% { opacity: 1; }      /* Começa visível */
+    75% { opacity: 1; }     /* Fica visível até aos 3 segundos (75% de 4s) */
+    100% { opacity: 0; display: none; } /* Desaparece totalmente no 4º segundo */
+}

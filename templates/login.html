@@ -6,6 +6,11 @@
     <link rel="stylesheet" href="../static/css/login.css">
 </head>
 <body>
+{%if msg %}
+    <div class="msg">
+    {{msg}}
+    </div>
+{%endif%}
     <div class="conteudo">
         <form action="/login" method="post">
             <h2>PAGINA DE LOGIN</h2>

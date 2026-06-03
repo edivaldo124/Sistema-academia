@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Painel do Administrador</title>
+    <title>Painel do Administrator</title>
     <link rel="stylesheet" href="/static/css/pgAdm.css">
 </head>
 <body>
@@ -18,19 +18,19 @@
                 <button type="submit" class="btn-cadastrar">Cadastrar Plano</button>
             </form>
 
-                    <h4>Planos Atuais:</h4>
-                    <ul>
-                        {% for plano in planos %}
-                            <li>
-                                <div>
-                                    <strong>{{ plano[0] }}</strong> — <span>R$ {{ plano[1] }}</span>
-                                </div>
-                                <a href="/admin/remover_plano/{{ plano[0] }}" class="btn btn-remover" style="padding: 4px 10px; font-size: 12px; margin: 0;" onclick="return confirm('Deseja realmente excluir o plano {{ plano[0] }}?')">Excluir</a>
-                            </li>
-                        {% else %}
-                            <li>Nenhum plano cadastrado ainda.</li>
-                        {% endfor %}
-                    </ul>
+            <h4>Planos Atuais:</h4>
+            <ul>
+                {% for plano in planos %}
+                    <li>
+                        <div>
+                            <strong>{{ plano.nome_plano }}</strong> — <span>R$ {{ plano.preco_plano }}</span>
+                        </div>
+                        <a href="/admin/remover_plano/{{ plano.id }}" class="btn btn-remover" style="padding: 4px 10px; font-size: 12px; margin: 0;" onclick="return confirm('Deseja realmente excluir o plano {{ plano.nome_plano }}?')">Excluir</a>
+                    </li>
+                {% else %}
+                    <li>Nenhum plano cadastrado ainda.</li>
+                {% endfor %}
+            </ul>
         </div>
 
         <div class="secao">
@@ -40,7 +40,7 @@
                     <thead>
                         <tr>
                             <th>Nome</th>
-                            <th>Login</th>
+                            <th>Login (CPF)</th>
                             <th>Email</th>
                             <th>Plano Atual</th>
                             <th>Situação</th>
@@ -51,14 +51,17 @@
                         {% for u in usuarios %}
                         <tr>
                             <td>{{ u.nome }}</td>
-                            <td>{{ u.login }}</td>
+                            <td>{{ u.cpf }}</td>
                             <td>{{ u.email }}</td>
-                            <td>{{ u.plano }}</td>
+
+                            <td>{% if u.plano %}{{ u.plano.nome_plano }}{% else %}Sem Plano{% endif %}</td>
+
                             <td>{{ u.mensalidade }}</td>
+
                             <td>
-                                <a href="/admin/mensalidade/{{ u.login }}/Em Dia" class="btn btn-status">Por Em Dia</a>
-                                <a href="/admin/mensalidade/{{ u.login }}/Pendente" class="btn btn-pendente">Negativar</a>
-                                <a href="/admin/remover/{{ u.login }}" class="btn btn-remover" onclick="return confirm('Tem certeza?')">Remover</a>
+                                <a href="/admin/mensalidade/{{ u.cpf }}/Em Dia" class="btn btn-status">Por Em Dia</a>
+                                <a href="/admin/mensalidade/{{ u.cpf }}/Pendente" class="btn btn-pendente">Negativar</a>
+                                <a href="/admin/remover/{{ u.cpf }}" class="btn btn-remover" onclick="return confirm('Tem certeza que deseja inativar {{ u.nome }}?')">Remover</a>
                             </td>
                         </tr>
                         {% else %}

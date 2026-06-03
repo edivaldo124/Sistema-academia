@@ -6,6 +6,12 @@
     <link rel="stylesheet" href="../static/css/cadastro.css">
 </head>
 <body>
+{%if erro%}
+    <div class="msg">
+   {{erro}}
+    </div>
+{%endif%}
+
         <a href="/logout">sair</a>
     <div class="conteudo">
         <form action="/cadastrar" method="post">
