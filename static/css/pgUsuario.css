@@ -1,121 +1,91 @@
-/* Configurações Globais e Fundo */
+/* static/css/pgUsuario.css */
+
+/* Reset básico e fundo da página */
 body {
-    background-color: #f7f9f6; /* Tom claro moderno e confortável */
-    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    background-color: #f4f6f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
-    padding: 0;
-    color: #333;
+    padding: 40px 20px;
     display: flex;
     justify-content: center;
-    align-items: center;
-    min-height: 100vh; /* Centraliza o card perfeitamente na tela */
+    align-items: flex-start; /* Permite que a caixa cresça para baixo sem ser cortada */
+    min-height: 100vh;
+    box-sizing: border-box;
 }
 
-/* Card Principal (Usando a sua classe .formulario) */
+/* Caixa principal do perfil */
 .formulario {
-    background-color: #ffffff; /* Fundo branco profissional */
-    border-top: 5px solid #e6b800; /* Detalhe dourado na borda superior */
-    width: 320px;
-    height: auto; /* Deixa a altura dinâmica para os dados do Jinja caberem perfeitamente */
-    text-align: center;
-    padding: 35px 25px;
-    border-radius: 12px; /* Cantos arredondados elegantes */
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); /* Sombra suave flutuante */
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 850px; /* Bem largo para os cartões dos planos ficarem lado a lado */
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
     box-sizing: border-box;
 }
 
-/* Título */
+/* Título principal */
 .formulario h2 {
+    text-align: center;
+    color: #2c3e50;
+    font-size: 26px;
     margin-top: 0;
-    margin-bottom: 10px;
-    font-size: 20px;
-    font-weight: 700;
-    color: #1b4d3e; /* Verde escuro sofisticado */
-    letter-spacing: -0.5px;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
 }
 
-/* Estilização das informações do Perfil (Nome, Plano e Status) */
-.formulario label {
-    display: block;
-    text-align: left;
-    font-size: 14px;
-    font-weight: 600;
-    color: #444;
-    margin-bottom: 8px;
-    padding-left: 5px;
-}
-
-/* Destaque para a label de instrução do Select */
-.formulario label[for="plano"],
-.formulario form > label:nth-of-type(4) {
-    color: #1b4d3e;
-    font-size: 13px;
-    margin-top: 15px;
-    margin-bottom: 5px;
-    border-top: 1px solid #eee;
-    padding-top: 15px;
-}
-
-/* Estilização do Select de Planos (Sobrescreve o estilo inline do HTML com elegância) */
-.formulario select {
-    width: 100% !important; /* Força o select a ocupar toda a largura interna do card */
-    height: 40px !important; /* Altura moderna e confortável */
-    padding: 0 10px;
-    border: 1px solid #dcdfe6 !important;
-    border-radius: 8px !important;
-    background-color: #fff;
-    font-size: 14px;
-    color: #333;
-    box-sizing: border-box;
-    outline: none;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-/* Efeito ao clicar no Select */
-.formulario select:focus {
-    border-color: #2e7d32 !important;
-    box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.15);
-}
-
-/* Botão de Salvar Plano */
-.formulario button {
-    background-color: #2e7d32; /* Verde padrão de ação */
-    color: white;
-    border: none;
+/* Secção de Dados do Aluno (estilo cartão de destaque) */
+.dados-aluno {
+    background-color: #f8f9fa;
+    border-left: 5px solid #409eff; /* Faixa azul na lateral para dar um toque premium */
+    padding: 25px;
     border-radius: 8px;
-    width: 100%; /* Botão largo acompanhando o select */
-    height: 42px;
-    font-size: 14px;
-    font-weight: 600;
-    margin-top: 15px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 6px rgba(46, 125, 50, 0.1);
+    margin-bottom: 30px;
 }
 
-.formulario button:hover {
-    background-color: #1b5e20; /* Escurece suavemente no hover */
-    transform: translateY(-1px);
-    box-shadow: 0 6px 12px rgba(46, 125, 50, 0.2);
+.dados-aluno p {
+    margin: 12px 0;
+    font-size: 16px;
+    color: #444;
 }
 
-.formulario button:active {
-    transform: translateY(0);
-}
-
-/* Link Inferior (Voltar ao Início) */
-.meulink {
-    color: #2e7d32;
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: 500;
+/* Deixa os títulos (Nome, Plano, etc.) alinhados de forma organizada */
+.dados-aluno strong {
+    color: #2c3e50;
     display: inline-block;
-    margin-top: 15px;
-    transition: color 0.2s ease;
+    width: 110px;
 }
 
+/* Linha divisória suave entre os dados e a escolha dos planos */
+hr {
+    border: none;
+    border-top: 1px solid #e9ecef;
+    margin: 35px 0;
+}
+
+/* Rodapé com os links de navegação */
+.links-rodape {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 40px;
+    border-top: 1px solid #e9ecef;
+    padding-top: 20px;
+}
+
+/* Estilo dos links ("Voltar ao Início" e "Sair") */
+.meulink {
+    color: #6c757d;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    padding: 10px 20px;
+    border-radius: 6px;
+}
+
+/* Efeito ao passar o rato (hover) nos links */
 .meulink:hover {
-    color: #1b5e20;
-    text-decoration: underline;
+    color: #409eff;
+    background-color: rgba(64, 158, 255, 0.1); /* Fundo azul clarinho */
 }

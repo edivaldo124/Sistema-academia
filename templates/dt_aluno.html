@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalhes do Aluno</title>
+    <link rel="stylesheet" href="/static/css/dt_aluno.css">
+</head>
+<body>
+
+    <div class="container-detalhes">
+        <h2>Editar Perfil: {{ u.nome }}</h2>
+
+        <form action="/admin/usuario/{{ u.cpf }}" method="POST" class="form-detalhes">
+
+            <div class="grupo-input">
+                <label>Nome Completo:</label>
+                <input type="text" name="nome" value="{{ u.nome }}" required>
+            </div>
+
+            <div class="grupo-input">
+                <label>Utilizador (Login):</label>
+                <input type="text" name="login" value="{{ u.login }}" required>
+            </div>
+
+            <div class="grupo-input">
+                <label>Data de Nascimento:</label>
+                <input type="text" name="datanascimento" value="{{ u.datanascimento }}" required>
+            </div>
+
+            <div class="grupo-input">
+                <label>CPF (Não editável):</label>
+                <input type="text" name="cpf" value="{{ u.cpf }}" readonly class="input-bloqueado">
+            </div>
+
+            <div class="grupo-input">
+                <label>E-mail:</label>
+                <input type="text" name="email" value="{{ u.email }}" required>
+            </div>
+
+            <div class="grupo-input">
+                <label>Telefone:</label>
+                <input type="text" name="telefone" value="{{ u.telefone }}" required>
+            </div>
+
+            <div class="grupo-input">
+                <label>Situação Financeira:</label>
+                <select name="mensalidade">
+                    <option value="Em Dia" {% if u.mensalidade == 'Em Dia' %}selected{% endif %}>Em Dia</option>
+                    <option value="Pendente" {% if u.mensalidade == 'Pendente' %}selected{% endif %}>Pendente</option>
+                    <option value="Inativo" {% if u.mensalidade == 'Inativo' %}selected{% endif %}>Inativo</option>
+                </select>
+            </div>
+
+            <div class="grupo-input">
+                <label>Plano da Academia:</label>
+                <select name="plano_id">
+                    <option value="Nenhum">Sem Plano</option>
+                    {% for p in planos %}
+                        <option value="{{ p.id }}" {% if u.plano_id == p.id %}selected{% endif %}>{{ p.nome_plano }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button type="submit" class="btn-salvar">Salvar Alterações</button>
+            <a href="/admin" class="btn-voltar">Voltar ao Painel</a>
+        </form>
+    </div>
+
+</body>
+</html>

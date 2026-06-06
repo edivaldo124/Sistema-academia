@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Recuperar Senha</title>
+    <link rel="stylesheet" href="/static/css/recuperar.css">
+</head>
+<body>
+    <div class="conteudo">
+        <form action="/recuperar_senha" method="post">
+            <p>RECUPERAR SENHA</p>
+
+            {% if erro %}
+                <div class="msg">{{ erro }}</div>
+            {% endif %}
+
+            <label>Qual o seu CPF?</label>
+            <input type="text" name="cpf" required>
+
+            <label>Qual o seu E-mail registado?</label>
+            <input type="email" name="email" required>
+
+            <label>Digite a Nova Senha:</label>
+            <input type="password" name="nova_senha" required>
+
+            <button type="submit">ALTERAR SENHA</button>
+
+            <a href="/login" class="link-voltar">Voltar ao Login</a>
+        </form>
+    </div>
+</body>
+</html>

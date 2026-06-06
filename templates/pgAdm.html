@@ -15,7 +15,9 @@
             <form action="/admin/cadastrar_plano" method="POST" class="form-plano">
                 <input type="text" name="nome_plano" placeholder="Nome do Plano (Ex: Mensal, Anual)" required>
                 <input type="text" name="preco_plano" placeholder="Preço (Ex: 80.00)" required>
+                <input type="number" name="duracao_dias" placeholder="Duração em dias (Ex: 365)" required>
                 <button type="submit" class="btn-cadastrar">Cadastrar Plano</button>
+
             </form>
 
             <h4>Planos Atuais:</h4>
@@ -23,7 +25,7 @@
                 {% for plano in planos %}
                     <li>
                         <div>
-                            <strong>{{ plano.nome_plano }}</strong> — <span>R$ {{ plano.preco_plano }}</span>
+                            <strong>{{ plano.nome_plano }}</strong> — <span>R$ {{ plano.preco_plano }} ({{ plano.duracao_dias }} dias)</span>
                         </div>
                         <a href="/admin/remover_plano/{{ plano.id }}" class="btn btn-remover" style="padding: 4px 10px; font-size: 12px; margin: 0;" onclick="return confirm('Deseja realmente excluir o plano {{ plano.nome_plano }}?')">Excluir</a>
                     </li>
@@ -39,34 +41,24 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Nome</th>
-                            <th>Login (CPF)</th>
-                            <th>Email</th>
-                            <th>Plano Atual</th>
-                            <th>Situação</th>
+                            <th>Nome do Aluno</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for u in usuarios %}
                         <tr>
-                            <td>{{ u.nome }}</td>
-                            <td>{{ u.cpf }}</td>
-                            <td>{{ u.email }}</td>
-
-                            <td>{% if u.plano %}{{ u.plano.nome_plano }}{% else %}Sem Plano{% endif %}</td>
-
-                            <td>{{ u.mensalidade }}</td>
+                            <td style="font-weight: 600; font-size: 16px;">{{ u.nome }}</td>
 
                             <td>
-                                <a href="/admin/mensalidade/{{ u.cpf }}/Em Dia" class="btn btn-status">Por Em Dia</a>
-                                <a href="/admin/mensalidade/{{ u.cpf }}/Pendente" class="btn btn-pendente">Negativar</a>
+                                <a href="/admin/usuario/{{ u.cpf }}" class="btn btn-status" style="background-color: #409eff !important; color: white !important;">Ver / Editar Perfil</a>
+
                                 <a href="/admin/remover/{{ u.cpf }}" class="btn btn-remover" onclick="return confirm('Tem certeza que deseja inativar {{ u.nome }}?')">Remover</a>
                             </td>
                         </tr>
                         {% else %}
                         <tr>
-                            <td colspan="6" style="text-align: center;">Nenhum aluno cadastrado.</td>
+                            <td colspan="2" style="text-align: center;">Nenhum aluno cadastrado.</td>
                         </tr>
                         {% endfor %}
                     </tbody>

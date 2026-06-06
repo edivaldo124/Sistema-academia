@@ -1,0 +1,111 @@
+/* static/css/recuperar.css */
+
+/* Fundo da página e alinhamento central */
+body {
+    background-color: #2c3e50; /* Um tom escuro e elegante, pode mudar a gosto */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Caixa principal do formulário */
+.conteudo {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+}
+
+/* Título principal */
+.conteudo p:first-child {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+
+/* Mensagem de erro */
+.msg {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #f5c6cb;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* Estilo das etiquetas (labels) */
+form label {
+    font-size: 14px;
+    color: #555;
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: inline-block;
+}
+
+/* Estilo dos campos de texto (inputs) */
+form input[type="text"],
+form input[type="email"],
+form input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 15px;
+    transition: border-color 0.3s;
+}
+
+/* Efeito ao clicar no campo */
+form input[type="text"]:focus,
+form input[type="email"]:focus,
+form input[type="password"]:focus {
+    border-color: #409eff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(64, 158, 255, 0.2);
+}
+
+/* Botão de envio */
+form button {
+    width: 100%;
+    background-color: #409eff;
+    color: white;
+    padding: 14px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: #307ecc;
+}
+
+/* Link para voltar ao Login */
+.link-voltar {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: #666;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.link-voltar:hover {
+    color: #409eff;
+    text-decoration: underline;
+}

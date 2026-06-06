@@ -6,6 +6,8 @@ class Aluno(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(150), nullable=False)
+    login = db.Column(db.String(50), unique=True, nullable=False)
+    datanascimento = db.Column(db.String, nullable=False)
     cpf = db.Column(db.String(14), unique=True, nullable=False)
     email = db.Column(db.String(150), unique=True, nullable=False)
     telefone = db.Column(db.String(20))
@@ -17,13 +19,17 @@ class Aluno(db.Model):
 
     # Mapeamento do relacionamento para buscar os dados do plano automaticamente
     plano = db.relationship('Plano', backref='alunos', lazy=True)
+    data_vencimento = db.Column(db.String(10), nullable=True)  # Ex: '2026-07-05'
 
     # Construtor da classe
-    def __init__(self, nome, cpf, email, telefone, senha, mensalidade='Em Dia', plano_id=None):
+    def __init__(self, nome, login,datanascimento, cpf, email, telefone, senha, mensalidade='Em Dia', plano_id=None, data_vencimento=None):
         self.nome = nome
+        self.login = login
+        self.datanascimento = datanascimento
         self.cpf = cpf
         self.email = email
         self.telefone = telefone
         self.senha = senha
         self.mensalidade = mensalidade
         self.plano_id = plano_id
+        self.data_vencimento = data_vencimento

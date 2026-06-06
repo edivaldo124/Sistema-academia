@@ -1,0 +1,96 @@
+/* static/css/planos.css */
+
+.secao-planos {
+    margin-top: 20px;
+}
+
+.secao-planos h3 {
+    color: #2c3e50;
+    font-size: 22px;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+/* A grelha que vai alinhar os cartões lado a lado */
+.grid-planos {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+    justify-content: center; /* Mantém os cartões centrados */
+}
+
+/* O Cartão do Plano */
+.card-plano {
+    background: #ffffff;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    padding: 30px 25px;
+    width: 230px; /* Largura fixa bonita para o cartão */
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* Efeito "Premium": o cartão flutua e ganha sombra azul ao passar o rato */
+.card-plano:hover {
+    transform: translateY(-8px);
+    border-color: #409eff;
+    box-shadow: 0 12px 25px rgba(64, 158, 255, 0.15);
+}
+
+/* Nome do Plano */
+.card-plano h3 {
+    color: #2c3e50;
+    margin: 0 0 15px 0;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Preço destacado em verde */
+.card-plano .preco {
+    font-size: 32px;
+    color: #28a745;
+    font-weight: 800;
+    margin: 15px 0;
+}
+
+/* Dias de duração */
+.card-plano .duracao {
+    color: #7f8c8d;
+    font-size: 14px;
+    margin-bottom: 25px;
+    font-weight: 500;
+}
+
+/* Botão de Contratar */
+.btn-escolher {
+    background-color: #409eff;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 15px;
+    width: 100%;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+/* Efeito no botão ao passar o rato e clicar */
+.btn-escolher:hover {
+    background-color: #307ecc;
+}
+
+.btn-escolher:active {
+    transform: scale(0.97); /* Dá um pequeno efeito de clique a afundar */
+}
+
+/* Responsividade: ajusta para telemóveis caso a janela fique pequena */
+@media (max-width: 600px) {
+    .card-plano {
+        width: 100%; /* No telemóvel, cada plano ocupa a linha toda */
+    }
+}

@@ -2,34 +2,55 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Perfil</title>
-    <link rel="stylesheet" href="../static/css/pgUsuario.css">
+    <title>Perfil do Aluno</title>
+    <link rel="stylesheet" href="/static/css/pgUsuario.css">
+
+    <link rel="stylesheet" href="/static/css/planos.css">
 </head>
 <body>
     <div class="formulario">
-        <form action="/perfil" method="post">
-            <h2>PERFIL DO ALUNO</h2>
-            <br>
-            <label>Nome: {{ usuario.nome }}</label><br>
-            <label>Plano: {{ usuario.plano }}</label><br>
-            <label>Status: {{ usuario.mensalidade }}</label><br>
-            <br>
+        <h2>PERFIL DO ALUNO</h2>
 
-            <label>Escolha ou Altere seu Plano:</label><br>
+        <div class="dados-aluno">
+            <p><strong>Nome:</strong> {{ usuario.nome }}</p>
 
-            <select name="plano" style="width: 200px; height: 30px; border-radius: 6px; margin-top: 5px; margin-bottom: 10px;">
-                <option value="Nenhum">Selecione um plano</option>
+            <p><strong>Plano Atual:</strong> {% if usuario.plano %}{{ usuario.plano.nome_plano }}{% else %}Sem plano ativo{% endif %}</p>
 
-                    {% for plano in planos %}
-                        <option value="{{ plano.id }}">{{ plano.nome_plano }} (R$ {{ plano.preco_plano }})</option>
-                    {% endfor %}
+            <p><strong>Status:</strong> {{ usuario.mensalidade }}</p>
 
-            </select><br>
+            {% if usuario.data_vencimento %}
+                <p><strong>Vencimento:</strong> {{ usuario.data_vencimento }}</p>
+            {% endif %}
+        </div>
 
-            <button type="submit">SALVAR PLANO</button>
-        </form>
+        <hr>
+
+        <div class="secao-planos">
+            <h3>Escolha ou Altere o seu Plano:</h3>
+
+            <div class="grid-planos">
+                {% for plano in planos %}
+                <div class="card-plano">
+                    <h3>{{ plano.nome_plano }}</h3>
+                    <p class="preco">R$ {{ plano.preco_plano }}</p>
+                    <p class="duracao">Válido por {{ plano.duracao_dias }} dias</p>
+
+                    <form action="/perfil" method="POST">
+                        <input type="hidden" name="plano" value="{{ plano.id }}">
+                        <button type="submit" class="btn-escolher">Contratar</button>
+                    </form>
+                </div>
+                {% else %}
+                    <p>Nenhum plano cadastrado pela academia ainda.</p>
+                {% endfor %}
+            </div>
+        </div>
+
         <br>
-        <a href="/" class="meulink">Voltar ao Início</a>
+        <div class="links-rodape">
+            <a href="/" class="meulink">Voltar ao Início</a>
+            <a href="/logout" class="meulink">Sair</a>
+        </div>
     </div>
 </body>
 </html>

@@ -111,6 +111,20 @@ body {
     color: #1b5e20;
     text-decoration: underline;
 }
+.recuperar {
+    color: #2e7d32;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+    display: inline-block;
+    margin-top: 20px;
+    transition: color 0.2s ease;
+}
+
+.recuperar:hover {
+    color: #1b5e20;
+    text-decoration: underline;
+}
 .msg {
     position: fixed;
     top: 20px;

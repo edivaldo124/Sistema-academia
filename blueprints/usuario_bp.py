@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, session, redirect
 from config import db
+from modelos import usuario
 from modelos.usuario import Aluno
 from dao.usuarioDAO import AlunoDAO
 from dao.planoDAO import PlanoDAO
@@ -35,19 +36,21 @@ def pagina_login():
 def pagina_cadastro():
     if request.method == "POST":
         nome = request.form.get("nomeusuario")
+        login = request.form.get("loginusuario")
+        datanascimento = request.form.get("dataNascimento")
         cpf = request.form.get("cpfusuario")
         senha = request.form.get("senhausuario")
         email = request.form.get("emailusuario")
         telefone = request.form.get("telefoneusuario")
 
-        if nome and cpf and senha and email and telefone:
+        if nome and login and cpf and senha and email and telefone:
             # PADRÃO DO PROFESSOR: Verifica se já existe antes de salvar
             aluno_existente = AlunoDAO.buscar_por_usuario(cpf)
             if aluno_existente:
                 return render_template("cadastro.html", erro="Erro: Este CPF já está cadastrado!")
 
             # PADRÃO DO PROFESSOR: Cria o objeto Aluno usando o construtor __init__
-            novo_aluno = Aluno(nome=nome, cpf=cpf, email=email, telefone=telefone, senha=senha)
+            novo_aluno = Aluno(nome=nome, login=login,datanascimento=datanascimento,cpf=cpf, email=email, telefone=telefone, senha=senha)
 
             # Salva usando o método estático do DAO
             AlunoDAO.salvar(novo_aluno)
@@ -80,8 +83,25 @@ def pagina_perfil():
 
     return render_template("pgUsuario.html", usuario=aluno_dados, planos=lista_planos)
 
+@auth_bp.route("/recuperar_senha", methods=["GET", "POST"])
+def recuperar_senha():
+    if request.method == "POST":
+        cpf = request.form.get("cpf")
+        email = request.form.get("email")
+        nova_senha = request.form.get("nova_senha")
 
-@auth_bp.route("/logout")
-def logout():
-    session.clear()
-    return redirect('/login')
+        # Procura o aluno pelo CPF e Email juntos
+        from modelos.usuario import Aluno
+        from config import db
+        aluno = Aluno.query.filter_by(cpf=cpf, email=email).first()
+
+        if aluno:
+            aluno.senha = nova_senha # Atualiza a senha
+            db.session.commit()
+            return render_template("login.html", msg="Senha alterada com sucesso! Faça login.")
+        else:
+            return render_template("recuperar.html", erro="CPF ou E-mail incorretos!")
+
+    return render_template("recuperar.html")
+
+
