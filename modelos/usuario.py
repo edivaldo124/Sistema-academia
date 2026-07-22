@@ -11,18 +11,19 @@ class Aluno(db.Model):
     cpf = db.Column(db.String(14), unique=True, nullable=False)
     email = db.Column(db.String(150), unique=True, nullable=False)
     telefone = db.Column(db.String(20))
-    mensalidade = db.Column(db.String(50), default='Em Dia')  # Situação/Status
+    mensalidade = db.Column(db.String(50), default='pendente', nullable=False)
     senha = db.Column(db.String(255), nullable=False)
+    descricao = db.Column(db.String(255), nullable=True)
 
     # Chave estrangeira para o plano
     plano_id = db.Column(db.Integer, db.ForeignKey('planos.id'), nullable=True)
 
     # Mapeamento do relacionamento para buscar os dados do plano automaticamente
     plano = db.relationship('Plano', backref='alunos', lazy=True)
-    data_vencimento = db.Column(db.String(10), nullable=True)  # Ex: '2026-07-05'
+    data_vencimento = db.Column(db.String(10), nullable=True)
 
     # Construtor da classe
-    def __init__(self, nome, login,datanascimento, cpf, email, telefone, senha, mensalidade='Em Dia', plano_id=None, data_vencimento=None):
+    def __init__(self, nome, login,datanascimento, cpf, email, telefone, senha, descricao, mensalidade='pendente', plano_id=None, data_vencimento=None):
         self.nome = nome
         self.login = login
         self.datanascimento = datanascimento
@@ -30,6 +31,7 @@ class Aluno(db.Model):
         self.email = email
         self.telefone = telefone
         self.senha = senha
+        self.descricao = descricao
         self.mensalidade = mensalidade
         self.plano_id = plano_id
         self.data_vencimento = data_vencimento

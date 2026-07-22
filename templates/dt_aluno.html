@@ -43,10 +43,16 @@
             </div>
 
             <div class="grupo-input">
+                <label>Descrição:</label>
+                <input type="text" name="descricao" value="{{ u.descricao }}" required>
+            </div>
+
+
+            <div class="grupo-input">
                 <label>Situação Financeira:</label>
                 <select name="mensalidade">
-                    <option value="Em Dia" {% if u.mensalidade == 'Em Dia' %}selected{% endif %}>Em Dia</option>
                     <option value="Pendente" {% if u.mensalidade == 'Pendente' %}selected{% endif %}>Pendente</option>
+                    <option value="Em Dia" {% if u.mensalidade == 'Em Dia' %}selected{% endif %}>Em Dia</option>
                     <option value="Inativo" {% if u.mensalidade == 'Inativo' %}selected{% endif %}>Inativo</option>
                 </select>
             </div>

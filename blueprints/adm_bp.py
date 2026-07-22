@@ -33,6 +33,8 @@ def cadastrar_plano():
 
     return redirect('/admin')
 
+#
+
 
 @admin_bp.route("/admin/remover/<cpf>")
 def remover_usuario(cpf):
@@ -43,6 +45,9 @@ def remover_usuario(cpf):
 
 
     return redirect('/admin')
+
+
+
 
 
 @admin_bp.route("/admin/mensalidade/<cpf>/<status>")
@@ -69,13 +74,11 @@ def detalhes_usuario(cpf):
     if 'usuario' not in session or session['usuario'] != 'admin':
         return redirect('/login')
 
-    # Busca o aluno pelo CPF
     aluno = AlunoDAO.buscar_por_usuario(cpf)
 
     if not aluno:
-        return redirect('/admin')  # Se o aluno não existir, volta pro início
+        return redirect('/admin')
 
-    # Se o administrador clicar no botão "Salvar Alterações"
     if request.method == "POST":
         dados_atualizados = {
             'nome': request.form.get("nome"),
@@ -84,15 +87,14 @@ def detalhes_usuario(cpf):
             'email': request.form.get("email"),
             'telefone': request.form.get("telefone"),
             'mensalidade': request.form.get("mensalidade"),
-            'plano_id': request.form.get("plano_id")
+            'plano_id': request.form.get("plano_id"),
+            'descricao': request.form.get('descricao')
         }
 
-        # Envia os dados para o DAO salvar no banco
         AlunoDAO.atualizar_dados_completos(cpf, dados_atualizados)
 
-        # Redireciona de volta para a tela inicial de admin
         return redirect('/admin')
 
-    # Se for apenas para visualizar a página (GET), carrega os planos e abre o HTML
+
     planos = PlanoDAO.listar_todos()
     return render_template("dt_aluno.html", u=aluno, planos=planos)

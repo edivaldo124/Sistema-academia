@@ -9,7 +9,6 @@ class Plano(db.Model):
 
     duracao_dias = db.Column(db.Integer, nullable=False, default=30)
 
-    # Construtor da classe
     def __init__(self, nome_plano, preco_plano, duracao_dias):
         self.nome_plano = nome_plano
         self.preco_plano = preco_plano

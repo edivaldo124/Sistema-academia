@@ -14,18 +14,23 @@ class AlunoDAO:
         return Aluno.query.all()
 
     @staticmethod
+    @staticmethod
     def autenticar(usuario, senha):
-        # Procura se o texto digitado coincide com nome, email OU cpf, E se a senha bate
+        # Agora exigimos obrigatoriamente que a senha bata com o usuário, email, login ou cpf.
         return Aluno.query.filter(
-            ((Aluno.nome == usuario) |(Aluno.login == usuario)|(Aluno.datanascimento == usuario)| (Aluno.email == usuario) | (Aluno.cpf == usuario)) &
-            (Aluno.senha == senha)
+            (
+                    (Aluno.nome == usuario) |
+                    (Aluno.login == usuario) |
+                    (Aluno.email == usuario) |
+                    (Aluno.cpf == usuario)
+            ) & (Aluno.senha == senha)
         ).first()
 
     @staticmethod
     def buscar_por_usuario(usuario):
         # Busca o perfil pelo nome, email ou cpf que está salvo na sessão
         return Aluno.query.filter(
-            (Aluno.nome == usuario) |(Aluno.login == usuario)| (Aluno.email == usuario) | (Aluno.cpf == usuario)
+            (Aluno.nome == usuario) |(Aluno.login == usuario)| (Aluno.email == usuario) | (Aluno.descricao == usuario)| (Aluno.cpf == usuario)
         ).first()
 
     @staticmethod
@@ -46,9 +51,6 @@ class AlunoDAO:
             return True
         return False
 
-
-
-
     @staticmethod
     def atualizar_dados_completos(cpf, dados):
         aluno = Aluno.query.filter_by(cpf=cpf).first()
@@ -57,8 +59,11 @@ class AlunoDAO:
             aluno.login = dados.get('login')
             aluno.datanascimento = dados.get('datanascimento')
             aluno.email = dados.get('email')
-            aluno.telefone = dados.get('telefone')
-            aluno.mensalidade = dados.get('mensalidade')
+
+            # Garantir que não enviam None para campos de texto opcionais
+            aluno.telefone = dados.get('telefone', '')
+            aluno.mensalidade = dados.get('mensalidade', 'Pendente')
+            aluno.descricao = dados.get('descricao', '')
 
             plano_escolhido = dados.get('plano_id')
 

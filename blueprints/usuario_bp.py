@@ -1,6 +1,5 @@
 from flask import Blueprint, render_template, request, session, redirect
 from config import db
-from modelos import usuario
 from modelos.usuario import Aluno
 from dao.usuarioDAO import AlunoDAO
 from dao.planoDAO import PlanoDAO
@@ -16,12 +15,10 @@ def pagina_login():
         login = request.form.get("loginusuario")
         senha = request.form.get("senhausuario")
 
-        # Login do Administrador
         if login == "admin" and senha == "admin":
             session['usuario'] = "admin"
             return redirect('/admin')
 
-        # PADRÃO DO PROFESSOR: Chama o método estático do DAO
         aluno = AlunoDAO.autenticar(login, senha)
         if aluno:
             session['usuario'] = login
@@ -42,17 +39,15 @@ def pagina_cadastro():
         senha = request.form.get("senhausuario")
         email = request.form.get("emailusuario")
         telefone = request.form.get("telefoneusuario")
+        descricao = request.form.get("descricaousuario")
 
         if nome and login and cpf and senha and email and telefone:
-            # PADRÃO DO PROFESSOR: Verifica se já existe antes de salvar
             aluno_existente = AlunoDAO.buscar_por_usuario(cpf)
             if aluno_existente:
                 return render_template("cadastro.html", erro="Erro: Este CPF já está cadastrado!")
 
-            # PADRÃO DO PROFESSOR: Cria o objeto Aluno usando o construtor __init__
-            novo_aluno = Aluno(nome=nome, login=login,datanascimento=datanascimento,cpf=cpf, email=email, telefone=telefone, senha=senha)
+            novo_aluno = Aluno(nome=nome, login=login,datanascimento=datanascimento,cpf=cpf, email=email, telefone=telefone, senha=senha, descricao=descricao)
 
-            # Salva usando o método estático do DAO
             AlunoDAO.salvar(novo_aluno)
             return redirect('/login')
 
@@ -78,7 +73,6 @@ def pagina_perfil():
             aluno_dados.plano_id = int(plano_id_escolhido)
             db.session.commit()  # Grava a alteração do plano no banco de dados
 
-    # Carrega a lista de planos para o <select> do HTML
     lista_planos = PlanoDAO.listar_todos()
 
     return render_template("pgUsuario.html", usuario=aluno_dados, planos=lista_planos)
@@ -90,7 +84,6 @@ def recuperar_senha():
         email = request.form.get("email")
         nova_senha = request.form.get("nova_senha")
 
-        # Procura o aluno pelo CPF e Email juntos
         from modelos.usuario import Aluno
         from config import db
         aluno = Aluno.query.filter_by(cpf=cpf, email=email).first()

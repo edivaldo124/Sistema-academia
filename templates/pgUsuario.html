@@ -13,6 +13,10 @@
 
         <div class="dados-aluno">
             <p><strong>Nome:</strong> {{ usuario.nome }}</p>
+            <p><strong>Gmail:</strong> {{ usuario.email }}</p>
+            <p><strong>Descrição:</strong> {{ usuario.descricao }}</p>
+
+
 
             <p><strong>Plano Atual:</strong> {% if usuario.plano %}{{ usuario.plano.nome_plano }}{% else %}Sem plano ativo{% endif %}</p>
 
