@@ -69,9 +69,8 @@ def pagina_perfil():
     if request.method == "POST":
         plano_id_escolhido = request.form.get("plano")
         if plano_id_escolhido and plano_id_escolhido != "Nenhum":
-            # Com o ORM, podemos alterar a propriedade diretamente no objeto carregado!
             aluno_dados.plano_id = int(plano_id_escolhido)
-            db.session.commit()  # Grava a alteração do plano no banco de dados
+            db.session.commit()
 
     lista_planos = PlanoDAO.listar_todos()
 
@@ -89,7 +88,7 @@ def recuperar_senha():
         aluno = Aluno.query.filter_by(cpf=cpf, email=email).first()
 
         if aluno:
-            aluno.senha = nova_senha # Atualiza a senha
+            aluno.senha = nova_senha
             db.session.commit()
             return render_template("login.html", msg="Senha alterada com sucesso! Faça login.")
         else:
