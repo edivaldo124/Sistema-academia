@@ -1,5 +1,5 @@
+import os
 from flask import *
-
 from config import db
 
 from blueprints.usuario_bp import auth_bp
@@ -8,12 +8,29 @@ from blueprints.adm_bp import admin_bp
 app = Flask(__name__)
 app.secret_key = "chave_secreta_academia"
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://edivaldo:senha123@localhost/academia3_db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db.init_app(app)
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://edivaldo:senha123@localhost/academia3_db'
 
-app.register_blueprint(auth_bp)
-app.register_blueprint(admin_bp)
+#app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+#db.init_app(app)
+
+#db_url = os.getenv("DATABASE_URL", "postgresql+psycopg2://edivaldo:senha123@localhost/academia3_db")
+
+#if db_url and db_url.startswith("postgres://"):
+    #db_url = db_url.replace("postgres://", "postgresql://", 1)
+
+#app.register_blueprint(auth_bp)
+#app.register_blueprint(admin_bp)
+
+db_url = os.getenv("DATABASE_URL", "postgresql+psycopg2://edivaldo:senha123@localhost/academia3_db")
+
+# O Render geralmente fornece URLs começando com 'postgres://', mas o SQLAlchemy exige 'postgresql://'
+if db_url and db_url.startswith("postgres://"):
+    db_url = db_url.replace("postgres://", "postgresql://", 1)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = db_url
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db.init_app(app)
 
 with app.app_context():
     db.create_all()
