@@ -1,6 +1,6 @@
 from flask import *
-
 from config import db
+import os
 
 from blueprints.usuario_bp import auth_bp
 from blueprints.adm_bp import admin_bp
@@ -8,8 +8,13 @@ from blueprints.adm_bp import admin_bp
 app = Flask(__name__)
 app.secret_key = "chave_secreta_academia"
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://edivaldo:senha123@localhost/academia3_db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
+    'DATABASE_URL',
+    'postgresql+psycopg2://edivaldo:senha123@localhost/academia3_db'
+)
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 db.init_app(app)
 
 app.register_blueprint(auth_bp)
@@ -38,4 +43,4 @@ def logout():
 
 
 if __name__ == '__main__':
-    app.run( host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5000)
