@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, session, redirect
+from sqlalchemy.exc import IntegrityError
 from config import db
 from modelos.usuario import Aluno
 from dao.usuarioDAO import AlunoDAO
@@ -32,26 +33,36 @@ def pagina_login():
 @auth_bp.route("/cadastrar", methods=["GET", "POST"])
 def pagina_cadastro():
     if request.method == "POST":
-        nome = request.form.get("nomeusuario")
-        login = request.form.get("loginusuario")
-        datanascimento = request.form.get("dataNascimento")
-        cpf = request.form.get("cpfusuario")
-        senha = request.form.get("senhausuario")
-        email = request.form.get("emailusuario")
-        telefone = request.form.get("telefoneusuario")
-        descricao = request.form.get("descricaousuario")
+        nome = (request.form.get("nomeusuario") or "").strip()
+        login = (request.form.get("loginusuario") or "").strip()
+        datanascimento = (request.form.get("dataNascimento") or "").strip()
+        cpf = (request.form.get("cpfusuario") or "").strip()
+        senha = request.form.get("senhausuario") or ""
+        email = (request.form.get("emailusuario") or "").strip().lower()
+        telefone = (request.form.get("telefoneusuario") or "").strip()
+        descricao = (request.form.get("descricaousuario") or "").strip()
 
-        if nome and login and cpf and senha and email and telefone:
-            aluno_existente = AlunoDAO.buscar_por_usuario(cpf)
-            if aluno_existente:
-                return render_template("cadastro.html", erro="Erro: Este CPF já está cadastrado!")
+        if not all([nome, login, datanascimento, cpf, senha.strip(), email, telefone]):
+            return render_template("cadastro.html", erro="Erro: Preencha todos os campos obrigatórios!")
 
-            novo_aluno = Aluno(nome=nome, login=login,datanascimento=datanascimento,cpf=cpf, email=email, telefone=telefone, senha=senha, descricao=descricao)
+        if Aluno.query.filter_by(cpf=cpf).first():
+            return render_template("cadastro.html", erro="Erro: Este CPF já está cadastrado!")
 
+        if Aluno.query.filter_by(login=login).first():
+            return render_template("cadastro.html", erro="Erro: Este usuário já está cadastrado!")
+
+        if Aluno.query.filter_by(email=email).first():
+            return render_template("cadastro.html", erro="Erro: Este e-mail já está cadastrado!")
+
+        novo_aluno = Aluno(nome=nome, login=login, datanascimento=datanascimento, cpf=cpf, email=email, telefone=telefone, senha=senha, descricao=descricao)
+
+        try:
             AlunoDAO.salvar(novo_aluno)
-            return redirect('/login')
+        except IntegrityError:
+            db.session.rollback()
+            return render_template("cadastro.html", erro="Erro: Não foi possível cadastrar. Verifique se os dados já estão em uso.")
 
-        return render_template("cadastro.html", erro="Erro: Todos os campos são obrigatórios!")
+        return redirect('/login')
 
     return render_template("cadastro.html")
 
@@ -95,5 +106,4 @@ def recuperar_senha():
             return render_template("recuperar.html", erro="CPF ou E-mail incorretos!")
 
     return render_template("recuperar.html")
-
 
