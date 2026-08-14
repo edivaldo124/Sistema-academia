@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Tela Inicial - Academia</title>
     <link rel="stylesheet" href="../static/css/index.css">
+    <link rel="stylesheet" href="../static/css/moldaljs.css">
 </head>
 <body>
 
@@ -11,10 +12,30 @@
         <img width="150px" height="80px" src="../static/imagens/logo.png">
 
         <div class="botoes-container">
-            <a href="/login" class="btn btn-login">Entrar</a>
+            <a href="/login" class="btn btn-login" onclick="abrirmodal(); return false;">Entrar</a>
             <a href="/cadastrar" class="btn btn-cadastro">Cadastrar</a>
         </div>
     </div>
 
+    <div id="meuModal" class="modal">
+        <div class="modal-conteudo">
+            <button type="button" class="fechar-modal" onclick="fechar()" aria-label="Fechar">
+                &times;
+            </button>
+
+            <form action="/login" method="post">
+                <h2>PAGINA DE LOGIN</h2>
+                <label>Usuario:</label><br>
+                <input type="text" id="inputnome" name="loginusuario"><br>
+                <label>Senha:</label><br>
+                <input type="password" name="senhausuario"><br>
+                <button type="submit">ENTRAR</button>
+            </form>
+            <a href="/recuperar_senha" class="recuperar">RECUPERAR SENHA</a><br>
+            <a href="/cadastrar" class="meulink">Não tem conta? Cadastre-se</a>
+        </div>
+    </div>
+
+    <script src="../static/js/index.js"></script>
 </body>
 </html>
