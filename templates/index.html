@@ -27,8 +27,12 @@
                 <label>Usuario:</label>
                 <input type="text" id="inputnome" name="loginusuario">
                 <label>Senha:</label>
-                <input type="password" name="senhausuario">
-                <button type="submit">ENTRAR</button>
+
+                <div class="campo-senha">
+                    <input type="password" id="senhausuario" name="senhausuario">
+
+                     <button type="button" id="iconeSenha"  class="icone-senha" onclick="mostrarSenha()">👁️</button>
+                </div>
             </form>
             <a href="/recuperar_senha" class="recuperar">RECUPERAR SENHA</a><br>
             <a href="/cadastrar" class="meulink">Não tem conta? Cadastre-se</a>
