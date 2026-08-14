@@ -40,6 +40,15 @@
     box-shadow: 0 12px 25px rgba(64, 158, 255, 0.15);
 }
 
+.card-plano.plano-atual {
+    border-color: #28a745;
+    box-shadow: 0 8px 20px rgba(40, 167, 69, 0.12);
+}
+
+.card-plano.plano-atual:hover {
+    transform: none;
+}
+
 /* Nome do Plano */
 .card-plano h3 {
     color: #2c3e50;
@@ -86,6 +95,12 @@
 
 .btn-escolher:active {
     transform: scale(0.97); /* Dá um pequeno efeito de clique a afundar */
+}
+
+.btn-escolher:disabled {
+    background-color: #8a9590;
+    cursor: not-allowed;
+    transform: none;
 }
 
 /* Responsividade: ajusta para telemóveis caso a janela fique pequena */

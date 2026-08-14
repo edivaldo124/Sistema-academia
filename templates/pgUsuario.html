@@ -2,10 +2,11 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil do Aluno</title>
     <link rel="stylesheet" href="/static/css/pgUsuario.css">
-
     <link rel="stylesheet" href="/static/css/planos.css">
+    <script src="/static/js/pgUsuario.js" defer></script>
 </head>
 <body>
     <div class="formulario">
@@ -32,14 +33,14 @@
         <div class="secao-planos">
             <h3>Escolha ou Altere o seu Plano:</h3>
 
-            <div class="grid-planos">
+            <div class="grid-planos" data-plano-atual="{{ usuario.plano_id or '' }}">
                 {% for plano in planos %}
-                <div class="card-plano">
+                <div class="card-plano" data-plano-id="{{ plano.id }}">
                     <h3>{{ plano.nome_plano }}</h3>
-                    <p class="preco">R$ {{ plano.preco_plano }}</p>
+                    <p class="preco" data-preco="{{ plano.preco_plano }}">R$ {{ plano.preco_plano }}</p>
                     <p class="duracao">Válido por {{ plano.duracao_dias }} dias</p>
 
-                    <form action="/perfil" method="POST">
+                    <form action="/perfil" method="POST" class="form-contratar-plano" data-plano-nome="{{ plano.nome_plano }}">
                         <input type="hidden" name="plano" value="{{ plano.id }}">
                         <button type="submit" class="btn-escolher">Contratar</button>
                     </form>
@@ -53,7 +54,7 @@
         <br>
         <div class="links-rodape">
             <a href="/" class="meulink">Voltar ao Início</a>
-            <a href="/logout" class="meulink">Sair</a>
+            <a href="/logout" class="meulink" id="link-sair">Sair</a>
         </div>
     </div>
 </body>

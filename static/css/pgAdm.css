@@ -92,6 +92,12 @@ h2 {
     transform: translateY(-1px);
 }
 
+.form-plano .btn-cadastrar:disabled {
+    background-color: #9bbbd8;
+    cursor: wait;
+    transform: none;
+}
+
 /* Lista Visual de Planos Atuais */
 .secao h4 {
     color: #606266;
@@ -125,6 +131,47 @@ h2 {
     overflow-x: auto;
     border-radius: 8px;
     border: 1px solid #ebeef5;
+}
+
+.ferramentas-alunos {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.ferramentas-alunos label {
+    color: #606266;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.ferramentas-alunos input {
+    width: 100%;
+    max-width: 320px;
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid #dcdfe6;
+    border-radius: 8px;
+    font: inherit;
+}
+
+.ferramentas-alunos input:focus {
+    border-color: #409eff;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(64, 158, 255, 0.15);
+}
+
+#contador-alunos {
+    margin-left: auto;
+    color: #6c757d;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+#sem-resultados td {
+    color: #6c757d !important;
+    text-align: center;
 }
 
 table {
@@ -222,4 +269,19 @@ tbody tr:hover td {
 .link-logout:hover {
     background-color: #f56c6c;
     color: white;
+}
+
+@media (max-width: 600px) {
+    .ferramentas-alunos {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .ferramentas-alunos input {
+        max-width: none;
+    }
+
+    #contador-alunos {
+        margin-left: 0;
+    }
 }

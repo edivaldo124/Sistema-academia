@@ -7,12 +7,11 @@
     <link rel="stylesheet" href="../static/css/moldaljs.css">
 </head>
 <body>
-
     <div class="conteudo">
         <img width="150px" height="80px" src="../static/imagens/logo.png">
 
         <div class="botoes-container">
-            <a href="/login" class="btn btn-login" onclick="abrirmodal(); return false;">Entrar</a>
+            <button type="button" class="btn btn-login" onclick="abrirmodal()">Entrar</button>
             <a href="/cadastrar" class="btn btn-cadastro">Cadastrar</a>
         </div>
     </div>
@@ -25,10 +24,10 @@
 
             <form action="/login" method="post">
                 <h2>PAGINA DE LOGIN</h2>
-                <label>Usuario:</label><br>
-                <input type="text" id="inputnome" name="loginusuario"><br>
-                <label>Senha:</label><br>
-                <input type="password" name="senhausuario"><br>
+                <label>Usuario:</label>
+                <input type="text" id="inputnome" name="loginusuario">
+                <label>Senha:</label>
+                <input type="password" name="senhausuario">
                 <button type="submit">ENTRAR</button>
             </form>
             <a href="/recuperar_senha" class="recuperar">RECUPERAR SENHA</a><br>
