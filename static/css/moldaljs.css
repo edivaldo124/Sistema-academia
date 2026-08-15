@@ -106,19 +106,48 @@
     position: absolute;
     top: 5px;
     right: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 32px;
     height: 28px;
     margin: 0;
     padding: 0;
     border: none;
+    border-radius: 50%;
     background: transparent;
     box-shadow: none;
-    font-size: 17px;
+    color: #66706d;
     cursor: pointer;
+    transition: color 0.2s ease, background-color 0.2s ease;
 }
 
 .modal-conteudo form .icone-senha:hover {
-    background: transparent;
+    background-color: #edf4f0;
+    color: #1b4d3e;
+}
+
+.modal-conteudo form .icone-senha:focus-visible {
+    outline: 2px solid #2e7d32;
+    outline-offset: 1px;
+}
+
+.icone-senha svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.icone-risco {
+    display: none;
+}
+
+.icone-senha.senha-visivel .icone-risco {
+    display: inline;
 }
 
 .modal-conteudo .recuperar,

@@ -10,6 +10,13 @@
 <body>
     <div class="container-admin">
         <h2>PAINEL DO ADMINISTRADOR</h2>
+
+        {% with mensagens = get_flashed_messages(with_categories=true) %}
+            {% for categoria, mensagem in mensagens %}
+                <div class="msg msg-{{ categoria }}" role="status">{{ mensagem }}</div>
+            {% endfor %}
+        {% endwith %}
+
         <br>
 
         <div class="secao">

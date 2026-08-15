@@ -140,6 +140,19 @@ body {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
     animation: sumir 4s forwards;
 }
+
+.msg-sucesso {
+    background-color: #d1e7dd;
+    color: #0f5132;
+    border-color: #badbcc;
+}
+
+.msg-aviso {
+    background-color: #fff3cd;
+    color: #664d03;
+    border-color: #ffecb5;
+}
+
 @keyframes sumir {
     0% { opacity: 1; }      /* Começa visível */
     75% { opacity: 1; }     /* Fica visível até aos 3 segundos (75% de 4s) */

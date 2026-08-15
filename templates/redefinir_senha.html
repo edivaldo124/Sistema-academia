@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redefinir Senha</title>
+    <link rel="stylesheet" href="/static/css/recuperar.css">
+</head>
+<body>
+    <div class="conteudo">
+        <form method="post">
+            <p>REDEFINIR SENHA</p>
+
+            {% if erro %}
+                <div class="msg">{{ erro }}</div>
+            {% endif %}
+
+            <label for="nova_senha">Nova senha:</label>
+            <input
+                type="password"
+                id="nova_senha"
+                name="nova_senha"
+                minlength="8"
+                maxlength="255"
+                autocomplete="new-password"
+                required
+            >
+
+            <label for="confirmar_senha">Confirme a nova senha:</label>
+            <input
+                type="password"
+                id="confirmar_senha"
+                name="confirmar_senha"
+                minlength="8"
+                maxlength="255"
+                autocomplete="new-password"
+                required
+            >
+
+            <button type="submit">SALVAR NOVA SENHA</button>
+            <a href="/login" class="link-voltar">Voltar ao Login</a>
+        </form>
+    </div>
+</body>
+</html>

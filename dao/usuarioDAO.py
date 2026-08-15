@@ -14,17 +14,25 @@ class AlunoDAO:
         return Aluno.query.all()
 
     @staticmethod
-    @staticmethod
     def autenticar(usuario, senha):
-        # Agora exigimos obrigatoriamente que a senha bata com o usuário, email, login ou cpf.
-        return Aluno.query.filter(
+        aluno = Aluno.query.filter(
             (
                     (Aluno.nome == usuario) |
                     (Aluno.login == usuario) |
                     (Aluno.email == usuario) |
                     (Aluno.cpf == usuario)
-            ) & (Aluno.senha == senha)
+            )
         ).first()
+
+        if not aluno or not aluno.verificar_senha(senha):
+            return None
+
+        # Protege automaticamente a senha dos cadastros antigos após o primeiro login.
+        if not aluno.senha_esta_protegida():
+            aluno.definir_senha(senha)
+            db.session.commit()
+
+        return aluno
 
     @staticmethod
     def buscar_por_usuario(usuario):

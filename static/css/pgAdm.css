@@ -285,3 +285,24 @@ tbody tr:hover td {
         margin-left: 0;
     }
 }
+
+.msg {
+    margin: 12px 0;
+    padding: 10px 12px;
+    border: 1px solid #f5c2c7;
+    border-radius: 6px;
+    background-color: #f8d7da;
+    color: #842029;
+}
+
+.msg-sucesso {
+    border-color: #badbcc;
+    background-color: #d1e7dd;
+    color: #0f5132;
+}
+
+.msg-aviso {
+    border-color: #ffecb5;
+    background-color: #fff3cd;
+    color: #664d03;
+}

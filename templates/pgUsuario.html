@@ -12,6 +12,12 @@
     <div class="formulario">
         <h2>PERFIL DO ALUNO</h2>
 
+        {% with mensagens = get_flashed_messages(with_categories=true) %}
+            {% for categoria, mensagem in mensagens %}
+                <div class="msg msg-{{ categoria }}" role="status">{{ mensagem }}</div>
+            {% endfor %}
+        {% endwith %}
+
         <div class="dados-aluno">
             <p><strong>Nome:</strong> {{ usuario.nome }}</p>
             <p><strong>Gmail:</strong> {{ usuario.email }}</p>
@@ -21,12 +27,28 @@
 
             <p><strong>Plano Atual:</strong> {% if usuario.plano %}{{ usuario.plano.nome_plano }}{% else %}Sem plano ativo{% endif %}</p>
 
-            <p><strong>Status:</strong> {{ usuario.mensalidade }}</p>
 
+            <p>
+                <strong>Status:</strong>
+                <span id="statusMensalidade" class="status-mensalidade">
+                {{ usuario.mensalidade }}
+                </span>
+            </p>
             {% if usuario.data_vencimento %}
-                <p><strong>Vencimento:</strong> {{ usuario.data_vencimento }}</p>
+                <p>
+                    <strong>Vencimento:</strong>
+
+                    <span
+                        id="dataVencimento"
+                        data-vencimento="{{ usuario.data_vencimento }}"
+                    >
+                        {{ usuario.data_vencimento }}
+                    </span>
+                </p>
+
+                <p id="contagemVencimento" class="contagem-vencimento"></p>
             {% endif %}
-        </div>
+           </div>
 
         <hr>
 
