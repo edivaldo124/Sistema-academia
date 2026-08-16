@@ -3,6 +3,7 @@ from modelos.plano import Plano
 from modelos.usuario import Aluno
 from datetime import date, timedelta
 from sqlalchemy.exc import SQLAlchemyError
+from servicos.formatacao import variantes_cpf
 
 class AlunoDAO:
     @staticmethod
@@ -18,12 +19,13 @@ class AlunoDAO:
     @staticmethod
     def autenticar(usuario, senha):
         # Agora exigimos obrigatoriamente que a senha bata com o usuário, email, login ou cpf.
+        cpfs_possiveis = variantes_cpf(usuario)
         return Aluno.query.filter(
             (
                     (Aluno.nome == usuario) |
                     (Aluno.login == usuario) |
                     (Aluno.email == usuario) |
-                    (Aluno.cpf == usuario)
+                    (Aluno.cpf.in_(cpfs_possiveis))
             ) & (Aluno.senha == senha)
         ).first()
 

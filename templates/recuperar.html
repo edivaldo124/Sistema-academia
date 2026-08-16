@@ -7,11 +7,11 @@
     <section class="recovery-panel"><div class="recovery-form"><a class="back-link" href="/login">← Voltar ao login</a><p class="eyebrow">Redefinir acesso</p><h2 class="page-title">Nova senha</h2><p class="page-subtitle">Use o CPF e e-mail vinculados à sua conta.</p>
         {% if erro %}<div class="msg" role="alert">{{ erro }}</div>{% endif %}
         <form action="/recuperar_senha" method="post">
-            <div class="field"><label for="cpf">CPF</label><input id="cpf" type="text" name="cpf" inputmode="numeric" autocomplete="off" required></div>
+            <div class="field"><label for="cpf">CPF</label><input id="cpf" type="text" name="cpf" maxlength="14" inputmode="numeric" autocomplete="off" placeholder="000.000.000-00" data-mask="cpf" required></div>
             <div class="field"><label for="email">E-mail cadastrado</label><input id="email" type="email" name="email" autocomplete="email" required></div>
             <div class="field"><label for="nova_senha">Nova senha</label><input id="nova_senha" type="password" name="nova_senha" autocomplete="new-password" required></div>
             <button class="button-primary" type="submit">Alterar minha senha →</button>
         </form>
     </div></section>
 </main>
-</body></html>
+<script src="{{ url_for('static', filename='js/masks.js') }}"></script></body></html>

@@ -1,7 +1,6 @@
 import hmac
 import secrets
 from datetime import date
-from decimal import Decimal, InvalidOperation
 
 from flask import Blueprint, abort, flash, redirect, render_template, request, session
 from config import db
@@ -10,6 +9,7 @@ from dao.usuarioDAO import AlunoDAO
 from dao.planoDAO import PlanoDAO
 from dao.financeiroDAO import PagamentoDAO
 from modelos.pagamento import Pagamento
+from servicos.formatacao import formatar_telefone
 
 admin_bp = Blueprint('admin_blueprint', __name__)
 
@@ -115,7 +115,7 @@ def detalhes_usuario(cpf):
             'login': request.form.get("login"),
             'datanascimento': request.form.get("datanascimento"),
             'email': request.form.get("email"),
-            'telefone': request.form.get("telefone"),
+            'telefone': formatar_telefone(request.form.get("telefone")),
             'mensalidade': request.form.get("mensalidade"),
             'plano_id': request.form.get("plano_id"),
             'descricao': request.form.get('descricao')
@@ -139,47 +139,27 @@ def cadastrar_pagamento(cpf):
     aluno = AlunoDAO.buscar_por_usuario(cpf)
     plano = PlanoDAO.buscar_por_id(request.form.get('plano_id'))
 
-    try:
-        valor = Decimal((request.form.get('valor') or '').replace(',', '.'))
-        vencimento = date.fromisoformat(request.form.get('vencimento') or '')
-    except (InvalidOperation, ValueError):
-        flash('Valor ou vencimento inválido.', 'erro')
-        return redirect(f'/admin/usuario/{cpf}')
+    valor = request.form.get('valor')
+    vencimento = request.form.get('vencimento')
+    status = request.form.get('status')
+    forma_pagamento = request.form.get('forma_pagamento')
+    data_pagamento = request.form.get('data_pagamento')
 
-    status = request.form.get('status', 'pendente')
-    forma_pagamento = request.form.get('forma_pagamento') or None
-    data_pagamento_texto = request.form.get('data_pagamento') or None
+    if aluno and plano and valor and vencimento:
+        novo_pagamento = Pagamento(
+            aluno_id=aluno.id,
+            plano_id=plano.id,
+            valor=float(valor),
+            vencimento=date.fromisoformat(vencimento),
+            status=status,
+            forma_pagamento=forma_pagamento if forma_pagamento else None,
+            data_pagamento=date.fromisoformat(data_pagamento) if data_pagamento else None
+        )
 
-    if not aluno or not plano or valor <= 0 or status not in PagamentoDAO.STATUS_VALIDOS:
-        flash('Não foi possível cadastrar a mensalidade. Verifique os dados.', 'erro')
-        return redirect(f'/admin/usuario/{cpf}')
+        PagamentoDAO.salvar(novo_pagamento)
+        aluno.mensalidade = 'Em Dia' if status == 'pago' else status.capitalize()
+        db.session.commit()
 
-    try:
-        data_pagamento = date.fromisoformat(data_pagamento_texto) if data_pagamento_texto else None
-    except ValueError:
-        flash('Data de pagamento inválida.', 'erro')
-        return redirect(f'/admin/usuario/{cpf}')
-
-    if status == 'pago' and not forma_pagamento:
-        flash('Informe a forma de pagamento para uma mensalidade paga.', 'erro')
-        return redirect(f'/admin/usuario/{cpf}')
-    if forma_pagamento and forma_pagamento not in PagamentoDAO.FORMAS_VALIDAS:
-        flash('Forma de pagamento inválida.', 'erro')
-        return redirect(f'/admin/usuario/{cpf}')
-
-    pagamento = Pagamento(
-        aluno_id=aluno.id,
-        plano_id=plano.id,
-        valor=valor,
-        vencimento=vencimento,
-        status=status,
-        forma_pagamento=forma_pagamento if status == 'pago' else None,
-        data_pagamento=(data_pagamento or date.today()) if status == 'pago' else None,
-    )
-    PagamentoDAO.salvar(pagamento)
-    aluno.mensalidade = 'Em Dia' if status == 'pago' else status.capitalize()
-    db.session.commit()
-    flash('Mensalidade cadastrada com sucesso.', 'sucesso')
     return redirect(f'/admin/usuario/{cpf}')
 
 
@@ -193,20 +173,11 @@ def atualizar_status_pagamento(pagamento_id):
         flash('Pagamento não encontrado.', 'erro')
         return redirect('/admin')
 
-    status = request.form.get('status', '')
-    forma_pagamento = request.form.get('forma_pagamento') or None
-    if status == 'pago' and not forma_pagamento:
-        flash('Informe a forma de pagamento.', 'erro')
-        return redirect(f'/admin/usuario/{pagamento.aluno.cpf}')
-    if forma_pagamento and forma_pagamento not in PagamentoDAO.FORMAS_VALIDAS:
-        flash('Forma de pagamento inválida.', 'erro')
-        return redirect(f'/admin/usuario/{pagamento.aluno.cpf}')
+    status = request.form.get('status')
+    forma_pagamento = request.form.get('forma_pagamento')
 
-    if not PagamentoDAO.atualizar_status(pagamento, status, forma_pagamento):
-        flash('Status inválido.', 'erro')
-    else:
-        pagamento.aluno.mensalidade = 'Em Dia' if status == 'pago' else status.capitalize()
-        db.session.commit()
-        flash('Status do pagamento atualizado.', 'sucesso')
+    PagamentoDAO.atualizar_status(pagamento_id, status, forma_pagamento)
+    pagamento.aluno.mensalidade = 'Em Dia' if status == 'pago' else status.capitalize()
+    db.session.commit()
 
     return redirect(f'/admin/usuario/{pagamento.aluno.cpf}')

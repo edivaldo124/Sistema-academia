@@ -15,8 +15,8 @@
                 <div class="field"><label for="loginusuario">Nome de usuário</label><input id="loginusuario" type="text" name="loginusuario" maxlength="50" autocomplete="username" required></div>
                 <div class="field"><label for="dataNascimento">Data de nascimento</label><input id="dataNascimento" type="date" name="dataNascimento" required></div>
                 <div class="field"><label for="emailusuario">E-mail</label><input id="emailusuario" type="email" name="emailusuario" maxlength="150" autocomplete="email" required></div>
-                <div class="field"><label for="telefoneusuario">Telefone</label><input id="telefoneusuario" type="tel" name="telefoneusuario" maxlength="20" autocomplete="tel" required></div>
-                <div class="field"><label for="cpfusuario">CPF</label><input id="cpfusuario" type="text" name="cpfusuario" maxlength="14" inputmode="numeric" required></div>
+                <div class="field"><label for="telefoneusuario">Telefone</label><input id="telefoneusuario" type="tel" name="telefoneusuario" maxlength="15" inputmode="tel" autocomplete="tel" placeholder="(00) 00000-0000" data-mask="phone" required></div>
+                <div class="field"><label for="cpfusuario">CPF</label><input id="cpfusuario" type="text" name="cpfusuario" maxlength="14" inputmode="numeric" autocomplete="off" placeholder="000.000.000-00" data-mask="cpf" required></div>
                 <div class="field"><label for="senhausuario">Senha</label><input id="senhausuario" type="password" name="senhausuario" maxlength="255" autocomplete="new-password" required></div>
                 <div class="field field-wide"><label for="descricaousuario">Observações de saúde <small>Opcional</small></label><textarea id="descricaousuario" name="descricaousuario" maxlength="255" placeholder="Informe restrições, lesões ou condições relevantes"></textarea></div>
             </div>
@@ -24,4 +24,4 @@
         </form>
     </section>
 </main>
-</body></html>
+<script src="{{ url_for('static', filename='js/masks.js') }}"></script></body></html>

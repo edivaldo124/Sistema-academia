@@ -5,6 +5,7 @@ from modelos.usuario import Aluno
 from dao.usuarioDAO import AlunoDAO
 from dao.planoDAO import PlanoDAO
 from dao.financeiroDAO import PagamentoDAO
+from servicos.formatacao import formatar_cpf, formatar_telefone, somente_digitos, variantes_cpf
 
 auth_bp = Blueprint('auth', __name__)
 
@@ -46,16 +47,19 @@ def pagina_cadastro():
         nome = (request.form.get("nomeusuario") or "").strip()
         login = (request.form.get("loginusuario") or "").strip()
         datanascimento = (request.form.get("dataNascimento") or "").strip()
-        cpf = (request.form.get("cpfusuario") or "").strip()
+        cpf = formatar_cpf(request.form.get("cpfusuario"))
         senha = request.form.get("senhausuario") or ""
         email = (request.form.get("emailusuario") or "").strip().lower()
-        telefone = (request.form.get("telefoneusuario") or "").strip()
+        telefone = formatar_telefone(request.form.get("telefoneusuario"))
         descricao = (request.form.get("descricaousuario") or "").strip()
 
         if not all([nome, login, datanascimento, cpf, senha.strip(), email, telefone]):
             return render_template("cadastro.html", erro="Erro: Preencha todos os campos obrigatórios!")
 
-        if Aluno.query.filter_by(cpf=cpf).first():
+        if len(somente_digitos(cpf)) != 11:
+            return render_template("cadastro.html", erro="Erro: Informe um CPF com 11 dígitos!")
+
+        if Aluno.query.filter(Aluno.cpf.in_(variantes_cpf(cpf))).first():
             return render_template("cadastro.html", erro="Erro: Este CPF já está cadastrado!")
 
         if Aluno.query.filter_by(login=login).first():
@@ -102,13 +106,13 @@ def pagina_perfil():
 @auth_bp.route("/recuperar_senha", methods=["GET", "POST"])
 def recuperar_senha():
     if request.method == "POST":
-        cpf = request.form.get("cpf")
-        email = request.form.get("email")
+        cpf = formatar_cpf(request.form.get("cpf"))
+        email = (request.form.get("email") or "").strip().lower()
         nova_senha = request.form.get("nova_senha")
 
         from modelos.usuario import Aluno
         from config import db
-        aluno = Aluno.query.filter_by(cpf=cpf, email=email).first()
+        aluno = Aluno.query.filter(Aluno.cpf.in_(variantes_cpf(cpf)), Aluno.email == email).first()
 
         if aluno:
             aluno.senha = nova_senha

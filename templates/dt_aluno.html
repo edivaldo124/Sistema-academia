@@ -42,7 +42,7 @@
 
             <div class="grupo-input">
                 <label>CPF (Não editável):</label>
-                <input type="text" name="cpf" value="{{ u.cpf }}" readonly class="input-bloqueado">
+                <input type="text" name="cpf" value="{{ u.cpf }}" maxlength="14" data-mask="cpf" readonly class="input-bloqueado">
             </div>
 
             <div class="grupo-input">
@@ -52,7 +52,7 @@
 
             <div class="grupo-input">
                 <label>Telefone:</label>
-                <input type="text" name="telefone" value="{{ u.telefone }}" required>
+                <input type="tel" name="telefone" value="{{ u.telefone }}" maxlength="15" inputmode="tel" placeholder="(00) 00000-0000" data-mask="phone" required>
             </div>
 
             <div class="grupo-input">
@@ -173,6 +173,7 @@
     </div>
     </main>
 
+    <script src="{{ url_for('static', filename='js/masks.js') }}"></script>
     <script>
         const plano = document.getElementById('plano-pagamento');
         const valor = document.getElementById('valor-pagamento');
