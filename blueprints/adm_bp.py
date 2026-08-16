@@ -1,4 +1,5 @@
 from flask import Blueprint, flash, redirect, render_template, request, session, url_for
+from sqlalchemy.exc import IntegrityError
 from config import db
 from modelos.plano import Plano
 from modelos.usuario import Aluno
@@ -105,15 +106,36 @@ def detalhes_usuario(cpf):
         plano_anterior = aluno.plano_id
 
         dados_atualizados = {
-            'nome': request.form.get("nome"),
-            'login': request.form.get("login"),
-            'datanascimento': request.form.get("datanascimento"),
-            'email': request.form.get("email"),
-            'telefone': request.form.get("telefone"),
+            'nome': (request.form.get("nome") or '').strip(),
+            'login': (request.form.get("login") or '').strip(),
+            'datanascimento': (request.form.get("datanascimento") or '').strip(),
+            'email': (request.form.get("email") or '').strip().lower(),
+            'telefone': (request.form.get("telefone") or '').strip(),
             'mensalidade': request.form.get("mensalidade"),
             'plano_id': request.form.get("plano_id"),
-            'descricao': request.form.get('descricao')
+            'descricao': (request.form.get('descricao') or '').strip()
         }
+
+        campos_obrigatorios = ('nome', 'login', 'datanascimento', 'email', 'telefone')
+        if any(not dados_atualizados[campo] for campo in campos_obrigatorios):
+            flash('Preencha todos os campos obrigatórios.', 'erro')
+            return redirect(url_for('admin_blueprint.detalhes_usuario', cpf=cpf))
+
+        login_em_uso = Aluno.query.filter(
+            Aluno.login == dados_atualizados['login'],
+            Aluno.id != aluno.id,
+        ).first()
+        if login_em_uso:
+            flash('Este login já está cadastrado para outro aluno.', 'erro')
+            return redirect(url_for('admin_blueprint.detalhes_usuario', cpf=cpf))
+
+        email_em_uso = Aluno.query.filter(
+            Aluno.email == dados_atualizados['email'],
+            Aluno.id != aluno.id,
+        ).first()
+        if email_em_uso:
+            flash('Este e-mail já está cadastrado para outro aluno.', 'erro')
+            return redirect(url_for('admin_blueprint.detalhes_usuario', cpf=cpf))
 
         if dados_atualizados['mensalidade'] not in STATUS_VALIDOS:
             flash('Status de mensalidade inválido.', 'erro')
@@ -131,7 +153,14 @@ def detalhes_usuario(cpf):
                 flash('Plano inválido.', 'erro')
                 return redirect(url_for('admin_blueprint.detalhes_usuario', cpf=cpf))
 
-        if not AlunoDAO.atualizar_dados_completos(cpf, dados_atualizados):
+        try:
+            atualizado = AlunoDAO.atualizar_dados_completos(cpf, dados_atualizados)
+        except (IntegrityError, TypeError, ValueError, AttributeError):
+            db.session.rollback()
+            flash('Não foi possível atualizar o aluno. Verifique os dados informados.', 'erro')
+            return redirect(url_for('admin_blueprint.detalhes_usuario', cpf=cpf))
+
+        if not atualizado:
             flash('Não foi possível atualizar o aluno.', 'erro')
             return redirect('/admin')
 

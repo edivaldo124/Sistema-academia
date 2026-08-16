@@ -66,6 +66,10 @@ class FluxosEmailTestCase(unittest.TestCase):
         db.session.commit()
         return aluno
 
+    def autenticar_admin(self):
+        with self.cliente.session_transaction() as sessao:
+            sessao['usuario'] = 'admin'
+
     @patch('blueprints.usuario_bp.enviar_boas_vindas', return_value=True)
     def test_cadastro_salva_hash_e_envia_boas_vindas(self, enviar_boas_vindas):
         resposta = self.cliente.post(
@@ -140,14 +144,48 @@ class FluxosEmailTestCase(unittest.TestCase):
     def test_inativacao_envia_aviso_de_status(self, enviar_status):
         aluno = self.criar_aluno()
 
-        with self.cliente.session_transaction() as sessao:
-            sessao['usuario'] = 'admin'
+        self.autenticar_admin()
 
         resposta = self.cliente.get(f'/admin/remover/{aluno.cpf}')
 
         self.assertEqual(resposta.status_code, 302)
         self.assertEqual(aluno.mensalidade, 'Inativo')
         enviar_status.assert_called_once_with(aluno)
+
+    def test_edicao_rejeita_email_que_ja_pertence_a_outro_aluno(self):
+        aluno = self.criar_aluno()
+        outro = Aluno(
+            nome='Outro Aluno',
+            login='outro',
+            datanascimento='1999-01-01',
+            cpf='111.111.111-11',
+            email='outro@example.com',
+            telefone='(11) 11111-1111',
+            senha='senha-segura',
+            descricao='',
+        )
+        db.session.add(outro)
+        db.session.commit()
+        self.autenticar_admin()
+
+        resposta = self.cliente.post(
+            f'/admin/usuario/{aluno.cpf}',
+            data={
+                'nome': aluno.nome,
+                'login': aluno.login,
+                'datanascimento': aluno.datanascimento,
+                'email': outro.email,
+                'telefone': aluno.telefone,
+                'mensalidade': aluno.mensalidade,
+                'plano_id': 'Nenhum',
+                'descricao': aluno.descricao,
+            },
+            follow_redirects=True,
+        )
+
+        self.assertEqual(resposta.status_code, 200)
+        self.assertIn(b'j\xc3\xa1 est\xc3\xa1 cadastrado para outro aluno', resposta.data)
+        self.assertEqual(aluno.email, 'aluno@example.com')
 
 
 if __name__ == '__main__':
