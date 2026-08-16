@@ -1,12 +1,25 @@
 from flask import *
 from config import db
 import os
+from datetime import timedelta
+from dotenv import load_dotenv
+
+load_dotenv()
 
 from blueprints.usuario_bp import auth_bp
 from blueprints.adm_bp import admin_bp
 
 app = Flask(__name__)
-app.secret_key = "chave_secreta_academia"
+app.secret_key = os.environ.get('SECRET_KEY', 'chave_secreta_academia-desenvolvimento')
+
+# Mantem a sessao no cookie, mas limita seu tempo de vida e impede acesso via JS.
+app.config.update(
+    PERMANENT_SESSION_LIFETIME=timedelta(minutes=30),
+    SESSION_COOKIE_HTTPONLY=True,
+    SESSION_COOKIE_SAMESITE='Lax',
+    SESSION_COOKIE_SECURE=os.environ.get('COOKIE_SECURE', 'false').lower() == 'true',
+    SESSION_REFRESH_EACH_REQUEST=True,
+)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
     'DATABASE_URL',
@@ -39,7 +52,7 @@ def pagina_cadastro():
 @app.route("/logout")
 def logout():
     session.clear()
-    return render_template('index.html')
+    return redirect('/')
 
 
 

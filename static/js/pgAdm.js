@@ -45,14 +45,6 @@ if (campoBusca) {
     campoBusca.addEventListener('input', atualizarListaDeAlunos);
 }
 
-document.querySelectorAll('.js-confirmar').forEach(function (link) {
-    link.addEventListener('click', function (evento) {
-        if (!confirm(link.dataset.confirmacao)) {
-            evento.preventDefault();
-        }
-    });
-});
-
 document.querySelectorAll('.preco-plano').forEach(function (preco) {
     const valor = Number(preco.dataset.preco);
 

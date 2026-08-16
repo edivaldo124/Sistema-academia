@@ -2,6 +2,7 @@ from config import db
 from modelos.plano import Plano
 from modelos.usuario import Aluno
 from datetime import date, timedelta
+from sqlalchemy.exc import SQLAlchemyError
 
 class AlunoDAO:
     @staticmethod
@@ -43,13 +44,18 @@ class AlunoDAO:
         return False
 
     @staticmethod
-    def remover(cpf):
-        aluno = Aluno.query.filter_by(cpf=cpf).first()
-        if aluno:
+    def remover(aluno_id):
+        aluno = db.session.get(Aluno, aluno_id)
+        if not aluno:
+            return None
+
+        try:
             db.session.delete(aluno)
             db.session.commit()
             return True
-        return False
+        except SQLAlchemyError:
+            db.session.rollback()
+            return False
 
     @staticmethod
     def atualizar_dados_completos(cpf, dados):

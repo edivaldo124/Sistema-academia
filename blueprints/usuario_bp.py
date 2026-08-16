@@ -4,6 +4,7 @@ from config import db
 from modelos.usuario import Aluno
 from dao.usuarioDAO import AlunoDAO
 from dao.planoDAO import PlanoDAO
+from dao.financeiroDAO import PagamentoDAO
 
 auth_bp = Blueprint('auth', __name__)
 
@@ -13,16 +14,25 @@ MSG_ERRO = 'Erro: Credenciais incorretas!'
 @auth_bp.route("/login", methods=["GET", "POST"])
 def pagina_login():
     if request.method == "POST":
-        login = request.form.get("loginusuario")
-        senha = request.form.get("senhausuario")
+        login = (request.form.get("loginusuario") or "").strip()
+        senha = request.form.get("senhausuario") or ""
 
         if login == "admin" and senha == "admin":
+            # Remove qualquer sessao anterior para evitar fixacao de sessao.
+            session.clear()
             session['usuario'] = "admin"
+            session['tipo_usuario'] = "admin"
+            session.permanent = True
             return redirect('/admin')
 
         aluno = AlunoDAO.autenticar(login, senha)
         if aluno:
-            session['usuario'] = login
+            session.clear()
+            # O ID nao muda se o aluno editar o login, email ou nome.
+            session['usuario'] = aluno.login
+            session['aluno_id'] = aluno.id
+            session['tipo_usuario'] = "aluno"
+            session.permanent = True
             return redirect('/perfil')
 
         return render_template('login.html', msg=MSG_ERRO)
@@ -69,12 +79,13 @@ def pagina_cadastro():
 
 @auth_bp.route("/perfil", methods=["GET", "POST"])
 def pagina_perfil():
-    if 'usuario' not in session:
+    if session.get('tipo_usuario') != 'aluno' or not session.get('aluno_id'):
         return redirect('/login')
 
-    aluno_dados = AlunoDAO.buscar_por_usuario(session['usuario'])
+    aluno_dados = db.session.get(Aluno, session['aluno_id'])
 
     if not aluno_dados:
+        session.clear()
         return redirect('/logout')
 
     if request.method == "POST":
@@ -84,8 +95,9 @@ def pagina_perfil():
             db.session.commit()
 
     lista_planos = PlanoDAO.listar_todos()
+    pagamentos = PagamentoDAO.listar_por_aluno(aluno_dados.id)
 
-    return render_template("pgUsuario.html", usuario=aluno_dados, planos=lista_planos)
+    return render_template("pgUsuario.html", usuario=aluno_dados, planos=lista_planos, pagamentos=pagamentos)
 
 @auth_bp.route("/recuperar_senha", methods=["GET", "POST"])
 def recuperar_senha():
@@ -106,4 +118,3 @@ def recuperar_senha():
             return render_template("recuperar.html", erro="CPF ou E-mail incorretos!")
 
     return render_template("recuperar.html")
-

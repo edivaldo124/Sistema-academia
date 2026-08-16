@@ -1,61 +1,19 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil do Aluno</title>
-    <link rel="stylesheet" href="/static/css/pgUsuario.css">
-    <link rel="stylesheet" href="/static/css/planos.css">
-    <script src="/static/js/pgUsuario.js" defer></script>
-</head>
-<body>
-    <div class="formulario">
-        <h2>PERFIL DO ALUNO</h2>
-
-        <div class="dados-aluno">
-            <p><strong>Nome:</strong> {{ usuario.nome }}</p>
-            <p><strong>Gmail:</strong> {{ usuario.email }}</p>
-            <p><strong>Descrição:</strong> {{ usuario.descricao }}</p>
-
-
-
-            <p><strong>Plano Atual:</strong> {% if usuario.plano %}{{ usuario.plano.nome_plano }}{% else %}Sem plano ativo{% endif %}</p>
-
-            <p><strong>Status:</strong> {{ usuario.mensalidade }}</p>
-
-            {% if usuario.data_vencimento %}
-                <p><strong>Vencimento:</strong> {{ usuario.data_vencimento }}</p>
-            {% endif %}
-        </div>
-
-        <hr>
-
-        <div class="secao-planos">
-            <h3>Escolha ou Altere o seu Plano:</h3>
-
-            <div class="grid-planos" data-plano-atual="{{ usuario.plano_id or '' }}">
-                {% for plano in planos %}
-                <div class="card-plano" data-plano-id="{{ plano.id }}">
-                    <h3>{{ plano.nome_plano }}</h3>
-                    <p class="preco" data-preco="{{ plano.preco_plano }}">R$ {{ plano.preco_plano }}</p>
-                    <p class="duracao">Válido por {{ plano.duracao_dias }} dias</p>
-
-                    <form action="/perfil" method="POST" class="form-contratar-plano" data-plano-nome="{{ plano.nome_plano }}">
-                        <input type="hidden" name="plano" value="{{ plano.id }}">
-                        <button type="submit" class="btn-escolher">Contratar</button>
-                    </form>
-                </div>
-                {% else %}
-                    <p>Nenhum plano cadastrado pela academia ainda.</p>
-                {% endfor %}
-            </div>
-        </div>
-
-        <br>
-        <div class="links-rodape">
-            <a href="/" class="meulink">Voltar ao Início</a>
-            <a href="/logout" class="meulink" id="link-sair">Sair</a>
-        </div>
-    </div>
-</body>
-</html>
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Minha área | Academia do Bitelo</title><link rel="stylesheet" href="{{ url_for('static',filename='css/theme.css') }}"><link rel="stylesheet" href="{{ url_for('static',filename='css/pgUsuario.css') }}"><link rel="stylesheet" href="{{ url_for('static',filename='css/planos.css') }}"><script src="{{ url_for('static',filename='js/pgUsuario.js') }}" defer></script></head>
+<body><a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+<header class="app-header"><a class="site-brand" href="/"><img src="{{ url_for('static',filename='imagens/logo.png') }}" alt=""><span>Academia<br><strong>do Bitelo</strong></span></a><nav><a href="#mensalidades">Mensalidades</a><a href="#planos">Planos</a><a href="/logout" id="link-sair" data-confirm-modal data-modal-eyebrow="Encerrar sessão" data-modal-title="Deseja sair?" data-modal-message="Sua sessão será encerrada e você voltará para a página inicial." data-modal-confirm="Sim, sair">Sair</a></nav></header>
+<main id="conteudo" class="profile-page">
+<section class="profile-hero"><div><p class="eyebrow">Área do aluno</p><h1>Olá, {{ usuario.nome.split()[0] }}.</h1><p>Seu espaço para acompanhar plano, pagamentos e evolução.</p></div><div class="profile-mark" aria-hidden="true">{{ usuario.nome[0]|upper }}</div></section>
+<section class="summary-grid" aria-label="Resumo da conta">
+<article><span>Status financeiro</span><strong class="financial-status">{{ usuario.mensalidade }}</strong></article>
+<article><span>Plano atual</span><strong>{% if usuario.plano %}{{ usuario.plano.nome_plano }}{% else %}Sem plano{% endif %}</strong></article>
+<article><span>Contato</span><strong>{{ usuario.email }}</strong></article>
+{% if usuario.data_vencimento %}<article><span>Próximo vencimento</span><strong>{{ usuario.data_vencimento }}</strong></article>{% endif %}
+</section>
+{% if usuario.descricao %}<section class="profile-note"><span>Observações</span><p>{{ usuario.descricao }}</p></section>{% endif %}
+<section class="content-section" id="mensalidades"><div class="section-heading"><div><p class="eyebrow">Financeiro</p><h2>Histórico de mensalidades</h2></div><p>Consulte seus pagamentos e vencimentos.</p></div>
+<div class="tabela-pagamentos"><table><thead><tr><th>Plano</th><th>Valor</th><th>Vencimento</th><th>Pagamento</th><th>Status</th><th>Forma</th></tr></thead><tbody>
+{% for pagamento in pagamentos %}<tr><td><strong>{{ pagamento.plano.nome_plano }}</strong></td><td>R$ {{ '%.2f'|format(pagamento.valor)|replace('.',',') }}</td><td>{{ pagamento.vencimento.strftime('%d/%m/%Y') }}</td><td>{{ pagamento.data_pagamento.strftime('%d/%m/%Y') if pagamento.data_pagamento else '—' }}</td><td><span class="status status-{{ pagamento.status }}">{{ pagamento.status }}</span></td><td>{{ (pagamento.forma_pagamento or '—')|replace('_',' ')|title }}</td></tr>{% else %}<tr><td colspan="6" class="empty-state">Nenhuma mensalidade registrada.</td></tr>{% endfor %}
+</tbody></table></div></section>
+<section class="content-section secao-planos" id="planos"><div class="section-heading"><div><p class="eyebrow">Escolha seu ritmo</p><h2>Planos disponíveis</h2></div><p>Você pode alterar seu plano quando precisar.</p></div>
+<div class="grid-planos" data-plano-atual="{{ usuario.plano_id or '' }}">{% for plano in planos %}<article class="card-plano" data-plano-id="{{ plano.id }}"><span class="plan-index">0{{ loop.index }}</span><h3>{{ plano.nome_plano }}</h3><p class="preco" data-preco="{{ plano.preco_plano }}">R$ {{ plano.preco_plano }}</p><p class="duracao">{{ plano.duracao_dias }} dias de acesso</p><form action="/perfil" method="POST" class="form-contratar-plano" data-plano-nome="{{ plano.nome_plano }}" data-confirm-modal data-modal-eyebrow="Alterar plano" data-modal-title="Escolher {{ plano.nome_plano }}?" data-modal-message="Este plano passará a ser associado ao seu perfil. Confirme para continuar." data-modal-confirm="Confirmar plano" data-loading-text="Processando…"><input type="hidden" name="plano" value="{{ plano.id }}"><button type="submit" class="btn-escolher">Escolher plano</button></form></article>{% else %}<p class="empty-state">Nenhum plano disponível no momento.</p>{% endfor %}</div></section>
+</main><footer class="app-footer"><span>© 2026 Academia do Bitelo</span><a href="/">Voltar ao início</a></footer>{% include 'components/confirm_modal.html' %}<link rel="stylesheet" href="{{ url_for('static',filename='css/modal.css') }}"><script src="{{ url_for('static',filename='js/modal.js') }}"></script></body></html>
