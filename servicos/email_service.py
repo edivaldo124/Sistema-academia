@@ -6,11 +6,24 @@ from email.utils import formataddr
 from flask import current_app
 
 
+VALORES_DE_EXEMPLO = {
+    'senha_de_aplicativo_sem_espacos',
+}
+
+
+def _senha_email():
+    """Normaliza senhas de aplicativo que foram copiadas com espaços."""
+    return (current_app.config.get('MAIL_PASSWORD') or '').replace(' ', '')
+
+
 def email_configurado():
     """Informa se há dados suficientes para tentar um envio."""
     remetente = current_app.config.get('MAIL_DEFAULT_SENDER')
     usuario = current_app.config.get('MAIL_USERNAME')
-    senha = current_app.config.get('MAIL_PASSWORD')
+    senha = _senha_email()
+
+    if senha.lower() in VALORES_DE_EXEMPLO:
+        return False
 
     autenticacao_completa = bool(usuario and senha)
     sem_autenticacao = not usuario and not senha
@@ -31,7 +44,7 @@ def enviar_email(destinatario, assunto, mensagem, mensagem_html=None):
     porta = current_app.config['MAIL_PORT']
     usar_tls = current_app.config['MAIL_USE_TLS']
     usuario = current_app.config.get('MAIL_USERNAME')
-    senha = current_app.config.get('MAIL_PASSWORD', '').replace(' ', '')
+    senha = _senha_email()
     remetente = current_app.config['MAIL_DEFAULT_SENDER']
     nome_remetente = current_app.config.get('MAIL_SENDER_NAME', 'Academia')
     tempo_limite = current_app.config.get('MAIL_TIMEOUT', 10)

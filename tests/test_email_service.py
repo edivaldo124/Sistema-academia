@@ -58,6 +58,16 @@ class EmailServiceTestCase(unittest.TestCase):
         smtp_mock.assert_not_called()
 
     @patch('servicos.email_service.smtplib.SMTP')
+    def test_nao_abre_conexao_com_senha_de_exemplo(self, smtp_mock):
+        self.app.config['MAIL_PASSWORD'] = 'senha_de_aplicativo_sem_espacos'
+
+        with self.app.app_context():
+            resultado = enviar_email('aluno@example.com', 'Teste', 'Mensagem')
+
+        self.assertFalse(resultado)
+        smtp_mock.assert_not_called()
+
+    @patch('servicos.email_service.smtplib.SMTP')
     def test_falha_de_autenticacao_nao_interrompe_aplicacao(self, smtp_mock):
         conexao = smtp_mock.return_value.__enter__.return_value
         conexao.login.side_effect = smtplib.SMTPAuthenticationError(535, b'erro')

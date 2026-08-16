@@ -17,3 +17,19 @@ flask --app servidor testar-email destinatario@example.com
 
 Em produção, configure também `SECRET_KEY` com um valor longo e aleatório e
 `APP_BASE_URL` com o endereço público HTTPS da aplicação.
+
+### Configuração no Render
+
+O Render não lê o arquivo `.env` do seu computador. No serviço publicado, abra
+**Environment** e cadastre individualmente as variáveis `MAIL_SERVER`,
+`MAIL_PORT`, `MAIL_USE_TLS`, `MAIL_USERNAME`, `MAIL_PASSWORD`,
+`MAIL_DEFAULT_SENDER` e `MAIL_SENDER_NAME` descritas no `.env.example`.
+
+Para Gmail, `MAIL_PASSWORD` deve ser uma senha de app gerada pela conta Google,
+sem aspas. O texto `senha_de_aplicativo_sem_espacos` é apenas um exemplo e é
+rejeitado pela aplicação. Depois de salvar as variáveis, faça um novo deploy e
+teste no Shell do Render com:
+
+```bash
+flask --app servidor testar-email seu_email@gmail.com
+```
