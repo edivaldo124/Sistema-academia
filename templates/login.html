@@ -11,11 +11,6 @@
     {{msg}}
     </div>
 {%endif%}
-{% with mensagens = get_flashed_messages(with_categories=true) %}
-    {% for categoria, mensagem in mensagens %}
-        <div class="msg msg-{{ categoria }}" role="status">{{ mensagem }}</div>
-    {% endfor %}
-{% endwith %}
     <div class="conteudo">
         <form action="/login" method="post">
             <h2>PAGINA DE LOGIN</h2>

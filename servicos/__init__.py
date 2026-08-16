@@ -1,1 +1,0 @@
-"""Serviços usados pela aplicação."""

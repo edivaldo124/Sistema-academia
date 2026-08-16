@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-pt">
 <head>
     <meta charset="UTF-8">
     <title>Recuperar Senha</title>
@@ -14,17 +14,16 @@
                 <div class="msg">{{ erro }}</div>
             {% endif %}
 
-            {% if mensagem %}
-                <div class="msg msg-informacao">{{ mensagem }}</div>
-            {% endif %}
-
             <label>Qual o seu CPF?</label>
             <input type="text" name="cpf" required>
 
-            <label>Qual o seu e-mail cadastrado?</label>
-            <input type="email" name="email" autocomplete="email" required>
+            <label>Qual o seu E-mail registado?</label>
+            <input type="email" name="email" required>
 
-            <button type="submit">ENVIAR LINK</button>
+            <label>Digite a Nova Senha:</label>
+            <input type="password" name="nova_senha" required>
+
+            <button type="submit">ALTERAR SENHA</button>
 
             <a href="/login" class="link-voltar">Voltar ao Login</a>
         </form>

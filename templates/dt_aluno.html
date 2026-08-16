@@ -10,12 +10,6 @@
     <div class="container-detalhes">
         <h2>Editar Perfil: {{ u.nome }}</h2>
 
-        {% with mensagens = get_flashed_messages(with_categories=true) %}
-            {% for categoria, mensagem in mensagens %}
-                <div class="mensagem {{ categoria }}" role="alert">{{ mensagem }}</div>
-            {% endfor %}
-        {% endwith %}
-
         <form action="/admin/usuario/{{ u.cpf }}" method="POST" class="form-detalhes">
 
             <div class="grupo-input">
@@ -40,7 +34,7 @@
 
             <div class="grupo-input">
                 <label>E-mail:</label>
-                <input type="email" name="email" value="{{ u.email }}" maxlength="150" required>
+                <input type="text" name="email" value="{{ u.email }}" required>
             </div>
 
             <div class="grupo-input">

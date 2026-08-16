@@ -1,21 +1,10 @@
-from flask import Blueprint, flash, redirect, render_template, request, session, url_for
-from sqlalchemy.exc import IntegrityError
+from flask import Blueprint, render_template, request, session, redirect
 from config import db
 from modelos.plano import Plano
-from modelos.usuario import Aluno
 from dao.usuarioDAO import AlunoDAO
 from dao.planoDAO import PlanoDAO
-from servicos.notificacoes_email import enviar_plano_selecionado, enviar_status_mensalidade
 
 admin_bp = Blueprint('admin_blueprint', __name__)
-STATUS_VALIDOS = {'Pendente', 'Em Dia', 'Inativo'}
-
-
-def avisar_status_atualizado(aluno):
-    if enviar_status_mensalidade(aluno):
-        flash('Status atualizado e aviso enviado por e-mail.', 'sucesso')
-    else:
-        flash('Status atualizado, mas não foi possível enviar o aviso por e-mail.', 'aviso')
 
 
 @admin_bp.route("/admin")
@@ -52,11 +41,8 @@ def remover_usuario(cpf):
     if 'usuario' not in session or session['usuario'] != 'admin':
         return redirect('/login')
 
-    aluno = Aluno.query.filter_by(cpf=cpf).first()
-    if aluno and AlunoDAO.atualizar_mensalidade(cpf, 'Inativo'):
-        avisar_status_atualizado(aluno)
-    else:
-        flash('Aluno não encontrado.', 'erro')
+    AlunoDAO.atualizar_mensalidade(cpf, 'Inativo')
+
 
     return redirect('/admin')
 
@@ -69,15 +55,7 @@ def alterar_mensalidade(cpf, status):
     if 'usuario' not in session or session['usuario'] != 'admin':
         return redirect('/login')
 
-    if status not in STATUS_VALIDOS:
-        flash('Status de mensalidade inválido.', 'erro')
-        return redirect('/admin')
-
-    aluno = Aluno.query.filter_by(cpf=cpf).first()
-    if aluno and AlunoDAO.atualizar_mensalidade(cpf, status):
-        avisar_status_atualizado(aluno)
-    else:
-        flash('Aluno não encontrado.', 'erro')
+    AlunoDAO.atualizar_mensalidade(cpf, status)
 
     return redirect('/admin')
 
@@ -102,75 +80,18 @@ def detalhes_usuario(cpf):
         return redirect('/admin')
 
     if request.method == "POST":
-        status_anterior = aluno.mensalidade
-        plano_anterior = aluno.plano_id
-
         dados_atualizados = {
-            'nome': (request.form.get("nome") or '').strip(),
-            'login': (request.form.get("login") or '').strip(),
-            'datanascimento': (request.form.get("datanascimento") or '').strip(),
-            'email': (request.form.get("email") or '').strip().lower(),
-            'telefone': (request.form.get("telefone") or '').strip(),
+            'nome': request.form.get("nome"),
+            'login': request.form.get("login"),
+            'datanascimento': request.form.get("datanascimento"),
+            'email': request.form.get("email"),
+            'telefone': request.form.get("telefone"),
             'mensalidade': request.form.get("mensalidade"),
             'plano_id': request.form.get("plano_id"),
-            'descricao': (request.form.get('descricao') or '').strip()
+            'descricao': request.form.get('descricao')
         }
 
-        campos_obrigatorios = ('nome', 'login', 'datanascimento', 'email', 'telefone')
-        if any(not dados_atualizados[campo] for campo in campos_obrigatorios):
-            flash('Preencha todos os campos obrigatórios.', 'erro')
-            return redirect(url_for('admin_blueprint.detalhes_usuario', cpf=cpf))
-
-        login_em_uso = Aluno.query.filter(
-            Aluno.login == dados_atualizados['login'],
-            Aluno.id != aluno.id,
-        ).first()
-        if login_em_uso:
-            flash('Este login já está cadastrado para outro aluno.', 'erro')
-            return redirect(url_for('admin_blueprint.detalhes_usuario', cpf=cpf))
-
-        email_em_uso = Aluno.query.filter(
-            Aluno.email == dados_atualizados['email'],
-            Aluno.id != aluno.id,
-        ).first()
-        if email_em_uso:
-            flash('Este e-mail já está cadastrado para outro aluno.', 'erro')
-            return redirect(url_for('admin_blueprint.detalhes_usuario', cpf=cpf))
-
-        if dados_atualizados['mensalidade'] not in STATUS_VALIDOS:
-            flash('Status de mensalidade inválido.', 'erro')
-            return redirect(url_for('admin_blueprint.detalhes_usuario', cpf=cpf))
-
-        plano_id = dados_atualizados['plano_id']
-        plano = None
-        if plano_id and plano_id != 'Nenhum':
-            try:
-                plano = PlanoDAO.buscar_por_id(int(plano_id))
-            except (TypeError, ValueError):
-                plano = None
-
-            if not plano:
-                flash('Plano inválido.', 'erro')
-                return redirect(url_for('admin_blueprint.detalhes_usuario', cpf=cpf))
-
-        try:
-            atualizado = AlunoDAO.atualizar_dados_completos(cpf, dados_atualizados)
-        except (IntegrityError, TypeError, ValueError, AttributeError):
-            db.session.rollback()
-            flash('Não foi possível atualizar o aluno. Verifique os dados informados.', 'erro')
-            return redirect(url_for('admin_blueprint.detalhes_usuario', cpf=cpf))
-
-        if not atualizado:
-            flash('Não foi possível atualizar o aluno.', 'erro')
-            return redirect('/admin')
-
-        if aluno.mensalidade != status_anterior:
-            enviar_status_mensalidade(aluno)
-
-        if aluno.plano_id != plano_anterior and plano:
-            enviar_plano_selecionado(aluno, plano)
-
-        flash('Dados do aluno atualizados.', 'sucesso')
+        AlunoDAO.atualizar_dados_completos(cpf, dados_atualizados)
 
         return redirect('/admin')
 
