@@ -9,168 +9,210 @@
 </head>
 <body>
     <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+
     <header class="detail-header">
-        <a class="site-brand" href="/admin"><img src="{{ url_for('static', filename='imagens/logo.png') }}" alt=""><span>Academia<br><strong>do Bitelo</strong></span></a>
+        <a class="site-brand" href="/admin">
+            <img src="{{ url_for('static', filename='imagens/logo.png') }}" alt="">
+            <span>Academia<br><strong>do Bitelo</strong></span>
+        </a>
         <a href="/admin">← Voltar ao painel</a>
     </header>
+
     <main id="conteudo">
-    <div class="container-detalhes">
-        <div class="detail-intro"><div><p class="eyebrow">Cadastro do aluno</p><h1>{{ u.nome }}</h1><p>Atualize dados pessoais, plano e situação financeira.</p></div><span aria-hidden="true">{{ u.nome[0]|upper }}</span></div>
-
-        {% with mensagens = get_flashed_messages(with_categories=true) %}
-            {% for categoria, mensagem in mensagens %}
-                <div class="msg msg-{{ categoria }}">{{ mensagem }}</div>
-            {% endfor %}
-        {% endwith %}
-
-        <section class="detail-section"><div class="section-title"><span>01</span><div><h2>Dados do perfil</h2><p>Informações cadastrais e vínculo com a academia.</p></div></div><form action="/admin/usuario/{{ u.cpf }}" method="POST" class="form-detalhes">
-
-            <div class="grupo-input">
-                <label>Nome Completo:</label>
-                <input type="text" name="nome" value="{{ u.nome }}" required>
-            </div>
-
-            <div class="grupo-input">
-                <label>Utilizador (Login):</label>
-                <input type="text" name="login" value="{{ u.login }}" required>
-            </div>
-
-            <div class="grupo-input">
-                <label>Data de Nascimento:</label>
-                <input type="text" name="datanascimento" value="{{ u.datanascimento }}" required>
-            </div>
-
-            <div class="grupo-input">
-                <label>CPF (Não editável):</label>
-                <input type="text" name="cpf" value="{{ u.cpf }}" maxlength="14" data-mask="cpf" readonly class="input-bloqueado">
-            </div>
-
-            <div class="grupo-input">
-                <label>E-mail:</label>
-                <input type="text" name="email" value="{{ u.email }}" required>
-            </div>
-
-            <div class="grupo-input">
-                <label>Telefone:</label>
-                <input type="tel" name="telefone" value="{{ u.telefone }}" maxlength="15" inputmode="tel" placeholder="(00) 00000-0000" data-mask="phone" required>
-            </div>
-
-            <div class="grupo-input">
-                <label>Descrição:</label>
-                <input type="text" name="descricao" value="{{ u.descricao }}" required>
-            </div>
-
-
-            <div class="grupo-input">
-                <label>Situação Financeira:</label>
-                <select name="mensalidade">
-                    <option value="Pendente" {% if u.mensalidade == 'Pendente' %}selected{% endif %}>Pendente</option>
-                    <option value="Em Dia" {% if u.mensalidade == 'Em Dia' %}selected{% endif %}>Em Dia</option>
-                    <option value="Inativo" {% if u.mensalidade == 'Inativo' %}selected{% endif %}>Inativo</option>
-                </select>
-            </div>
-
-            <div class="grupo-input">
-                <label>Plano da Academia:</label>
-                <select name="plano_id">
-                    <option value="Nenhum">Sem Plano</option>
-                    {% for p in planos %}
-                        <option value="{{ p.id }}" {% if u.plano_id == p.id %}selected{% endif %}>{{ p.nome_plano }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-
-            <button type="submit" class="btn-salvar">Salvar Alterações</button>
-            <a href="/admin" class="btn-voltar">Voltar ao Painel</a>
-        </form></section>
-
-        <section class="secao-pagamentos">
-            <div class="section-title"><span>02</span><div><h2>Controle de mensalidades</h2><p>Lance cobranças e atualize pagamentos do aluno.</p></div></div>
-
-            <form action="/admin/usuario/{{ u.cpf }}/pagamentos" method="POST" class="form-pagamento">
-                <div class="grupo-input">
-                    <label>Plano:</label>
-                    <select name="plano_id" id="plano-pagamento" required>
-                        <option value="">Selecione</option>
-                        {% for p in planos %}
-                            <option value="{{ p.id }}" data-valor="{{ p.preco_plano }}" {% if u.plano_id == p.id %}selected{% endif %}>{{ p.nome_plano }}</option>
-                        {% endfor %}
-                    </select>
+        <div class="container-detalhes">
+            <div class="detail-intro">
+                <div>
+                    <p class="eyebrow">Cadastro do aluno</p>
+                    <h1>{{ u.nome }}</h1>
+                    <p>Atualize dados pessoais, plano e situação financeira.</p>
                 </div>
-                <div class="grupo-input">
-                    <label>Valor:</label>
-                    <input type="number" name="valor" id="valor-pagamento" min="0.01" step="0.01" required>
-                </div>
-                <div class="grupo-input">
-                    <label>Vencimento:</label>
-                    <input type="date" name="vencimento" required>
-                </div>
-                <div class="grupo-input">
-                    <label>Status:</label>
-                    <select name="status" id="status-pagamento">
-                        <option value="pendente">Pendente</option>
-                        <option value="pago">Pago</option>
-                        <option value="atrasado">Atrasado</option>
-                        <option value="cancelado">Cancelado</option>
-                    </select>
-                </div>
-                <div class="grupo-input">
-                    <label>Data do pagamento:</label>
-                    <input type="date" name="data_pagamento">
-                </div>
-                <div class="grupo-input">
-                    <label>Forma de pagamento:</label>
-                    <select name="forma_pagamento">
-                        <option value="">Não informada</option>
-                        <option value="pix">PIX</option>
-                        <option value="dinheiro">Dinheiro</option>
-                        <option value="cartao_credito">Cartão de crédito</option>
-                        <option value="cartao_debito">Cartão de débito</option>
-                        <option value="boleto">Boleto</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn-salvar">Lançar mensalidade</button>
-            </form>
-
-            <div class="tabela-pagamentos">
-                <table>
-                    <thead>
-                        <tr><th>Plano</th><th>Valor</th><th>Vencimento</th><th>Pagamento</th><th>Status</th><th>Forma</th><th>Ação</th></tr>
-                    </thead>
-                    <tbody>
-                    {% for pagamento in pagamentos %}
-                        <tr>
-                            <td>{{ pagamento.plano.nome_plano }}</td>
-                            <td>R$ {{ '%.2f'|format(pagamento.valor)|replace('.', ',') }}</td>
-                            <td>{{ pagamento.vencimento.strftime('%d/%m/%Y') }}</td>
-                            <td>{{ pagamento.data_pagamento.strftime('%d/%m/%Y') if pagamento.data_pagamento else '—' }}</td>
-                            <td><span class="status status-{{ pagamento.status }}">{{ pagamento.status }}</span></td>
-                            <td>{{ (pagamento.forma_pagamento or '—')|replace('_', ' ') }}</td>
-                            <td>
-                                <form action="/admin/pagamentos/{{ pagamento.id }}/status" method="POST" class="form-status">
-                                    <select name="status">
-                                        {% for status in ['pendente', 'pago', 'atrasado', 'cancelado'] %}
-                                            <option value="{{ status }}" {% if pagamento.status == status %}selected{% endif %}>{{ status|capitalize }}</option>
-                                        {% endfor %}
-                                    </select>
-                                    <select name="forma_pagamento">
-                                        <option value="">Forma</option>
-                                        {% for forma, rotulo in [('pix', 'PIX'), ('dinheiro', 'Dinheiro'), ('cartao_credito', 'Crédito'), ('cartao_debito', 'Débito'), ('boleto', 'Boleto')] %}
-                                            <option value="{{ forma }}" {% if pagamento.forma_pagamento == forma %}selected{% endif %}>{{ rotulo }}</option>
-                                        {% endfor %}
-                                    </select>
-                                    <button type="submit">Atualizar</button>
-                                </form>
-                            </td>
-                        </tr>
-                    {% else %}
-                        <tr><td colspan="7">Nenhuma mensalidade lançada.</td></tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                <span aria-hidden="true">{{ u.nome[0]|upper }}</span>
             </div>
-        </section>
-    </div>
+
+            {% with mensagens = get_flashed_messages(with_categories=true) %}
+                {% for categoria, mensagem in mensagens %}
+                    <div class="msg msg-{{ categoria }}">{{ mensagem }}</div>
+                {% endfor %}
+            {% endwith %}
+
+            <section class="detail-section">
+                <div class="section-title">
+                    <span>01</span>
+                    <div>
+                        <h2>Dados do perfil</h2>
+                        <p>Informações cadastrais e vínculo com a academia.</p>
+                    </div>
+                </div>
+
+                <form action="/admin/usuario/{{ u.cpf }}" method="POST" class="form-detalhes">
+                    <div class="grupo-input">
+                        <label>Nome Completo:</label>
+                        <input type="text" name="nome" value="{{ u.nome }}" required>
+                    </div>
+
+                    <div class="grupo-input">
+                        <label>Utilizador (Login):</label>
+                        <input type="text" name="login" value="{{ u.login }}" required>
+                    </div>
+
+                    <div class="grupo-input">
+                        <label>Data de Nascimento:</label>
+                        <input type="text" name="datanascimento" value="{{ u.datanascimento }}" required>
+                    </div>
+
+                    <div class="grupo-input">
+                        <label>CPF (Não editável):</label>
+                        <input type="text" name="cpf" value="{{ u.cpf }}" maxlength="14" data-mask="cpf" readonly class="input-bloqueado">
+                    </div>
+
+                    <div class="grupo-input">
+                        <label>E-mail:</label>
+                        <input type="text" name="email" value="{{ u.email }}" required>
+                    </div>
+
+                    <div class="grupo-input">
+                        <label>Telefone:</label>
+                        <input type="tel" name="telefone" value="{{ u.telefone }}" maxlength="15" inputmode="tel" placeholder="(00) 00000-0000" data-mask="phone" required>
+                    </div>
+
+                    <div class="grupo-input">
+                        <label>Descrição:</label>
+                        <input type="text" name="descricao" value="{{ u.descricao }}" required>
+                    </div>
+
+                    <div class="grupo-input">
+                        <label>Situação Financeira:</label>
+                        <select name="mensalidade">
+                            <option value="Pendente" {% if u.mensalidade == 'Pendente' %}selected{% endif %}>Pendente</option>
+                            <option value="Em Dia" {% if u.mensalidade == 'Em Dia' %}selected{% endif %}>Em Dia</option>
+                            <option value="Inativo" {% if u.mensalidade == 'Inativo' %}selected{% endif %}>Inativo</option>
+                        </select>
+                    </div>
+
+                    <div class="grupo-input">
+                        <label>Plano da Academia:</label>
+                        <select name="plano_id">
+                            <option value="Nenhum">Sem Plano</option>
+                            {% for p in planos %}
+                                <option value="{{ p.id }}" {% if u.plano_id == p.id %}selected{% endif %}>{{ p.nome_plano }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn-salvar">Salvar Alterações</button>
+                    <a href="/admin" class="btn-voltar">Voltar ao Painel</a>
+                </form>
+            </section>
+
+            <section class="secao-pagamentos">
+                <div class="section-title">
+                    <span>02</span>
+                    <div>
+                        <h2>Controle de mensalidades</h2>
+                        <p>Lance cobranças e atualize pagamentos do aluno.</p>
+                    </div>
+                </div>
+
+                <form action="/admin/usuario/{{ u.cpf }}/pagamentos" method="POST" class="form-pagamento">
+                    <div class="grupo-input">
+                        <label>Plano:</label>
+                        <select name="plano_id" id="plano-pagamento" required>
+                            <option value="">Selecione</option>
+                            {% for p in planos %}
+                                <option value="{{ p.id }}" data-valor="{{ p.preco_plano }}" {% if u.plano_id == p.id %}selected{% endif %}>{{ p.nome_plano }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="grupo-input">
+                        <label>Valor:</label>
+                        <input type="number" name="valor" id="valor-pagamento" min="0.01" step="0.01" required>
+                    </div>
+
+                    <div class="grupo-input">
+                        <label>Vencimento:</label>
+                        <input type="date" name="vencimento" required>
+                    </div>
+
+                    <div class="grupo-input">
+                        <label>Status:</label>
+                        <select name="status" id="status-pagamento">
+                            <option value="pendente">Pendente</option>
+                            <option value="pago">Pago</option>
+                            <option value="atrasado">Atrasado</option>
+                            <option value="cancelado">Cancelado</option>
+                        </select>
+                    </div>
+
+                    <div class="grupo-input">
+                        <label>Data do pagamento:</label>
+                        <input type="date" name="data_pagamento">
+                    </div>
+
+                    <div class="grupo-input">
+                        <label>Forma de pagamento:</label>
+                        <select name="forma_pagamento">
+                            <option value="">Não informada</option>
+                            <option value="pix">PIX</option>
+                            <option value="dinheiro">Dinheiro</option>
+                            <option value="cartao_credito">Cartão de crédito</option>
+                            <option value="cartao_debito">Cartão de débito</option>
+                            <option value="boleto">Boleto</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn-salvar">Lançar mensalidade</button>
+                </form>
+
+                <div class="tabela-pagamentos">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Plano</th>
+                                <th>Valor</th>
+                                <th>Vencimento</th>
+                                <th>Pagamento</th>
+                                <th>Status</th>
+                                <th>Forma</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for pagamento in pagamentos %}
+                                <tr>
+                                    <td>{{ pagamento.plano.nome_plano }}</td>
+                                    <td>R$ {{ '%.2f'|format(pagamento.valor)|replace('.', ',') }}</td>
+                                    <td>{{ pagamento.vencimento.strftime('%d/%m/%Y') }}</td>
+                                    <td>{{ pagamento.data_pagamento.strftime('%d/%m/%Y') if pagamento.data_pagamento else '—' }}</td>
+                                    <td><span class="status status-{{ pagamento.status }}">{{ pagamento.status }}</span></td>
+                                    <td>{{ (pagamento.forma_pagamento or '—')|replace('_', ' ') }}</td>
+                                    <td>
+                                        <form action="/admin/pagamentos/{{ pagamento.id }}/status" method="POST" class="form-status">
+                                            <select name="status">
+                                                {% for status in ['pendente', 'pago', 'atrasado', 'cancelado'] %}
+                                                    <option value="{{ status }}" {% if pagamento.status == status %}selected{% endif %}>{{ status|capitalize }}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <select name="forma_pagamento">
+                                                <option value="">Forma</option>
+                                                {% for forma, rotulo in [('pix', 'PIX'), ('dinheiro', 'Dinheiro'), ('cartao_credito', 'Crédito'), ('cartao_debito', 'Débito'), ('boleto', 'Boleto')] %}
+                                                    <option value="{{ forma }}" {% if pagamento.forma_pagamento == forma %}selected{% endif %}>{{ rotulo }}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <button type="submit">Atualizar</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="7">Nenhuma mensalidade lançada.</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
     </main>
 
     <script src="{{ url_for('static', filename='js/masks.js') }}"></script>
@@ -184,6 +226,5 @@
         plano.addEventListener('change', preencherValor);
         preencherValor();
     </script>
-
 </body>
 </html>

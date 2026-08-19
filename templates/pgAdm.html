@@ -1,10 +1,146 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Administração | Academia do Bitelo</title><link rel="stylesheet" href="{{ url_for('static',filename='css/theme.css') }}"><link rel="stylesheet" href="{{ url_for('static',filename='css/pgAdm.css') }}"><script src="{{ url_for('static',filename='js/pgAdm.js') }}" defer></script></head>
-<body><a class="skip-link" href="#conteudo">Ir para o conteúdo</a><header class="admin-header"><a class="site-brand" href="/"><img src="{{ url_for('static',filename='imagens/logo.png') }}" alt=""><span>Academia<br><strong>do Bitelo</strong></span></a><div><span>Administração</span><a href="/logout" class="link-logout" data-confirm-modal data-modal-eyebrow="Encerrar sessão" data-modal-title="Sair do painel?" data-modal-message="Você precisará entrar novamente para acessar a administração." data-modal-confirm="Sim, sair">Sair</a></div></header>
-<main id="conteudo" class="container-admin"><section class="admin-intro"><div><p class="eyebrow">Visão geral</p><h1>Painel administrativo</h1><p>Gerencie planos, alunos e operações da academia.</p></div><div class="admin-metrics"><article><strong>{{ usuarios|length }}</strong><span>Alunos</span></article><article><strong>{{ planos|length }}</strong><span>Planos ativos</span></article></div></section>
-{% with mensagens=get_flashed_messages(with_categories=true) %}{% for categoria,mensagem in mensagens %}<div class="msg msg-{{ categoria }}" role="status">{{ mensagem }}</div>{% endfor %}{% endwith %}
-<section class="secao"><div class="section-heading"><div><p class="eyebrow">Produtos</p><h2>Planos da academia</h2></div><p>Cadastre e organize as opções disponíveis aos alunos.</p></div>
-<form action="/admin/cadastrar_plano" method="POST" class="form-plano" id="form-plano"><div class="field"><label for="nome-plano">Nome do plano</label><input id="nome-plano" type="text" name="nome_plano" placeholder="Ex.: Plano anual" required></div><div class="field"><label for="preco-plano">Preço</label><input type="text" name="preco_plano" id="preco-plano" inputmode="decimal" placeholder="80,00" required></div><div class="field"><label for="duracao-dias">Duração</label><input type="number" name="duracao_dias" id="duracao-dias" min="1" placeholder="Dias" required></div><button type="submit" class="btn-cadastrar">Cadastrar plano</button></form>
-<div class="plan-list">{% for plano in planos %}<article><div><span>Plano 0{{ loop.index }}</span><strong>{{ plano.nome_plano }}</strong><p><b class="preco-plano" data-preco="{{ plano.preco_plano }}">R$ {{ plano.preco_plano }}</b> · {{ plano.duracao_dias }} dias</p></div><a href="/admin/remover_plano/{{ plano.id }}" class="btn btn-remover" data-confirm-modal data-modal-variant="danger" data-modal-eyebrow="Excluir plano" data-modal-title="Remover {{ plano.nome_plano }}?" data-modal-message="O plano deixará de estar disponível para novas contratações. Confirme antes de continuar." data-modal-confirm="Excluir plano">Excluir</a></article>{% else %}<p class="empty-state">Nenhum plano cadastrado.</p>{% endfor %}</div></section>
-<section class="secao"><div class="section-heading"><div><p class="eyebrow">Cadastros</p><h2>Alunos</h2></div><span id="contador-alunos">{{ usuarios|length }} aluno(s)</span></div>
-<div class="ferramentas-alunos"><label class="sr-only" for="busca-aluno">Buscar aluno</label><input type="search" id="busca-aluno" placeholder="Buscar por nome…" autocomplete="off"></div>
-<div class="table-container"><table><thead><tr><th>Aluno</th><th>Ações</th></tr></thead><tbody id="lista-alunos">{% for u in usuarios %}<tr class="aluno-item" data-nome="{{ u.nome }}"><td><span class="student-avatar">{{ u.nome[0]|upper }}</span><strong>{{ u.nome }}</strong></td><td><a href="/admin/usuario/{{ u.cpf }}" class="btn btn-status">Ver perfil</a><form action="{{ url_for('admin_blueprint.remover_usuario',aluno_id=u.id) }}" method="POST" class="form-remover" data-confirm-modal data-modal-variant="danger" data-modal-eyebrow="Excluir cadastro" data-modal-title="Excluir {{ u.nome }}?" data-modal-message="O cadastro e o acesso deste aluno serão removidos. Esta ação não pode ser desfeita." data-modal-confirm="Excluir aluno" data-loading-text="Excluindo…"><input type="hidden" name="token_exclusao" value="{{ token_exclusao }}"><button type="submit" class="btn btn-remover">Excluir</button></form></td></tr>{% else %}<tr><td colspan="2" class="empty-state">Nenhum aluno cadastrado.</td></tr>{% endfor %}<tr id="sem-resultados" hidden><td colspan="2">Nenhum aluno encontrado.</td></tr></tbody></table></div></section></main>{% include 'components/confirm_modal.html' %}<link rel="stylesheet" href="{{ url_for('static',filename='css/modal.css') }}"><script src="{{ url_for('static',filename='js/modal.js') }}"></script></body></html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administração | Academia do Bitelo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pgAdm.css') }}">
+    <script src="{{ url_for('static', filename='js/pgAdm.js') }}" defer></script>
+</head>
+<body>
+    <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+
+    <header class="admin-header">
+        <a class="site-brand" href="/">
+            <img src="{{ url_for('static', filename='imagens/logo.png') }}" alt="">
+            <span>Academia<br><strong>do Bitelo</strong></span>
+        </a>
+        <div>
+            <span>Administração</span>
+            <a href="/logout" class="link-logout" data-confirm-modal data-modal-eyebrow="Encerrar sessão" data-modal-title="Sair do painel?" data-modal-message="Você precisará entrar novamente para acessar a administração." data-modal-confirm="Sim, sair">Sair</a>
+        </div>
+    </header>
+
+    <main id="conteudo" class="container-admin">
+        <section class="admin-intro">
+            <div>
+                <p class="eyebrow">Visão geral</p>
+                <h1>Painel administrativo</h1>
+                <p>Gerencie planos, alunos e operações da academia.</p>
+            </div>
+            <div class="admin-metrics">
+                <article>
+                    <strong>{{ usuarios|length }}</strong>
+                    <span>Alunos</span>
+                </article>
+                <article>
+                    <strong>{{ planos|length }}</strong>
+                    <span>Planos ativos</span>
+                </article>
+            </div>
+        </section>
+
+        {% with mensagens = get_flashed_messages(with_categories=true) %}
+            {% for categoria, mensagem in mensagens %}
+                <div class="msg msg-{{ categoria }}" role="status">{{ mensagem }}</div>
+            {% endfor %}
+        {% endwith %}
+
+        <section class="secao">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">Produtos</p>
+                    <h2>Planos da academia</h2>
+                </div>
+                <p>Cadastre e organize as opções disponíveis aos alunos.</p>
+            </div>
+
+            <form action="/admin/cadastrar_plano" method="POST" class="form-plano" id="form-plano">
+                <div class="field">
+                    <label for="nome-plano">Nome do plano</label>
+                    <input id="nome-plano" type="text" name="nome_plano" placeholder="Ex.: Plano anual" required>
+                </div>
+                <div class="field">
+                    <label for="preco-plano">Preço</label>
+                    <input type="text" name="preco_plano" id="preco-plano" inputmode="decimal" placeholder="80,00" required>
+                </div>
+                <div class="field">
+                    <label for="duracao-dias">Duração</label>
+                    <input type="number" name="duracao_dias" id="duracao-dias" min="1" placeholder="Dias" required>
+                </div>
+                <button type="submit" class="btn-cadastrar">Cadastrar plano</button>
+            </form>
+
+            <div class="plan-list">
+                {% for plano in planos %}
+                    <article>
+                        <div>
+                            <span>Plano 0{{ loop.index }}</span>
+                            <strong>{{ plano.nome_plano }}</strong>
+                            <p><b class="preco-plano" data-preco="{{ plano.preco_plano }}">R$ {{ plano.preco_plano }}</b> · {{ plano.duracao_dias }} dias</p>
+                        </div>
+                        <a href="/admin/remover_plano/{{ plano.id }}" class="btn btn-remover" data-confirm-modal data-modal-variant="danger" data-modal-eyebrow="Excluir plano" data-modal-title="Remover {{ plano.nome_plano }}?" data-modal-message="O plano deixará de estar disponível para novas contratações. Confirme antes de continuar." data-modal-confirm="Excluir plano">Excluir</a>
+                    </article>
+                {% else %}
+                    <p class="empty-state">Nenhum plano cadastrado.</p>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="secao">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">Cadastros</p>
+                    <h2>Alunos</h2>
+                </div>
+                <span id="contador-alunos">{{ usuarios|length }} aluno(s)</span>
+            </div>
+
+            <div class="ferramentas-alunos">
+                <label class="sr-only" for="busca-aluno">Buscar aluno</label>
+                <input type="search" id="busca-aluno" placeholder="Buscar por nome…" autocomplete="off">
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Aluno</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="lista-alunos">
+                        {% for u in usuarios %}
+                            <tr class="aluno-item" data-nome="{{ u.nome }}">
+                                <td>
+                                    <span class="student-avatar">{{ u.nome[0]|upper }}</span>
+                                    <strong>{{ u.nome }}</strong>
+                                </td>
+                                <td>
+                                    <a href="/admin/usuario/{{ u.cpf }}" class="btn btn-status">Ver perfil</a>
+                                    <form action="{{ url_for('admin_blueprint.remover_usuario', aluno_id=u.id) }}" method="POST" class="form-remover" data-confirm-modal data-modal-variant="danger" data-modal-eyebrow="Excluir cadastro" data-modal-title="Excluir {{ u.nome }}?" data-modal-message="O cadastro e o acesso deste aluno serão removidos. Esta ação não pode ser desfeita." data-modal-confirm="Excluir aluno" data-loading-text="Excluindo…">
+                                        <input type="hidden" name="token_exclusao" value="{{ token_exclusao }}">
+                                        <button type="submit" class="btn btn-remover">Excluir</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="2" class="empty-state">Nenhum aluno cadastrado.</td>
+                            </tr>
+                        {% endfor %}
+                        <tr id="sem-resultados" hidden>
+                            <td colspan="2">Nenhum aluno encontrado.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    {% include 'components/confirm_modal.html' %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modal.css') }}">
+    <script src="{{ url_for('static', filename='js/modal.js') }}"></script>
+</body>
+</html>

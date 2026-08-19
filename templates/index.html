@@ -1,49 +1,116 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#171b1e">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#171b1e">
     <title>Academia do Bitelo | Força & Resistência</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
     <script src="{{ url_for('static', filename='js/index.js') }}" defer></script>
 </head>
 <body>
-<a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
-<header class="home-header">
-    <a class="site-brand" href="/" aria-label="Academia do Bitelo — início"><img src="{{ url_for('static', filename='imagens/logo.png') }}" alt=""><span>Academia<br><strong>do Bitelo</strong></span></a>
-    <nav aria-label="Navegação principal"><a href="#estrutura">A academia</a><a href="#metodo">Nosso método</a><button type="button" class="nav-login" onclick="abrirmodal()">Área do aluno</button></nav>
-</header>
-<main id="conteudo">
-    <section class="hero">
-        <div class="hero-copy">
-            <p class="eyebrow">Força & resistência</p>
-            <h1>Treine com<br>propósito.<br><em>Evolua de verdade.</em></h1>
-            <p class="hero-text">Estrutura, acompanhamento e consistência para transformar esforço em resultado — no seu ritmo, sem atalhos.</p>
-            <div class="hero-actions"><a class="button-primary" href="/cadastrar">Começar agora <span>→</span></a><button class="text-button" type="button" onclick="abrirmodal()">Já sou aluno</button></div>
+    <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+
+    <header class="home-header">
+        <a class="site-brand" href="/" aria-label="Academia do Bitelo — início">
+            <img src="{{ url_for('static', filename='imagens/logo.png') }}" alt="">
+            <span>Academia<br><strong>do Bitelo</strong></span>
+        </a>
+        <nav aria-label="Navegação principal">
+            <a href="#estrutura">A academia</a>
+            <a href="#metodo">Nosso método</a>
+            <button type="button" class="nav-login" onclick="abrirmodal()">Área do aluno</button>
+        </nav>
+    </header>
+
+    <main id="conteudo">
+        <section class="hero">
+            <div class="hero-copy">
+                <p class="eyebrow">Força & resistência</p>
+                <h1>Treine com<br>propósito.<br><em>Evolua de verdade.</em></h1>
+                <p class="hero-text">Estrutura, acompanhamento e consistência para transformar esforço em resultado — no seu ritmo, sem atalhos.</p>
+                <div class="hero-actions">
+                    <a class="button-primary" href="/cadastrar">Começar agora <span>→</span></a>
+                    <button class="text-button" type="button" onclick="abrirmodal()">Já sou aluno</button>
+                </div>
+            </div>
+            <div class="hero-visual" aria-label="Identidade da Academia do Bitelo">
+                <div class="hero-number" aria-hidden="true">01</div>
+                <img src="{{ url_for('static', filename='imagens/logo.png') }}" alt="Academia do Bitelo — Força e resistência">
+                <div class="hero-stamp">
+                    <strong>+FORÇA</strong>
+                    <span>todo treino conta</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="proof-strip" aria-label="Diferenciais">
+            <p><strong>Treino</strong><span>com direção</span></p>
+            <p><strong>Rotina</strong><span>que cabe na vida</span></p>
+            <p><strong>Evolução</strong><span>que você acompanha</span></p>
+        </section>
+
+        <section class="home-section" id="estrutura">
+            <div>
+                <p class="eyebrow">Um espaço para evoluir</p>
+                <h2 class="page-title">Mais que aparelhos.<br>Uma rotina que funciona.</h2>
+            </div>
+            <p class="section-copy">Aqui, cada treino tem intenção. Você encontra o ambiente e os planos certos para manter a constância e construir resultados sólidos.</p>
+        </section>
+
+        <section class="method-grid" id="metodo">
+            <article>
+                <span>01</span>
+                <h3>Comece</h3>
+                <p>Crie seu perfil e encontre o plano que combina com sua rotina.</p>
+            </article>
+            <article>
+                <span>02</span>
+                <h3>Mantenha</h3>
+                <p>Acompanhe mensalidades e informações da sua jornada em um só lugar.</p>
+            </article>
+            <article>
+                <span>03</span>
+                <h3>Supere</h3>
+                <p>Transforme frequência em força e disciplina em resultado.</p>
+            </article>
+        </section>
+    </main>
+
+    <footer class="home-footer">
+        <span>© 2026 Academia do Bitelo</span>
+        <a href="/cadastrar">Faça parte →</a>
+    </footer>
+
+    <div id="meuModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+        <div class="modal-backdrop" onclick="fechar()"></div>
+        <div class="modal-conteudo">
+            <button type="button" class="fechar-modal" onclick="fechar()" aria-label="Fechar login">×</button>
+            <p class="eyebrow">Área do aluno</p>
+            <h2 id="modal-title">Acesse sua conta</h2>
+            <p class="modal-intro">Continue sua evolução.</p>
+
+            <form action="/login" method="post">
+                <div class="field">
+                    <label for="inputnome">Usuário</label>
+                    <input type="text" id="inputnome" name="loginusuario" autocomplete="username" required>
+                </div>
+                <div class="field">
+                    <div class="label-row">
+                        <label for="senhausuario">Senha</label>
+                        <a href="/recuperar_senha">Esqueci a senha</a>
+                    </div>
+                    <div class="campo-senha">
+                        <input type="password" id="senhausuario" name="senhausuario" autocomplete="current-password" required>
+                        <button type="button" id="iconeSenha" class="icone-senha" onclick="mostrarSenha()" aria-label="Mostrar senha">Ver</button>
+                    </div>
+                </div>
+                <button class="button-primary" type="submit">Entrar na minha conta</button>
+            </form>
+
+            <p class="modal-signup">Novo por aqui? <a href="/cadastrar">Crie sua conta</a></p>
         </div>
-        <div class="hero-visual" aria-label="Identidade da Academia do Bitelo">
-            <div class="hero-number" aria-hidden="true">01</div>
-            <img src="{{ url_for('static', filename='imagens/logo.png') }}" alt="Academia do Bitelo — Força e resistência">
-            <div class="hero-stamp"><strong>+FORÇA</strong><span>todo treino conta</span></div>
-        </div>
-    </section>
-    <section class="proof-strip" aria-label="Diferenciais"><p><strong>Treino</strong><span>com direção</span></p><p><strong>Rotina</strong><span>que cabe na vida</span></p><p><strong>Evolução</strong><span>que você acompanha</span></p></section>
-    <section class="home-section" id="estrutura"><div><p class="eyebrow">Um espaço para evoluir</p><h2 class="page-title">Mais que aparelhos.<br>Uma rotina que funciona.</h2></div><p class="section-copy">Aqui, cada treino tem intenção. Você encontra o ambiente e os planos certos para manter a constância e construir resultados sólidos.</p></section>
-    <section class="method-grid" id="metodo"><article><span>01</span><h3>Comece</h3><p>Crie seu perfil e encontre o plano que combina com sua rotina.</p></article><article><span>02</span><h3>Mantenha</h3><p>Acompanhe mensalidades e informações da sua jornada em um só lugar.</p></article><article><span>03</span><h3>Supere</h3><p>Transforme frequência em força e disciplina em resultado.</p></article></section>
-</main>
-<footer class="home-footer"><span>© 2026 Academia do Bitelo</span><a href="/cadastrar">Faça parte →</a></footer>
-<div id="meuModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
-    <div class="modal-backdrop" onclick="fechar()"></div>
-    <div class="modal-conteudo">
-        <button type="button" class="fechar-modal" onclick="fechar()" aria-label="Fechar login">×</button>
-        <p class="eyebrow">Área do aluno</p><h2 id="modal-title">Acesse sua conta</h2><p class="modal-intro">Continue sua evolução.</p>
-        <form action="/login" method="post">
-            <div class="field"><label for="inputnome">Usuário</label><input type="text" id="inputnome" name="loginusuario" autocomplete="username" required></div>
-            <div class="field"><div class="label-row"><label for="senhausuario">Senha</label><a href="/recuperar_senha">Esqueci a senha</a></div><div class="campo-senha"><input type="password" id="senhausuario" name="senhausuario" autocomplete="current-password" required><button type="button" id="iconeSenha" class="icone-senha" onclick="mostrarSenha()" aria-label="Mostrar senha">Ver</button></div></div>
-            <button class="button-primary" type="submit">Entrar na minha conta</button>
-        </form>
-        <p class="modal-signup">Novo por aqui? <a href="/cadastrar">Crie sua conta</a></p>
     </div>
-</div>
 </body>
 </html>

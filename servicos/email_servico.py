@@ -2,6 +2,7 @@
 
 import os
 import smtplib
+from datetime import date, datetime
 from email.message import EmailMessage
 import logging
 import requests
@@ -191,6 +192,262 @@ Equipe Academia do Bitelo
     </div>
     <div class="footer">
         © 2026 Academia do Bitelo • Segurança e Privacidade
+    </div>
+</div>
+</body>
+</html>
+"""
+
+    return enviar_email(destinatario, assunto, texto, html)
+
+
+def _formatar_rotulo_forma_pagamento(forma):
+    if not forma:
+        return "Não informada"
+    mapa = {
+        'pix': 'PIX',
+        'dinheiro': 'Dinheiro',
+        'cartao_credito': 'Cartão de Crédito',
+        'cartao_debito': 'Cartão de Débito',
+        'boleto': 'Boleto'
+    }
+    return mapa.get(str(forma).lower(), str(forma).replace('_', ' ').title())
+
+
+def enviar_email_boas_vindas(destinatario, nome_usuario, login):
+    """
+    Dispara o e-mail de boas-vindas ao novo aluno cadastrado na academia.
+    """
+    primeiro_nome = nome_usuario.split()[0] if nome_usuario else "Aluno(a)"
+    assunto = f"Bem-vindo(a) à Academia do Bitelo, {primeiro_nome}! 🏋️"
+
+    texto = f"""Olá, {primeiro_nome}!
+
+Seja muito bem-vindo(a) à Academia do Bitelo! Seu cadastro foi realizado com sucesso.
+
+Seus dados de acesso:
+- Usuário (Login): {login}
+- E-mail: {destinatario}
+
+Acesse o sistema para escolher seu plano de treino e acompanhar suas mensalidades.
+
+Bons treinos e conte com a gente para alcançar seus objetivos!
+
+Atenciosamente,
+Equipe Academia do Bitelo
+"""
+
+    html = f"""<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<style>
+    body {{ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f1e9; margin: 0; padding: 20px; color: #171b1e; }}
+    .container {{ max-width: 520px; margin: 0 auto; background: #ffffff; border-radius: 6px; border: 1px solid #d9d8d2; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }}
+    .header {{ background-color: #171b1e; padding: 24px; text-align: center; border-bottom: 4px solid #ef6c23; }}
+    .header h1 {{ color: #ffffff; margin: 0; font-size: 22px; text-transform: uppercase; letter-spacing: 1px; }}
+    .header h1 span {{ color: #ffc72c; }}
+    .content {{ padding: 30px; }}
+    .badge {{ display: inline-block; background-color: #ef6c23; color: #ffffff; font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; letter-spacing: 1px; margin-bottom: 15px; }}
+    .greeting {{ font-size: 20px; font-weight: bold; margin-bottom: 12px; color: #171b1e; }}
+    .message {{ font-size: 14px; line-height: 1.6; color: #4a5259; margin-bottom: 20px; }}
+    .info-box {{ background: #faf7f0; border-left: 4px solid #ef6c23; border-radius: 4px; padding: 16px; margin: 20px 0; }}
+    .info-item {{ font-size: 13px; color: #2d3748; margin: 6px 0; }}
+    .info-item strong {{ color: #171b1e; }}
+    .footer {{ background: #ebe8df; padding: 16px; text-align: center; font-size: 11px; color: #687078; }}
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Academia <span>do Bitelo</span></h1>
+    </div>
+    <div class="content">
+        <div class="badge">Cadastro Concluído</div>
+        <p class="greeting">Olá, {primeiro_nome}!</p>
+        <p class="message">Seja muito bem-vindo(a) à <strong>Academia do Bitelo</strong>! Ficamos muito felizes em tê-lo(a) conosco em sua jornada de treinos e saúde.</p>
+        
+        <div class="info-box">
+            <div class="info-item"><strong>Usuário / Login:</strong> {login}</div>
+            <div class="info-item"><strong>E-mail Cadastrado:</strong> {destinatario}</div>
+        </div>
+
+        <p class="message">Você já pode fazer login na plataforma para consultar seus planos, acompanhar seus pagamentos e manter seus treinos em dia.</p>
+        
+        <p class="message" style="margin-bottom: 0; font-weight: 600; color: #ef6c23;">Foco nos treinos e conte sempre com nossa equipe!</p>
+    </div>
+    <div class="footer">
+        © 2026 Academia do Bitelo • Todos os direitos reservados
+    </div>
+</div>
+</body>
+</html>
+"""
+
+    return enviar_email(destinatario, assunto, texto, html)
+
+
+def enviar_aviso_alteracao_dados(destinatario, nome_usuario, detalhes="seus dados cadastrais e/ou credenciais"):
+    """
+    Dispara o e-mail de confirmação após a alteração de dados do perfil ou senha do aluno.
+    """
+    primeiro_nome = nome_usuario.split()[0] if nome_usuario else "Aluno(a)"
+    assunto = "Segurança: Seus dados foram alterados - Academia do Bitelo"
+
+    texto = f"""Olá, {primeiro_nome}!
+
+Informamos que {detalhes} na sua conta da Academia do Bitelo foram atualizados com sucesso.
+
+Se foi você quem realizou essa alteração, nenhuma ação adicional é necessária.
+
+Caso NÃO tenha sido você, entre em contato imediatamente com a administração da academia para proteger seus dados e acesso.
+
+Atenciosamente,
+Equipe Academia do Bitelo
+"""
+
+    html = f"""<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<style>
+    body {{ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f1e9; margin: 0; padding: 20px; color: #171b1e; }}
+    .container {{ max-width: 520px; margin: 0 auto; background: #ffffff; border-radius: 6px; border: 1px solid #d9d8d2; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }}
+    .header {{ background-color: #171b1e; padding: 24px; text-align: center; border-bottom: 4px solid #ef6c23; }}
+    .header h1 {{ color: #ffffff; margin: 0; font-size: 22px; text-transform: uppercase; letter-spacing: 1px; }}
+    .header h1 span {{ color: #ffc72c; }}
+    .content {{ padding: 30px; }}
+    .badge {{ display: inline-block; background-color: #2b8a3e; color: #ffffff; font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; letter-spacing: 1px; margin-bottom: 15px; }}
+    .greeting {{ font-size: 18px; font-weight: bold; margin-bottom: 12px; color: #171b1e; }}
+    .message {{ font-size: 14px; line-height: 1.6; color: #4a5259; margin-bottom: 20px; }}
+    .warning-box {{ background: #fff8e6; border: 1px solid #ffe08a; border-radius: 6px; padding: 14px; margin: 20px 0; font-size: 12px; color: #7a5800; line-height: 1.5; }}
+    .footer {{ background: #ebe8df; padding: 16px; text-align: center; font-size: 11px; color: #687078; }}
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Academia <span>do Bitelo</span></h1>
+    </div>
+    <div class="content">
+        <div class="badge">Dados Atualizados</div>
+        <p class="greeting">Olá, {primeiro_nome}!</p>
+        <p class="message">Confirmamos que <strong>{detalhes}</strong> foram atualizados com sucesso no sistema da Academia do Bitelo.</p>
+        
+        <div class="warning-box">
+            <strong>Aviso de segurança:</strong> Se você mesmo realizou essa alteração, seus dados já estão atualizados. Se você <strong>NÃO</strong> reconhece essa ação, procure a recepção da academia imediatamente para proteger seu acesso.
+        </div>
+    </div>
+    <div class="footer">
+        © 2026 Academia do Bitelo • Segurança e Privacidade
+    </div>
+</div>
+</body>
+</html>
+"""
+
+    return enviar_email(destinatario, assunto, texto, html)
+
+
+def enviar_confirmacao_pagamento(destinatario, nome_usuario, nome_plano, valor, forma_pagamento, data_pagamento=None):
+    """
+    Dispara o e-mail de recibo/confirmação de pagamento da mensalidade, informando o plano, valor e forma de pagamento.
+    """
+    primeiro_nome = nome_usuario.split()[0] if nome_usuario else "Aluno(a)"
+    assunto = "✅ Mensalidade Confirmada - Academia do Bitelo"
+
+    # Formata a data de pagamento
+    if isinstance(data_pagamento, (date, datetime)):
+        data_formatada = data_pagamento.strftime('%d/%m/%Y')
+    elif isinstance(data_pagamento, str) and data_pagamento:
+        data_formatada = data_pagamento
+    else:
+        data_formatada = date.today().strftime('%d/%m/%Y')
+
+    # Formata o valor no padrão R$ XX,XX
+    try:
+        valor_float = float(valor)
+        valor_str = f"{valor_float:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
+    except (ValueError, TypeError):
+        valor_str = str(valor)
+
+    forma_formatada = _formatar_rotulo_forma_pagamento(forma_pagamento)
+
+    texto = f"""Olá, {primeiro_nome}!
+
+Confirmamos o recebimento do pagamento da sua mensalidade na Academia do Bitelo.
+
+Detalhes do Pagamento:
+- Plano: {nome_plano}
+- Valor Pago: R$ {valor_str}
+- Forma de Pagamento: {forma_formatada}
+- Data do Pagamento: {data_formatada}
+- Status: PAGO (Em Dia)
+
+Seu acesso à academia está 100% liberado. Obrigado pela preferência e ótimos treinos!
+
+Atenciosamente,
+Equipe Academia do Bitelo
+"""
+
+    html = f"""<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<style>
+    body {{ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f1e9; margin: 0; padding: 20px; color: #171b1e; }}
+    .container {{ max-width: 520px; margin: 0 auto; background: #ffffff; border-radius: 6px; border: 1px solid #d9d8d2; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }}
+    .header {{ background-color: #171b1e; padding: 24px; text-align: center; border-bottom: 4px solid #ef6c23; }}
+    .header h1 {{ color: #ffffff; margin: 0; font-size: 22px; text-transform: uppercase; letter-spacing: 1px; }}
+    .header h1 span {{ color: #ffc72c; }}
+    .content {{ padding: 30px; }}
+    .badge-pago {{ display: inline-block; background-color: #28a745; color: #ffffff; font-size: 12px; font-weight: 700; text-transform: uppercase; padding: 5px 12px; border-radius: 20px; letter-spacing: 1px; margin-bottom: 16px; }}
+    .greeting {{ font-size: 18px; font-weight: bold; margin-bottom: 12px; color: #171b1e; }}
+    .message {{ font-size: 14px; line-height: 1.6; color: #4a5259; margin-bottom: 20px; }}
+    .receipt-card {{ background: #faf7f0; border: 1px solid #e5e0d4; border-radius: 6px; padding: 20px; margin: 20px 0; }}
+    .receipt-title {{ font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #ef6c23; margin-bottom: 14px; border-bottom: 1px solid #e5e0d4; padding-bottom: 8px; }}
+    .access-notice {{ background: #e8f5e9; border-left: 4px solid #28a745; padding: 12px 16px; border-radius: 4px; font-size: 13px; color: #1b5e20; margin-top: 20px; }}
+    .footer {{ background: #ebe8df; padding: 16px; text-align: center; font-size: 11px; color: #687078; }}
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Academia <span>do Bitelo</span></h1>
+    </div>
+    <div class="content">
+        <div class="badge-pago">✔ Pagamento Confirmado</div>
+        <p class="greeting">Olá, {primeiro_nome}!</p>
+        <p class="message">Confirmamos o pagamento da sua mensalidade. Abaixo estão os dados do seu comprovante:</p>
+        
+        <div class="receipt-card">
+            <div class="receipt-title">Comprovante de Mensalidade</div>
+            <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                <tr>
+                    <td style="padding: 7px 0; color: #687078;">Plano:</td>
+                    <td style="padding: 7px 0; font-weight: bold; text-align: right; color: #171b1e;">{nome_plano}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 7px 0; color: #687078;">Forma de Pagamento:</td>
+                    <td style="padding: 7px 0; font-weight: bold; text-align: right; color: #171b1e;">{forma_formatada}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 7px 0; color: #687078;">Data do Pagamento:</td>
+                    <td style="padding: 7px 0; font-weight: bold; text-align: right; color: #171b1e;">{data_formatada}</td>
+                </tr>
+                <tr style="border-top: 1px solid #e0dbd0;">
+                    <td style="padding: 10px 0 0 0; font-weight: bold; color: #171b1e;">Valor Pago:</td>
+                    <td style="padding: 10px 0 0 0; font-weight: 800; text-align: right; color: #28a745; font-size: 16px;">R$ {valor_str}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="access-notice">
+            <strong>Acesso Liberado:</strong> Sua situação está <strong>Em Dia</strong>. Bons treinos!
+        </div>
+    </div>
+    <div class="footer">
+        © 2026 Academia do Bitelo • Comprovante Gerado Automaticamente
     </div>
 </div>
 </body>

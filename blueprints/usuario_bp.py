@@ -1,3 +1,4 @@
+import logging
 import secrets
 import time
 from flask import Blueprint, render_template, request, session, redirect, flash, url_for
@@ -8,7 +9,13 @@ from dao.usuarioDAO import AlunoDAO
 from dao.planoDAO import PlanoDAO
 from dao.financeiroDAO import PagamentoDAO
 from servicos.formatacao import formatar_cpf, formatar_telefone, somente_digitos, variantes_cpf
-from servicos.email_servico import enviar_codigo_verificacao
+from servicos.email_servico import (
+    enviar_codigo_verificacao,
+    enviar_email_boas_vindas,
+    enviar_aviso_alteracao_dados
+)
+
+logger = logging.getLogger(__name__)
 
 auth_bp = Blueprint('auth', __name__)
 
@@ -98,6 +105,16 @@ def pagina_cadastro():
         except IntegrityError:
             db.session.rollback()
             return render_template("cadastro.html", erro="Erro: Não foi possível cadastrar. Verifique se os dados já estão em uso.")
+
+        # Envia e-mail de boas-vindas para o aluno recém-cadastrado
+        try:
+            enviar_email_boas_vindas(
+                destinatario=novo_aluno.email,
+                nome_usuario=novo_aluno.nome,
+                login=novo_aluno.login
+            )
+        except Exception as e:
+            logger.error(f"Erro ao enviar e-mail de boas-vindas: {e}")
 
         return redirect('/login')
 
@@ -240,6 +257,19 @@ def verificar_codigo():
         if sucesso:
             novo_login = pendente['dados']['login']
             session['usuario'] = novo_login
+            
+            # Envia e-mail notificando a alteração de dados com sucesso
+            try:
+                dest_email = pendente['dados'].get('email') or pendente.get('email_destino')
+                detalhe = "sua nova senha e dados de acesso" if pendente['dados'].get('nova_senha') else "seus dados de perfil"
+                enviar_aviso_alteracao_dados(
+                    destinatario=dest_email,
+                    nome_usuario=pendente['dados'].get('nome', aluno.nome if aluno else "Aluno"),
+                    detalhes=detalhe
+                )
+            except Exception as e:
+                logger.error(f"Erro ao disparar aviso de alteração de dados: {e}")
+
             session.pop('pendente_alteracao', None)
             flash("Suas credenciais e dados cadastrais foram atualizados com sucesso!", "sucesso")
             return redirect('/perfil')
@@ -300,6 +330,17 @@ def recuperar_senha():
         if aluno:
             aluno.senha = nova_senha
             db.session.commit()
+
+            # Envia e-mail de aviso de alteração de senha
+            try:
+                enviar_aviso_alteracao_dados(
+                    destinatario=aluno.email,
+                    nome_usuario=aluno.nome,
+                    detalhes="sua senha de acesso (via recuperação de senha)"
+                )
+            except Exception as e:
+                logger.error(f"Erro ao disparar aviso de alteração de senha: {e}")
+
             return render_template("login.html", msg="Senha alterada com sucesso! Faça login.")
         else:
             return render_template("recuperar.html", erro="CPF ou E-mail incorretos!")

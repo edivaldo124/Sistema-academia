@@ -1,17 +1,60 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Recuperar senha | Academia do Bitelo</title><link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}"><link rel="stylesheet" href="{{ url_for('static', filename='css/recuperar.css') }}"></head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar senha | Academia do Bitelo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/recuperar.css') }}">
+</head>
 <body>
-<main class="recovery-shell">
-    <section class="recovery-brand"><a class="site-brand" href="/"><img src="{{ url_for('static', filename='imagens/logo.png') }}" alt=""><span>Academia<br><strong>do Bitelo</strong></span></a><div><p class="eyebrow">Recuperação segura</p><h1>Volte para<br>o seu ritmo.</h1><p>Confirme seus dados cadastrados e defina uma nova senha de acesso.</p></div><span class="marker">02 / ACESSO</span></section>
-    <section class="recovery-panel"><div class="recovery-form"><a class="back-link" href="/login">← Voltar ao login</a><p class="eyebrow">Redefinir acesso</p><h2 class="page-title">Nova senha</h2><p class="page-subtitle">Use o CPF e e-mail vinculados à sua conta.</p>
-        {% if erro %}<div class="msg" role="alert">{{ erro }}</div>{% endif %}
-        <form action="/recuperar_senha" method="post">
-            <div class="field"><label for="cpf">CPF</label><input id="cpf" type="text" name="cpf" maxlength="14" inputmode="numeric" autocomplete="off" placeholder="000.000.000-00" data-mask="cpf" required></div>
-            <div class="field"><label for="email">E-mail cadastrado</label><input id="email" type="email" name="email" autocomplete="email" required></div>
-            <div class="field"><label for="nova_senha">Nova senha</label><input id="nova_senha" type="password" name="nova_senha" autocomplete="new-password" required></div>
-            <button class="button-primary" type="submit">Alterar minha senha →</button>
-        </form>
-    </div></section>
-</main>
-<script src="{{ url_for('static', filename='js/masks.js') }}"></script></body></html>
+    <main class="recovery-shell">
+        <section class="recovery-brand">
+            <a class="site-brand" href="/">
+                <img src="{{ url_for('static', filename='imagens/logo.png') }}" alt="">
+                <span>Academia<br><strong>do Bitelo</strong></span>
+            </a>
+            <div>
+                <p class="eyebrow">Recuperação segura</p>
+                <h1>Volte para<br>o seu ritmo.</h1>
+                <p>Confirme seus dados cadastrados e defina uma nova senha de acesso.</p>
+            </div>
+            <span class="marker">02 / ACESSO</span>
+        </section>
+
+        <section class="recovery-panel">
+            <div class="recovery-form">
+                <a class="back-link" href="/login">← Voltar ao login</a>
+                <p class="eyebrow">Redefinir acesso</p>
+                <h2 class="page-title">Nova senha</h2>
+                <p class="page-subtitle">Use o CPF e e-mail vinculados à sua conta.</p>
+
+                {% if erro %}
+                    <div class="msg" role="alert">{{ erro }}</div>
+                {% endif %}
+
+                <form action="/recuperar_senha" method="post">
+                    <div class="field">
+                        <label for="cpf">CPF</label>
+                        <input id="cpf" type="text" name="cpf" maxlength="14" inputmode="numeric" autocomplete="off" placeholder="000.000.000-00" data-mask="cpf" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="email">E-mail cadastrado</label>
+                        <input id="email" type="email" name="email" autocomplete="email" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="nova_senha">Nova senha</label>
+                        <input id="nova_senha" type="password" name="nova_senha" autocomplete="new-password" required>
+                    </div>
+
+                    <button class="button-primary" type="submit">Alterar minha senha →</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/masks.js') }}"></script>
+</body>
+</html>

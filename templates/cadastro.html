@@ -1,27 +1,94 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Cadastro | Academia do Bitelo</title><link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}"><link rel="stylesheet" href="{{ url_for('static', filename='css/cadastro.css') }}"></head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro | Academia do Bitelo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cadastro.css') }}">
+</head>
 <body>
-<a class="skip-link" href="#cadastro-form">Ir para o formulário</a>
-<header class="account-header"><a class="site-brand" href="/"><img src="{{ url_for('static', filename='imagens/logo.png') }}" alt=""><span>Academia<br><strong>do Bitelo</strong></span></a><a href="/login">Já tenho uma conta →</a></header>
-<main class="register-shell">
-    <aside><p class="eyebrow">Comece sua jornada</p><h1>Seu treino.<br>Seu ritmo.<br><em>Sua evolução.</em></h1><p>Preencha seus dados para criar o perfil de aluno e escolher o plano ideal.</p><ol><li><span>01</span>Crie sua conta</li><li><span>02</span>Escolha seu plano</li><li><span>03</span>Comece a treinar</li></ol></aside>
-    <section class="register-panel" aria-labelledby="register-title">
-        <div class="form-heading"><p class="eyebrow">Novo aluno</p><h2 id="register-title" class="page-title">Crie sua conta</h2><p class="page-subtitle">Os campos marcados são necessários para concluir o cadastro.</p></div>
-        {% if erro %}<div class="msg" role="alert">{{ erro }}</div>{% endif %}
-        <form id="cadastro-form" action="/cadastrar" method="post">
-            <div class="form-grid">
-                <div class="field field-wide"><label for="nomeusuario">Nome completo</label><input id="nomeusuario" type="text" name="nomeusuario" maxlength="150" autocomplete="name" required></div>
-                <div class="field"><label for="loginusuario">Nome de usuário</label><input id="loginusuario" type="text" name="loginusuario" maxlength="50" autocomplete="username" required></div>
-                <div class="field"><label for="dataNascimento">Data de nascimento</label><input id="dataNascimento" type="date" name="dataNascimento" required></div>
-                <div class="field"><label for="emailusuario">E-mail</label><input id="emailusuario" type="email" name="emailusuario" maxlength="150" autocomplete="email" required></div>
-                <div class="field"><label for="telefoneusuario">Telefone</label><input id="telefoneusuario" type="tel" name="telefoneusuario" maxlength="15" inputmode="tel" autocomplete="tel" placeholder="(00) 00000-0000" data-mask="phone" required></div>
-                <div class="field"><label for="cpfusuario">CPF</label><input id="cpfusuario" type="text" name="cpfusuario" maxlength="14" inputmode="numeric" autocomplete="off" placeholder="000.000.000-00" data-mask="cpf" required></div>
-                <div class="field"><label for="senhausuario">Senha</label><input id="senhausuario" type="password" name="senhausuario" maxlength="255" autocomplete="new-password" required></div>
-                <div class="field field-wide"><label for="descricaousuario">Observações de saúde <small>Opcional</small></label><textarea id="descricaousuario" name="descricaousuario" maxlength="255" placeholder="Informe restrições, lesões ou condições relevantes"></textarea></div>
+    <a class="skip-link" href="#cadastro-form">Ir para o formulário</a>
+
+    <header class="account-header">
+        <a class="site-brand" href="/">
+            <img src="{{ url_for('static', filename='imagens/logo.png') }}" alt="">
+            <span>Academia<br><strong>do Bitelo</strong></span>
+        </a>
+        <a href="/login">Já tenho uma conta →</a>
+    </header>
+
+    <main class="register-shell">
+        <aside>
+            <p class="eyebrow">Comece sua jornada</p>
+            <h1>Seu treino.<br>Seu ritmo.<br><em>Sua evolução.</em></h1>
+            <p>Preencha seus dados para criar o perfil de aluno e escolher o plano ideal.</p>
+            <ol>
+                <li><span>01</span>Crie sua conta</li>
+                <li><span>02</span>Escolha seu plano</li>
+                <li><span>03</span>Comece a treinar</li>
+            </ol>
+        </aside>
+
+        <section class="register-panel" aria-labelledby="register-title">
+            <div class="form-heading">
+                <p class="eyebrow">Novo aluno</p>
+                <h2 id="register-title" class="page-title">Crie sua conta</h2>
+                <p class="page-subtitle">Os campos marcados são necessários para concluir o cadastro.</p>
             </div>
-            <button class="button-primary" type="submit">Criar minha conta <span>→</span></button>
-        </form>
-    </section>
-</main>
-<script src="{{ url_for('static', filename='js/masks.js') }}"></script></body></html>
+
+            {% if erro %}
+                <div class="msg" role="alert">{{ erro }}</div>
+            {% endif %}
+
+            <form id="cadastro-form" action="/cadastrar" method="post">
+                <div class="form-grid">
+                    <div class="field field-wide">
+                        <label for="nomeusuario">Nome completo</label>
+                        <input id="nomeusuario" type="text" name="nomeusuario" maxlength="150" autocomplete="name" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="loginusuario">Nome de usuário</label>
+                        <input id="loginusuario" type="text" name="loginusuario" maxlength="50" autocomplete="username" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="dataNascimento">Data de nascimento</label>
+                        <input id="dataNascimento" type="date" name="dataNascimento" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="emailusuario">E-mail</label>
+                        <input id="emailusuario" type="email" name="emailusuario" maxlength="150" autocomplete="email" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="telefoneusuario">Telefone</label>
+                        <input id="telefoneusuario" type="tel" name="telefoneusuario" maxlength="15" inputmode="tel" autocomplete="tel" placeholder="(00) 00000-0000" data-mask="phone" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="cpfusuario">CPF</label>
+                        <input id="cpfusuario" type="text" name="cpfusuario" maxlength="14" inputmode="numeric" autocomplete="off" placeholder="000.000.000-00" data-mask="cpf" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="senhausuario">Senha</label>
+                        <input id="senhausuario" type="password" name="senhausuario" maxlength="255" autocomplete="new-password" required>
+                    </div>
+
+                    <div class="field field-wide">
+                        <label for="descricaousuario">Observações de saúde <small>Opcional</small></label>
+                        <textarea id="descricaousuario" name="descricaousuario" maxlength="255" placeholder="Informe restrições, lesões ou condições relevantes"></textarea>
+                    </div>
+                </div>
+
+                <button class="button-primary" type="submit">Criar minha conta <span>→</span></button>
+            </form>
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/masks.js') }}"></script>
+</body>
+</html>

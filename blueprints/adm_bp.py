@@ -1,3 +1,4 @@
+import logging
 import hmac
 import secrets
 from datetime import date
@@ -10,6 +11,9 @@ from dao.planoDAO import PlanoDAO
 from dao.financeiroDAO import PagamentoDAO
 from modelos.pagamento import Pagamento
 from servicos.formatacao import formatar_telefone
+from servicos.email_servico import enviar_confirmacao_pagamento
+
+logger = logging.getLogger(__name__)
 
 admin_bp = Blueprint('admin_blueprint', __name__)
 
@@ -160,6 +164,20 @@ def cadastrar_pagamento(cpf):
         aluno.mensalidade = 'Em Dia' if status == 'pago' else status.capitalize()
         db.session.commit()
 
+        # Dispara o recibo de confirmação de pagamento por e-mail se estiver pago
+        if status == 'pago' and aluno.email:
+            try:
+                enviar_confirmacao_pagamento(
+                    destinatario=aluno.email,
+                    nome_usuario=aluno.nome,
+                    nome_plano=plano.nome_plano if plano else "Plano de Treino",
+                    valor=float(valor),
+                    forma_pagamento=forma_pagamento or "Não informada",
+                    data_pagamento=novo_pagamento.data_pagamento or novo_pagamento.vencimento or date.today()
+                )
+            except Exception as e:
+                logger.error(f"Erro ao enviar recibo de pagamento por e-mail: {e}")
+
     return redirect(f'/admin/usuario/{cpf}')
 
 
@@ -179,5 +197,22 @@ def atualizar_status_pagamento(pagamento_id):
     PagamentoDAO.atualizar_status(pagamento_id, status, forma_pagamento)
     pagamento.aluno.mensalidade = 'Em Dia' if status == 'pago' else status.capitalize()
     db.session.commit()
+
+    # Dispara o recibo de confirmação de pagamento por e-mail quando o status for pago
+    if status == 'pago' and pagamento.aluno and pagamento.aluno.email:
+        try:
+            plano_nome = pagamento.plano.nome_plano if pagamento.plano else "Plano de Treino"
+            forma = forma_pagamento if forma_pagamento else pagamento.forma_pagamento
+            data_pg = pagamento.data_pagamento if pagamento.data_pagamento else date.today()
+            enviar_confirmacao_pagamento(
+                destinatario=pagamento.aluno.email,
+                nome_usuario=pagamento.aluno.nome,
+                nome_plano=plano_nome,
+                valor=pagamento.valor,
+                forma_pagamento=forma or "Não informada",
+                data_pagamento=data_pg
+            )
+        except Exception as e:
+            logger.error(f"Erro ao enviar recibo de pagamento por e-mail: {e}")
 
     return redirect(f'/admin/usuario/{pagamento.aluno.cpf}')
