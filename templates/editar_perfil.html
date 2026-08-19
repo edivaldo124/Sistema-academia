@@ -6,76 +6,7 @@
     <title>Editar Credenciais | Academia do Bitelo</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/cadastro.css') }}">
-    <style>
-        .security-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 12px;
-            background: rgba(255, 199, 44, 0.2);
-            border: 1px solid var(--yellow);
-            border-radius: 4px;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            margin-bottom: 16px;
-            color: #745400;
-        }
-        .security-info {
-            background: #faf7f0;
-            border-left: 4px solid var(--orange);
-            padding: 16px;
-            margin-bottom: 24px;
-            border-radius: 2px;
-        }
-        .security-info p {
-            margin: 0;
-            font-size: 13px;
-            color: var(--ink-2);
-            line-height: 1.5;
-        }
-        .security-info strong {
-            color: var(--orange-dark);
-        }
-        .password-box {
-            grid-column: 1 / -1;
-            background: #fbfaf6;
-            border: 1px dashed var(--line);
-            padding: 20px;
-            border-radius: 4px;
-            margin-top: 10px;
-        }
-        .password-box-title {
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--muted);
-            margin-bottom: 14px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .input-readonly {
-            background: #ebe8df !important;
-            cursor: not-allowed;
-            color: #72777a !important;
-        }
-        .btn-group {
-            display: flex;
-            gap: 16px;
-            margin-top: 28px;
-            flex-wrap: wrap;
-        }
-        .btn-group .button-primary {
-            flex: 1;
-            margin-top: 0;
-        }
-        .btn-group .button-secondary {
-            flex: 0 0 auto;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/editar_perfil.css') }}">
 </head>
 <body>
     <a class="skip-link" href="#editar-form">Ir para o formulário</a>
@@ -111,7 +42,7 @@
             </div>
 
             {% if erro %}
-                <div class="msg" role="alert" style="margin-bottom: 20px;">{{ erro }}</div>
+                <div class="msg" role="alert">{{ erro }}</div>
             {% endif %}
 
             <div class="security-info">
@@ -161,7 +92,7 @@
                     <div class="password-box">
                         <div class="password-box-title">
                             <span>Alteração de Senha</span>
-                            <span style="font-weight: 400; text-transform: none;">Deixe em branco caso não queira mudar a senha</span>
+                            <span class="password-box-subtitle">Deixe em branco caso não queira mudar a senha</span>
                         </div>
                         <div class="form-grid">
                             <div class="field">

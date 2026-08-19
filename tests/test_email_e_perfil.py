@@ -91,5 +91,47 @@ class TestAlteracaoCredenciais(unittest.TestCase):
             self.assertEqual(aluno_atualizado.email, 'carlos.novo@teste.com')
             self.assertEqual(aluno_atualizado.senha, 'senha_nova_123')
 
+
+class TestEmailServico(unittest.TestCase):
+    @patch('servicos.email_servico.requests.post')
+    def test_enviar_email_brevo(self, mock_post):
+        from servicos.email_servico import _enviar_email_brevo
+        mock_response = MagicMock()
+        mock_response.status_code = 201
+        mock_post.return_value = mock_response
+
+        sucesso, msg = _enviar_email_brevo(
+            destinatario="aluno@teste.com",
+            assunto="Teste",
+            conteudo_texto="Texto",
+            conteudo_html="<p>Texto</p>",
+            api_key="chave_teste",
+            remetente="remetente@teste.com"
+        )
+        self.assertTrue(sucesso)
+        self.assertEqual(msg, "E-mail enviado com sucesso.")
+        self.assertTrue(mock_post.called)
+
+    @patch('servicos.email_servico.requests.post')
+    def test_enviar_email_resend(self, mock_post):
+        from servicos.email_servico import _enviar_email_resend
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_post.return_value = mock_response
+
+        sucesso, msg = _enviar_email_resend(
+            destinatario="aluno@teste.com",
+            assunto="Teste",
+            conteudo_texto="Texto",
+            conteudo_html="<p>Texto</p>",
+            api_key="chave_teste",
+            remetente="remetente@teste.com"
+        )
+        self.assertTrue(sucesso)
+        self.assertEqual(msg, "E-mail enviado com sucesso.")
+        self.assertTrue(mock_post.called)
+
+
 if __name__ == '__main__':
     unittest.main()
+

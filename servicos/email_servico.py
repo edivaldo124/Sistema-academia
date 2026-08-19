@@ -1,7 +1,10 @@
+
+
 import os
 import smtplib
 from email.message import EmailMessage
 import logging
+import requests
 from dotenv import load_dotenv
 
 logger = logging.getLogger(__name__)
@@ -14,18 +17,87 @@ def obter_configuracoes_email():
     senha = senha.replace(' ', '')
     servidor_smtp = (os.environ.get('SMTP_SERVER') or 'smtp.gmail.com').strip()
     porta_smtp = int(os.environ.get('SMTP_PORT', 465))
-    return remetente, senha, servidor_smtp, porta_smtp
+    brevo_api_key = (os.environ.get('BREVO_API_KEY') or os.environ.get('SENDINBLUE_API_KEY') or '').strip()
+    resend_api_key = (os.environ.get('RESEND_API_KEY') or '').strip()
+    return remetente, senha, servidor_smtp, porta_smtp, brevo_api_key, resend_api_key
+
+
+def _enviar_email_brevo(destinatario, assunto, conteudo_texto, conteudo_html, api_key, remetente):
+    """Envia e-mail via API REST HTTPS da Brevo (antigo Sendinblue) - funciona no Render Free."""
+    url = "https://api.brevo.com/v3/smtp/email"
+    headers = {
+        "accept": "application/json",
+        "api-key": api_key,
+        "content-type": "application/json"
+    }
+    payload = {
+        "sender": {"name": "Academia do Bitelo", "email": remetente or "suporte@academiadobitelo.com"},
+        "to": [{"email": destinatario}],
+        "subject": assunto,
+        "textContent": conteudo_texto,
+    }
+    if conteudo_html:
+        payload["htmlContent"] = conteudo_html
+
+    try:
+        resp = requests.post(url, json=payload, headers=headers, timeout=15)
+        if resp.status_code in (200, 201, 202):
+            return True, "E-mail enviado com sucesso."
+        else:
+            logger.error(f"Erro Brevo API ({resp.status_code}): {resp.text}")
+            return False, f"Erro Brevo API ({resp.status_code}): {resp.text}"
+    except Exception as e:
+        logger.error(f"Exceção ao conectar à API Brevo: {e}")
+        return False, f"Erro de conexão com Brevo: {str(e)}"
+
+
+def _enviar_email_resend(destinatario, assunto, conteudo_texto, conteudo_html, api_key, remetente):
+    """Envia e-mail via API REST HTTPS da Resend - funciona no Render Free."""
+    url = "https://api.resend.com/emails"
+    from_email = remetente if (remetente and not remetente.endswith('@gmail.com')) else "Academia do Bitelo <onboarding@resend.dev>"
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json"
+    }
+    payload = {
+        "from": from_email,
+        "to": [destinatario],
+        "subject": assunto,
+        "text": conteudo_texto,
+    }
+    if conteudo_html:
+        payload["html"] = conteudo_html
+
+    try:
+        resp = requests.post(url, json=payload, headers=headers, timeout=15)
+        if resp.status_code in (200, 201):
+            return True, "E-mail enviado com sucesso."
+        else:
+            logger.error(f"Erro Resend API ({resp.status_code}): {resp.text}")
+            return False, f"Erro Resend API ({resp.status_code}): {resp.text}"
+    except Exception as e:
+        logger.error(f"Exceção ao conectar à API Resend: {e}")
+        return False, f"Erro de conexão com Resend: {str(e)}"
 
 
 def enviar_email(destinatario, assunto, conteudo_texto, conteudo_html=None):
     """
-    Envia um e-mail utilizando smtplib e EmailMessage (método padrão Python para Gmail com senha de app).
+    Envia um e-mail utilizando Brevo API, Resend API ou smtplib tradicional (SMTP).
     """
-    remetente, senha, servidor_smtp, porta_smtp = obter_configuracoes_email()
+    remetente, senha, servidor_smtp, porta_smtp, brevo_api_key, resend_api_key = obter_configuracoes_email()
 
+    # 1. Se BREVO_API_KEY estiver configurada, envia via API HTTP da Brevo
+    if brevo_api_key:
+        return _enviar_email_brevo(destinatario, assunto, conteudo_texto, conteudo_html, brevo_api_key, remetente)
+
+    # 2. Se RESEND_API_KEY estiver configurada, envia via API HTTP da Resend
+    if resend_api_key:
+        return _enviar_email_resend(destinatario, assunto, conteudo_texto, conteudo_html, resend_api_key, remetente)
+
+    # 3. Fallback: Envio padrão via SMTP direto (smtplib)
     if not remetente or not senha or 'seu_email@' in remetente or senha == 'sua_senha_de_aplicativo_aqui':
         logger.warning("Credenciais de e-mail não configuradas ou com valores padrão no .env (EMAIL_REMETENTE e EMAIL_SENHA).")
-        return False, "Configuração de e-mail ausente ou com valores padrão. Configure EMAIL_REMETENTE e EMAIL_SENHA no arquivo .env."
+        return False, "Configuração de e-mail ausente. Configure EMAIL_REMETENTE e EMAIL_SENHA ou BREVO_API_KEY no ambiente."
 
     msg = EmailMessage()
     msg['Subject'] = assunto
