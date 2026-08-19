@@ -16,6 +16,9 @@ class AlunoDAO:
         return Aluno.query.all()
 
     @staticmethod
+    def buscar_por_id(aluno_id):
+        return db.session.get(Aluno, aluno_id)
+
     @staticmethod
     def autenticar(usuario, senha):
         # Agora exigimos obrigatoriamente que a senha bata com o usuário, email, login ou cpf.
@@ -26,6 +29,7 @@ class AlunoDAO:
                     (Aluno.login == usuario) |
                     (Aluno.email == usuario) |
                     (Aluno.cpf.in_(cpfs_possiveis))
+                    
             ) & (Aluno.senha == senha)
         ).first()
 
@@ -35,6 +39,14 @@ class AlunoDAO:
         return Aluno.query.filter(
             (Aluno.nome == usuario) |(Aluno.login == usuario)| (Aluno.email == usuario) | (Aluno.descricao == usuario)| (Aluno.cpf == usuario)
         ).first()
+
+    @staticmethod
+    def login_em_uso_por_outro(login, aluno_id):
+        return Aluno.query.filter(Aluno.login == login, Aluno.id != aluno_id).first() is not None
+
+    @staticmethod
+    def email_em_uso_por_outro(email, aluno_id):
+        return Aluno.query.filter(Aluno.email == email, Aluno.id != aluno_id).first() is not None
 
     @staticmethod
     def atualizar_mensalidade(cpf, nova_situacao):
@@ -53,6 +65,34 @@ class AlunoDAO:
 
         try:
             db.session.delete(aluno)
+            db.session.commit()
+            return True
+        except SQLAlchemyError:
+            db.session.rollback()
+            return False
+
+    @staticmethod
+    def atualizar_credenciais_aluno(aluno_id, dados):
+        aluno = db.session.get(Aluno, aluno_id)
+        if not aluno:
+            return False
+
+        try:
+            if 'nome' in dados and dados['nome']:
+                aluno.nome = dados['nome'].strip()
+            if 'login' in dados and dados['login']:
+                aluno.login = dados['login'].strip()
+            if 'email' in dados and dados['email']:
+                aluno.email = dados['email'].strip().lower()
+            if 'telefone' in dados:
+                aluno.telefone = dados['telefone']
+            if 'datanascimento' in dados and dados['datanascimento']:
+                aluno.datanascimento = dados['datanascimento'].strip()
+            if 'descricao' in dados:
+                aluno.descricao = (dados.get('descricao') or '').strip()
+            if dados.get('nova_senha'):
+                aluno.senha = dados['nova_senha']
+
             db.session.commit()
             return True
         except SQLAlchemyError:

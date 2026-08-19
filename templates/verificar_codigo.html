@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#151a1e">
+    <title>Verificação de Segurança | Academia do Bitelo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/recuperar.css') }}">
+    <style>
+        .code-input-wrap {
+            margin: 20px 0;
+        }
+        .code-input {
+            width: 100%;
+            height: 60px;
+            font-size: 32px;
+            font-weight: 800;
+            text-align: center;
+            letter-spacing: 12px;
+            font-family: monospace;
+            border: 2px solid var(--orange);
+            border-radius: 4px;
+            background: #ffffff;
+            color: var(--ink);
+            outline: none;
+            box-shadow: 0 4px 12px rgba(239, 108, 35, 0.08);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .code-input:focus {
+            border-color: var(--orange-dark);
+            box-shadow: 0 0 0 4px rgba(239, 108, 35, 0.2);
+        }
+        .security-badge-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            background: var(--yellow);
+            color: var(--ink);
+            border-radius: 6px;
+            margin-bottom: 16px;
+        }
+        .email-highlight {
+            display: inline-block;
+            background: #ebe8df;
+            padding: 4px 10px;
+            border-radius: 3px;
+            font-weight: 700;
+            color: var(--ink);
+            word-break: break-all;
+        }
+        .actions-secondary {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid var(--line);
+            font-size: 13px;
+        }
+        .btn-resend {
+            background: none;
+            border: none;
+            color: var(--orange-dark);
+            font-weight: 700;
+            cursor: pointer;
+            padding: 0;
+            font-size: 13px;
+            text-decoration: underline;
+        }
+        .btn-resend:hover {
+            color: var(--ink);
+        }
+        .link-cancel {
+            color: var(--muted);
+            text-decoration: none;
+        }
+        .link-cancel:hover {
+            color: var(--red);
+        }
+    </style>
+</head>
+<body>
+    <main class="recovery-shell">
+        <section class="recovery-brand">
+            <a class="site-brand" href="/perfil">
+                <img src="{{ url_for('static', filename='imagens/logo.png') }}" alt="">
+                <span>Academia<br><strong>do Bitelo</strong></span>
+            </a>
+            <div>
+                <div class="security-badge-icon">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="20" height="16" x="2" y="4" rx="2"/>
+                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                    </svg>
+                </div>
+                <p class="eyebrow">Segurança da conta</p>
+                <h1>Código de<br>Verificação</h1>
+                <p>Para proteger seus dados, enviamos um código de segurança de 6 dígitos via Gmail.</p>
+            </div>
+            <span class="marker">02 / CONFIRMAÇÃO</span>
+        </section>
+
+        <section class="recovery-panel">
+            <div class="recovery-form">
+                <a class="back-link" href="/perfil/editar">← Voltar e alterar dados</a>
+                <p class="eyebrow">Etapa de confirmação</p>
+                <h2 class="page-title">Digite o código</h2>
+                <p class="page-subtitle">
+                    Verifique a caixa de entrada (ou spam) do e-mail: <br>
+                    <span class="email-highlight">{{ email_mascarado }}</span>
+                </p>
+
+                {% with mensagens = get_flashed_messages(with_categories=true) %}
+                    {% for categoria, mensagem in mensagens %}
+                        <div class="msg msg-{{ categoria }}" role="alert" style="margin: 16px 0;">{{ mensagem }}</div>
+                    {% endfor %}
+                {% endwith %}
+
+                {% if erro %}
+                    <div class="msg" role="alert" style="margin: 16px 0;">{{ erro }}</div>
+                {% endif %}
+
+                <form action="/perfil/verificar_codigo" method="post">
+                    <div class="field">
+                        <label for="codigo">Código de 6 dígitos</label>
+                        <div class="code-input-wrap">
+                            <input 
+                                id="codigo" 
+                                class="code-input" 
+                                type="text" 
+                                name="codigo" 
+                                maxlength="6" 
+                                inputmode="numeric" 
+                                pattern="[0-9]*" 
+                                placeholder="······" 
+                                autofocus 
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <button class="button-primary" type="submit" style="width: 100%;">Confirmar Alterações →</button>
+                </form>
+
+                <div class="actions-secondary">
+                    <form action="/perfil/reenviar_codigo" method="post" style="display: inline;">
+                        <button type="submit" class="btn-resend">Não recebi o código (Reenviar)</button>
+                    </form>
+                    <a href="/perfil/cancelar_alteracao" class="link-cancel">Cancelar</a>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

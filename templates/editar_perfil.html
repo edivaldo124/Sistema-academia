@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Credenciais | Academia do Bitelo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cadastro.css') }}">
+    <style>
+        .security-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: rgba(255, 199, 44, 0.2);
+            border: 1px solid var(--yellow);
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 16px;
+            color: #745400;
+        }
+        .security-info {
+            background: #faf7f0;
+            border-left: 4px solid var(--orange);
+            padding: 16px;
+            margin-bottom: 24px;
+            border-radius: 2px;
+        }
+        .security-info p {
+            margin: 0;
+            font-size: 13px;
+            color: var(--ink-2);
+            line-height: 1.5;
+        }
+        .security-info strong {
+            color: var(--orange-dark);
+        }
+        .password-box {
+            grid-column: 1 / -1;
+            background: #fbfaf6;
+            border: 1px dashed var(--line);
+            padding: 20px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .password-box-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--muted);
+            margin-bottom: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .input-readonly {
+            background: #ebe8df !important;
+            cursor: not-allowed;
+            color: #72777a !important;
+        }
+        .btn-group {
+            display: flex;
+            gap: 16px;
+            margin-top: 28px;
+            flex-wrap: wrap;
+        }
+        .btn-group .button-primary {
+            flex: 1;
+            margin-top: 0;
+        }
+        .btn-group .button-secondary {
+            flex: 0 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <a class="skip-link" href="#editar-form">Ir para o formulário</a>
+    <header class="account-header">
+        <a class="site-brand" href="/perfil">
+            <img src="{{ url_for('static', filename='imagens/logo.png') }}" alt="">
+            <span>Academia<br><strong>do Bitelo</strong></span>
+        </a>
+        <a href="/perfil">← Voltar ao perfil</a>
+    </header>
+
+    <main class="register-shell">
+        <aside>
+            <div class="security-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Verificação Segura
+            </div>
+            <p class="eyebrow">Área do aluno</p>
+            <h1>Atualize seus<br>dados e<br><em>credenciais.</em></h1>
+            <p>Mantenha suas informações de contato e acesso sempre em dia com proteção por e-mail.</p>
+            <ol>
+                <li><span>01</span>Altere seus dados</li>
+                <li><span>02</span>Receba o código no Gmail</li>
+                <li><span>03</span>Confirme e salve</li>
+            </ol>
+        </aside>
+
+        <section class="register-panel" aria-labelledby="edit-title">
+            <div class="form-heading">
+                <p class="eyebrow">Configurações de conta</p>
+                <h2 id="edit-title" class="page-title">Editar credenciais</h2>
+                <p class="page-subtitle">Altere suas informações de perfil, usuário, e-mail e senha de acesso.</p>
+            </div>
+
+            {% if erro %}
+                <div class="msg" role="alert" style="margin-bottom: 20px;">{{ erro }}</div>
+            {% endif %}
+
+            <div class="security-info">
+                <p>
+                    <strong>Proteção por E-mail:</strong> Para sua segurança, ao clicar em "Salvar alterações", enviaremos um <strong>código de verificação de 6 dígitos</strong> para o seu e-mail cadastrado (<strong>{{ usuario.email }}</strong>) antes de aplicar as mudanças.
+                </p>
+            </div>
+
+            <form id="editar-form" action="/perfil/editar" method="post">
+                <div class="form-grid">
+                    <div class="field field-wide">
+                        <label for="nome">Nome completo</label>
+                        <input id="nome" type="text" name="nome" value="{{ usuario.nome }}" maxlength="150" autocomplete="name" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="login">Nome de usuário (Login)</label>
+                        <input id="login" type="text" name="login" value="{{ usuario.login }}" maxlength="50" autocomplete="username" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="email">E-mail (Gmail / Contato)</label>
+                        <input id="email" type="email" name="email" value="{{ usuario.email }}" maxlength="150" autocomplete="email" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="telefone">Telefone</label>
+                        <input id="telefone" type="tel" name="telefone" value="{{ usuario.telefone }}" maxlength="15" inputmode="tel" autocomplete="tel" placeholder="(00) 00000-0000" data-mask="phone" required>
+                    </div>
+
+                    <div class="field">
+                        <label for="datanascimento">Data de nascimento</label>
+                        <input id="datanascimento" type="date" name="datanascimento" value="{{ usuario.datanascimento }}" required>
+                    </div>
+
+                    <div class="field field-wide">
+                        <label for="cpf_bloqueado">CPF (Identificador único - não editável)</label>
+                        <input id="cpf_bloqueado" type="text" value="{{ usuario.cpf }}" readonly class="input-readonly">
+                    </div>
+
+                    <div class="field field-wide">
+                        <label for="descricao">Observações / Restrições de saúde <small>Opcional</small></label>
+                        <textarea id="descricao" name="descricao" maxlength="255" placeholder="Informe restrições, lesões ou observações relevantes">{{ usuario.descricao or '' }}</textarea>
+                    </div>
+
+                    <!-- Seção Opcional de Troca de Senha -->
+                    <div class="password-box">
+                        <div class="password-box-title">
+                            <span>Alteração de Senha</span>
+                            <span style="font-weight: 400; text-transform: none;">Deixe em branco caso não queira mudar a senha</span>
+                        </div>
+                        <div class="form-grid">
+                            <div class="field">
+                                <label for="senha_atual">Senha atual</label>
+                                <input id="senha_atual" type="password" name="senha_atual" autocomplete="current-password" placeholder="Digite sua senha atual">
+                            </div>
+                            <div class="field">
+                                <label for="nova_senha">Nova senha</label>
+                                <input id="nova_senha" type="password" name="nova_senha" autocomplete="new-password" placeholder="Mínimo 4 dígitos">
+                            </div>
+                            <div class="field field-wide">
+                                <label for="confirmar_senha">Confirmar nova senha</label>
+                                <input id="confirmar_senha" type="password" name="confirmar_senha" autocomplete="new-password" placeholder="Repita a nova senha">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="button-primary" type="submit">Salvar e Enviar Código <span>→</span></button>
+                    <a href="/perfil" class="button-secondary">Cancelar</a>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/masks.js') }}"></script>
+</body>
+</html>

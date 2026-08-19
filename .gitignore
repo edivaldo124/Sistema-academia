@@ -1,1 +1,30 @@
-venv *
+# Ambiente virtual
+.venv/
+venv/
+ENV/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Configurações de ambiente / Segredos
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# IDEs e Editores
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Banco de dados local / instâncias
+instance/
+*.sqlite3
+*.db
+
+# Logs
+*.log

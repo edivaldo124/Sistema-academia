@@ -1,19 +1,157 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Minha área | Academia do Bitelo</title><link rel="stylesheet" href="{{ url_for('static',filename='css/theme.css') }}"><link rel="stylesheet" href="{{ url_for('static',filename='css/pgUsuario.css') }}"><link rel="stylesheet" href="{{ url_for('static',filename='css/planos.css') }}"><script src="{{ url_for('static',filename='js/pgUsuario.js') }}" defer></script></head>
-<body><a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
-<header class="app-header"><a class="site-brand" href="/"><img src="{{ url_for('static',filename='imagens/logo.png') }}" alt=""><span>Academia<br><strong>do Bitelo</strong></span></a><nav><a href="#mensalidades">Mensalidades</a><a href="#planos">Planos</a><a href="/logout" id="link-sair" data-confirm-modal data-modal-eyebrow="Encerrar sessão" data-modal-title="Deseja sair?" data-modal-message="Sua sessão será encerrada e você voltará para a página inicial." data-modal-confirm="Sim, sair">Sair</a></nav></header>
-<main id="conteudo" class="profile-page">
-<section class="profile-hero"><div><p class="eyebrow">Área do aluno</p><h1>Olá, {{ usuario.nome.split()[0] }}.</h1><p>Seu espaço para acompanhar plano, pagamentos e evolução.</p></div><div class="profile-mark" aria-hidden="true">{{ usuario.nome[0]|upper }}</div></section>
-<section class="summary-grid" aria-label="Resumo da conta">
-<article><span>Status financeiro</span><strong class="financial-status">{{ usuario.mensalidade }}</strong></article>
-<article><span>Plano atual</span><strong>{% if usuario.plano %}{{ usuario.plano.nome_plano }}{% else %}Sem plano{% endif %}</strong></article>
-<article><span>Contato</span><strong>{{ usuario.email }}</strong></article>
-{% if usuario.data_vencimento %}<article><span>Próximo vencimento</span><strong>{{ usuario.data_vencimento }}</strong></article>{% endif %}
-</section>
-{% if usuario.descricao %}<section class="profile-note"><span>Observações</span><p>{{ usuario.descricao }}</p></section>{% endif %}
-<section class="content-section" id="mensalidades"><div class="section-heading"><div><p class="eyebrow">Financeiro</p><h2>Histórico de mensalidades</h2></div><p>Consulte seus pagamentos e vencimentos.</p></div>
-<div class="tabela-pagamentos"><table><thead><tr><th>Plano</th><th>Valor</th><th>Vencimento</th><th>Pagamento</th><th>Status</th><th>Forma</th></tr></thead><tbody>
-{% for pagamento in pagamentos %}<tr><td><strong>{{ pagamento.plano.nome_plano }}</strong></td><td>R$ {{ '%.2f'|format(pagamento.valor)|replace('.',',') }}</td><td>{{ pagamento.vencimento.strftime('%d/%m/%Y') }}</td><td>{{ pagamento.data_pagamento.strftime('%d/%m/%Y') if pagamento.data_pagamento else '—' }}</td><td><span class="status status-{{ pagamento.status }}">{{ pagamento.status }}</span></td><td>{{ (pagamento.forma_pagamento or '—')|replace('_',' ')|title }}</td></tr>{% else %}<tr><td colspan="6" class="empty-state">Nenhuma mensalidade registrada.</td></tr>{% endfor %}
-</tbody></table></div></section>
-<section class="content-section secao-planos" id="planos"><div class="section-heading"><div><p class="eyebrow">Escolha seu ritmo</p><h2>Planos disponíveis</h2></div><p>Você pode alterar seu plano quando precisar.</p></div>
-<div class="grid-planos" data-plano-atual="{{ usuario.plano_id or '' }}">{% for plano in planos %}<article class="card-plano" data-plano-id="{{ plano.id }}"><span class="plan-index">0{{ loop.index }}</span><h3>{{ plano.nome_plano }}</h3><p class="preco" data-preco="{{ plano.preco_plano }}">R$ {{ plano.preco_plano }}</p><p class="duracao">{{ plano.duracao_dias }} dias de acesso</p><form action="/perfil" method="POST" class="form-contratar-plano" data-plano-nome="{{ plano.nome_plano }}" data-confirm-modal data-modal-eyebrow="Alterar plano" data-modal-title="Escolher {{ plano.nome_plano }}?" data-modal-message="Este plano passará a ser associado ao seu perfil. Confirme para continuar." data-modal-confirm="Confirmar plano" data-loading-text="Processando…"><input type="hidden" name="plano" value="{{ plano.id }}"><button type="submit" class="btn-escolher">Escolher plano</button></form></article>{% else %}<p class="empty-state">Nenhum plano disponível no momento.</p>{% endfor %}</div></section>
-</main><footer class="app-footer"><span>© 2026 Academia do Bitelo</span><a href="/">Voltar ao início</a></footer>{% include 'components/confirm_modal.html' %}<link rel="stylesheet" href="{{ url_for('static',filename='css/modal.css') }}"><script src="{{ url_for('static',filename='js/modal.js') }}"></script></body></html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Minha área | Academia do Bitelo</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/theme.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/pgUsuario.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/planos.css') }}">
+    <script src="{{ url_for('static',filename='js/pgUsuario.js') }}" defer></script>
+</head>
+<body>
+    <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+    <header class="app-header">
+        <a class="site-brand" href="/">
+            <img src="{{ url_for('static',filename='imagens/logo.png') }}" alt="">
+            <span>Academia<br><strong>do Bitelo</strong></span>
+        </a>
+        <nav>
+            <a href="#mensalidades">Mensalidades</a>
+            <a href="#planos">Planos</a>
+            <a href="/perfil/editar" style="color: var(--yellow);">Editar Dados</a>
+            <a href="/logout" id="link-sair" data-confirm-modal data-modal-eyebrow="Encerrar sessão" data-modal-title="Deseja sair?" data-modal-message="Sua sessão será encerrada e você voltará para a página inicial." data-modal-confirm="Sim, sair">Sair</a>
+        </nav>
+    </header>
+
+    <main id="conteudo" class="profile-page">
+        {% with mensagens = get_flashed_messages(with_categories=true) %}
+            {% if mensagens %}
+                <div style="margin-bottom: 28px;">
+                    {% for categoria, mensagem in mensagens %}
+                        <div class="msg msg-{{ categoria }}" role="alert" style="margin-bottom: 10px;">{{ mensagem }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <section class="profile-hero">
+            <div>
+                <p class="eyebrow">Área do aluno</p>
+                <h1>Olá, {{ usuario.nome.split()[0] }}.</h1>
+                <p>Seu espaço para acompanhar plano, pagamentos e evolução.</p>
+                <div style="margin-top: 16px; display: flex; gap: 12px; align-items: center;">
+                    <a href="/perfil/editar" class="button-secondary" style="min-height: 38px; padding: 0 16px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; display: inline-flex; align-items: center; gap: 6px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                        Editar dados e credenciais
+                    </a>
+                </div>
+            </div>
+            <div class="profile-mark" aria-hidden="true">{{ usuario.nome[0]|upper }}</div>
+        </section>
+
+        <section class="summary-grid" aria-label="Resumo da conta">
+            <article>
+                <span>Status financeiro</span>
+                <strong class="financial-status">{{ usuario.mensalidade }}</strong>
+            </article>
+            <article>
+                <span>Plano atual</span>
+                <strong>{% if usuario.plano %}{{ usuario.plano.nome_plano }}{% else %}Sem plano{% endif %}</strong>
+            </article>
+            <article>
+                <span>Contato</span>
+                <strong>{{ usuario.email }}</strong>
+            </article>
+            {% if usuario.data_vencimento %}
+            <article>
+                <span>Próximo vencimento</span>
+                <strong>{{ usuario.data_vencimento }}</strong>
+            </article>
+            {% endif %}
+        </section>
+
+        {% if usuario.descricao %}
+        <section class="profile-note">
+            <span>Observações</span>
+            <p>{{ usuario.descricao }}</p>
+        </section>
+        {% endif %}
+
+        <section class="content-section" id="mensalidades">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">Financeiro</p>
+                    <h2>Histórico de mensalidades</h2>
+                </div>
+                <p>Consulte seus pagamentos e vencimentos.</p>
+            </div>
+            <div class="tabela-pagamentos">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Plano</th>
+                            <th>Valor</th>
+                            <th>Vencimento</th>
+                            <th>Pagamento</th>
+                            <th>Status</th>
+                            <th>Forma</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for pagamento in pagamentos %}
+                        <tr>
+                            <td><strong>{{ pagamento.plano.nome_plano }}</strong></td>
+                            <td>R$ {{ '%.2f'|format(pagamento.valor)|replace('.',',') }}</td>
+                            <td>{{ pagamento.vencimento.strftime('%d/%m/%Y') }}</td>
+                            <td>{{ pagamento.data_pagamento.strftime('%d/%m/%Y') if pagamento.data_pagamento else '—' }}</td>
+                            <td><span class="status status-{{ pagamento.status }}">{{ pagamento.status }}</span></td>
+                            <td>{{ (pagamento.forma_pagamento or '—')|replace('_',' ')|title }}</td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="6" class="empty-state">Nenhuma mensalidade registrada.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="content-section secao-planos" id="planos">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">Escolha seu ritmo</p>
+                    <h2>Planos disponíveis</h2>
+                </div>
+                <p>Você pode alterar seu plano quando precisar.</p>
+            </div>
+            <div class="grid-planos" data-plano-atual="{{ usuario.plano_id or '' }}">
+                {% for plano in planos %}
+                <article class="card-plano" data-plano-id="{{ plano.id }}">
+                    <span class="plan-index">0{{ loop.index }}</span>
+                    <h3>{{ plano.nome_plano }}</h3>
+                    <p class="preco" data-preco="{{ plano.preco_plano }}">R$ {{ plano.preco_plano }}</p>
+                    <p class="duracao">{{ plano.duracao_dias }} dias de acesso</p>
+                    <form action="/perfil" method="POST" class="form-contratar-plano" data-plano-nome="{{ plano.nome_plano }}" data-confirm-modal data-modal-eyebrow="Alterar plano" data-modal-title="Escolher {{ plano.nome_plano }}?" data-modal-message="Este plano passará a ser associado ao seu perfil. Confirme para continuar." data-modal-confirm="Confirmar plano" data-loading-text="Processando…">
+                        <input type="hidden" name="plano" value="{{ plano.id }}">
+                        <button type="submit" class="btn-escolher">Escolher plano</button>
+                    </form>
+                </article>
+                {% else %}
+                <p class="empty-state">Nenhum plano disponível no momento.</p>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+
+    <footer class="app-footer">
+        <span>© 2026 Academia do Bitelo</span>
+        <a href="/">Voltar ao início</a>
+    </footer>
+
+    {% include 'components/confirm_modal.html' %}
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/modal.css') }}">
+    <script src="{{ url_for('static',filename='js/modal.js') }}"></script>
+</body>
+</html>
