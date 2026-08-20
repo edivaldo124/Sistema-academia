@@ -147,6 +147,23 @@
                 {% endfor %}
             </div>
         </section>
+
+        <section class="content-section" id="preferencias">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">Comunicação</p>
+                    <h2>Preferências de e-mail</h2>
+                </div>
+                <p>Escolha se quer receber recados e avisos gerais da academia.</p>
+            </div>
+            <form action="/perfil/preferencias" method="POST" class="form-preferencias">
+                <label class="campo-checkbox">
+                    <input type="checkbox" name="receber_recados" {% if usuario.receber_recados %}checked{% endif %}>
+                    Quero receber recados e avisos da academia por e-mail
+                </label>
+                <button type="submit" class="button-secondary">Salvar preferência</button>
+            </form>
+        </section>
     </main>
 
     <footer class="app-footer">
