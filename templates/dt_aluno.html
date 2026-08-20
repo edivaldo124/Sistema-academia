@@ -146,7 +146,7 @@
 
                     <div class="grupo-input">
                         <label>Data do pagamento:</label>
-                        <input type="date" name="data_pagamento">
+                        <input type="date" name="data_pagamento" id="data-pagamento-pagamento">
                     </div>
 
                     <div class="grupo-input">
@@ -220,6 +220,7 @@
         const plano = document.getElementById('plano-pagamento');
         const valor = document.getElementById('valor-pagamento');
         const vencimento = document.getElementById('vencimento-pagamento');
+        const dataPagamento = document.getElementById('data-pagamento-pagamento');
 
         function formatarDataISO(data) {
             const ano = data.getFullYear();
@@ -242,12 +243,17 @@
             }
         }
 
+        function preencherDataPagamento() {
+            if (dataPagamento && !dataPagamento.value) dataPagamento.value = formatarDataISO(new Date());
+        }
+
         plano.addEventListener('change', () => {
             preencherValor();
             preencherVencimento();
         });
         preencherValor();
         preencherVencimento();
+        preencherDataPagamento();
     </script>
 </body>
 </html>
