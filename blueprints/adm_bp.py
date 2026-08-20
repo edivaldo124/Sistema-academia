@@ -11,7 +11,12 @@ from dao.planoDAO import PlanoDAO
 from dao.financeiroDAO import PagamentoDAO
 from modelos.pagamento import Pagamento
 from servicos.formatacao import formatar_telefone
-from servicos.email_servico import enviar_confirmacao_pagamento
+from servicos.email_servico import (
+    enviar_confirmacao_pagamento,
+    enviar_notificacao_plano,
+    enviar_aviso_status_mensalidade,
+    enviar_aviso_pagamento_atrasado,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -46,7 +51,7 @@ def cadastrar_plano():
 
     nome_plano = request.form.get("nome_plano")
     preco_plano = request.form.get("preco_plano")
-    duracao_dias = request.form.get("duracao_dias")  # Captura os dias
+    duracao_dias = request.form.get("duracao_dias")  
 
     if nome_plano and preco_plano and duracao_dias:
         novo_plano = Plano(nome_plano=nome_plano, preco_plano=float(preco_plano),duracao_dias=int(duracao_dias))
@@ -89,7 +94,18 @@ def alterar_mensalidade(cpf, status):
     if session.get('tipo_usuario') != 'admin' or session.get('usuario') != 'admin':
         return redirect('/login')
 
+    aluno = AlunoDAO.buscar_por_usuario(cpf)
     AlunoDAO.atualizar_mensalidade(cpf, status)
+
+    if aluno and aluno.email:
+        try:
+            enviar_aviso_status_mensalidade(
+                destinatario=aluno.email,
+                nome_usuario=aluno.nome,
+                status=status
+            )
+        except Exception as e:
+            logger.error(f"Erro ao enviar aviso de status da mensalidade por e-mail: {e}")
 
     return redirect('/admin')
 
@@ -125,7 +141,22 @@ def detalhes_usuario(cpf):
             'descricao': request.form.get('descricao')
         }
 
+        plano_id_anterior = aluno.plano_id
+
         AlunoDAO.atualizar_dados_completos(cpf, dados_atualizados)
+
+        # Dispara aviso por e-mail quando o admin muda o plano do aluno
+        if aluno.plano_id and aluno.plano_id != plano_id_anterior and aluno.email:
+            try:
+                plano_novo = PlanoDAO.buscar_por_id(aluno.plano_id)
+                enviar_notificacao_plano(
+                    destinatario=aluno.email,
+                    nome_usuario=aluno.nome,
+                    nome_plano=plano_novo.nome_plano if plano_novo else "Plano de Treino",
+                    data_vencimento=aluno.data_vencimento
+                )
+            except Exception as e:
+                logger.error(f"Erro ao enviar notificação de novo plano por e-mail: {e}")
 
         return redirect('/admin')
 
@@ -164,7 +195,6 @@ def cadastrar_pagamento(cpf):
         aluno.mensalidade = 'Em Dia' if status == 'pago' else status.capitalize()
         db.session.commit()
 
-        # Dispara o recibo de confirmação de pagamento por e-mail se estiver pago
         if status == 'pago' and aluno.email:
             try:
                 enviar_confirmacao_pagamento(
@@ -177,6 +207,17 @@ def cadastrar_pagamento(cpf):
                 )
             except Exception as e:
                 logger.error(f"Erro ao enviar recibo de pagamento por e-mail: {e}")
+        elif status == 'atrasado' and aluno.email:
+            try:
+                enviar_aviso_pagamento_atrasado(
+                    destinatario=aluno.email,
+                    nome_usuario=aluno.nome,
+                    nome_plano=plano.nome_plano if plano else "Plano de Treino",
+                    valor=float(valor),
+                    vencimento=novo_pagamento.vencimento
+                )
+            except Exception as e:
+                logger.error(f"Erro ao enviar aviso de atraso por e-mail: {e}")
 
     return redirect(f'/admin/usuario/{cpf}')
 
@@ -198,7 +239,6 @@ def atualizar_status_pagamento(pagamento_id):
     pagamento.aluno.mensalidade = 'Em Dia' if status == 'pago' else status.capitalize()
     db.session.commit()
 
-    # Dispara o recibo de confirmação de pagamento por e-mail quando o status for pago
     if status == 'pago' and pagamento.aluno and pagamento.aluno.email:
         try:
             plano_nome = pagamento.plano.nome_plano if pagamento.plano else "Plano de Treino"
@@ -214,5 +254,17 @@ def atualizar_status_pagamento(pagamento_id):
             )
         except Exception as e:
             logger.error(f"Erro ao enviar recibo de pagamento por e-mail: {e}")
+    elif status == 'atrasado' and pagamento.aluno and pagamento.aluno.email:
+        try:
+            plano_nome = pagamento.plano.nome_plano if pagamento.plano else "Plano de Treino"
+            enviar_aviso_pagamento_atrasado(
+                destinatario=pagamento.aluno.email,
+                nome_usuario=pagamento.aluno.nome,
+                nome_plano=plano_nome,
+                valor=pagamento.valor,
+                vencimento=pagamento.vencimento
+            )
+        except Exception as e:
+            logger.error(f"Erro ao enviar aviso de atraso por e-mail: {e}")
 
     return redirect(f'/admin/usuario/{pagamento.aluno.cpf}')
