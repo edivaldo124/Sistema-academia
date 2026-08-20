@@ -1,1 +1,20 @@
-{"0": "Admin Panel & Payments Backend", "1": "User Auth & Profile Flow", "2": "Email Service & User Model Tests", "3": "Frontend Templates", "4": "Graphify Skill - Core Pipeline", "5": "Graphify Skill - Exports & Extraction Spec", "6": "Python Dependencies", "7": "Admin Panel JS", "8": "Landing Page JS", "9": "Flask Server Entrypoint", "10": "Gym Brand Logo", "11": "Graphify - GitHub & Merge", "12": "Input Masks JS", "13": "Modal JS Utility", "14": "User Panel JS", "15": "App Entry Point", "16": "Project README"}
+{
+  "0": "AlunoDAO",
+  "1": "usuario_bp.py",
+  "2": "email_servico.py",
+  "3": "Aluno Detail (Admin) Page",
+  "4": "/graphify Command",
+  "5": "Exports & Benchmark Reference",
+  "6": "Python Dependencies (requirements.txt)",
+  "7": "pgAdm.js",
+  "8": "index.js",
+  "9": "adm_bp.py",
+  "10": "Academia do Bitelo (brand name)",
+  "11": "graphify clone",
+  "12": "masks.js",
+  "13": "modal.js",
+  "14": "pgUsuario.js",
+  "15": "main.py",
+  "16": "ProjetoWeb / Sistema-academia",
+  "17": "TestAlteracaoCredenciais"
+}

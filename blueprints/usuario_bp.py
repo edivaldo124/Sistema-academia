@@ -1,6 +1,7 @@
 import logging
 import secrets
 import time
+from datetime import date, timedelta
 from flask import Blueprint, render_template, request, session, redirect, flash, url_for
 from sqlalchemy.exc import IntegrityError
 from config import db
@@ -12,7 +13,8 @@ from servicos.formatacao import formatar_cpf, formatar_telefone, somente_digitos
 from servicos.email_servico import (
     enviar_codigo_verificacao,
     enviar_email_boas_vindas,
-    enviar_aviso_alteracao_dados
+    enviar_aviso_alteracao_dados,
+    enviar_notificacao_plano
 )
 
 logger = logging.getLogger(__name__)
@@ -135,14 +137,49 @@ def pagina_perfil():
     if request.method == "POST":
         plano_id_escolhido = request.form.get("plano")
         if plano_id_escolhido and plano_id_escolhido != "Nenhum":
-            aluno_dados.plano_id = int(plano_id_escolhido)
+            novo_plano_id = int(plano_id_escolhido)
+            plano_mudou = novo_plano_id != aluno_dados.plano_id
+            plano_escolhido = PlanoDAO.buscar_por_id(novo_plano_id) if plano_mudou else None
+
+            aluno_dados.plano_id = novo_plano_id
+            if plano_mudou and plano_escolhido:
+                aluno_dados.data_vencimento = (date.today() + timedelta(days=plano_escolhido.duracao_dias)).strftime('%Y-%m-%d')
+
             db.session.commit()
             flash("Plano atualizado com sucesso!", "sucesso")
+
+            if plano_mudou and aluno_dados.email:
+                try:
+                    enviar_notificacao_plano(
+                        destinatario=aluno_dados.email,
+                        nome_usuario=aluno_dados.nome,
+                        nome_plano=plano_escolhido.nome_plano if plano_escolhido else "Plano de Treino",
+                        data_vencimento=aluno_dados.data_vencimento
+                    )
+                except Exception as e:
+                    logger.error(f"Erro ao enviar notificação de novo plano por e-mail: {e}")
 
     lista_planos = PlanoDAO.listar_todos()
     pagamentos = PagamentoDAO.listar_por_aluno(aluno_dados.id)
 
     return render_template("pgUsuario.html", usuario=aluno_dados, planos=lista_planos, pagamentos=pagamentos)
+
+
+@auth_bp.route("/perfil/preferencias", methods=["POST"])
+def atualizar_preferencias_email():
+    if session.get('tipo_usuario') != 'aluno' or not session.get('aluno_id'):
+        return redirect('/login')
+
+    aluno = AlunoDAO.buscar_por_id(session['aluno_id'])
+    if not aluno:
+        session.clear()
+        return redirect('/logout')
+
+    aluno.receber_recados = 'receber_recados' in request.form
+    db.session.commit()
+    flash('Preferência de e-mail atualizada.', 'sucesso')
+
+    return redirect('/perfil')
 
 
 @auth_bp.route("/perfil/editar", methods=["GET", "POST"])

@@ -16,6 +16,7 @@ from servicos.email_servico import (
     enviar_notificacao_plano,
     enviar_aviso_status_mensalidade,
     enviar_aviso_pagamento_atrasado,
+    enviar_recado_admin,
 )
 
 logger = logging.getLogger(__name__)
@@ -42,6 +43,49 @@ def painel_adm():
         planos=lista_planos,
         token_exclusao=token_exclusao
     )
+
+
+@admin_bp.route("/admin/recados", methods=["POST"])
+def enviar_recado():
+    if session.get('tipo_usuario') != 'admin' or session.get('usuario') != 'admin':
+        return redirect('/login')
+
+    assunto = (request.form.get('assunto') or '').strip()
+    mensagem = (request.form.get('mensagem') or '').strip()
+
+    if not mensagem:
+        flash('Escreva uma mensagem antes de enviar o recado.', 'erro')
+        return redirect('/admin')
+
+    alunos = [a for a in AlunoDAO.listar_todos() if a.email and a.receber_recados]
+    enviados = 0
+    falhas = 0
+
+    for aluno in alunos:
+        try:
+            sucesso, _ = enviar_recado_admin(
+                destinatario=aluno.email,
+                nome_usuario=aluno.nome,
+                assunto=assunto,
+                mensagem=mensagem
+            )
+            if sucesso:
+                enviados += 1
+            else:
+                falhas += 1
+        except Exception as e:
+            falhas += 1
+            logger.error(f"Erro ao enviar recado para {aluno.email}: {e}")
+
+    if enviados:
+        resumo = f'Recado enviado para {enviados} aluno(s).'
+        if falhas:
+            resumo += f' Falhou para {falhas}.'
+        flash(resumo, 'sucesso')
+    else:
+        flash('Não foi possível enviar o recado para nenhum aluno.', 'erro')
+
+    return redirect('/admin')
 
 
 @admin_bp.route("/admin/cadastrar_plano", methods=["POST"])

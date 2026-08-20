@@ -2,6 +2,7 @@
 
 import os
 import smtplib
+import html as html_lib
 from datetime import date, datetime
 from email.message import EmailMessage
 import logging
@@ -427,6 +428,66 @@ Equipe Academia do Bitelo
 """
 
     return enviar_email(destinatario, assunto, texto, html)
+
+
+def enviar_recado_admin(destinatario, nome_usuario, assunto, mensagem):
+    """
+    Dispara um recado/comunicado da administração para o aluno.
+    """
+    primeiro_nome = nome_usuario.split()[0] if nome_usuario else "Aluno(a)"
+    assunto_email = f"{assunto} - Academia do Bitelo" if assunto else "Recado da Academia do Bitelo"
+
+    texto = f"""Olá, {primeiro_nome}!
+
+A administração da Academia do Bitelo enviou o seguinte recado:
+
+{mensagem}
+
+Atenciosamente,
+Equipe Academia do Bitelo
+"""
+
+    mensagem_html = html_lib.escape(mensagem).replace('\n', '<br>')
+
+    html = f"""<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<style>
+    body {{ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f1e9; margin: 0; padding: 20px; color: #171b1e; }}
+    .container {{ max-width: 520px; margin: 0 auto; background: #ffffff; border-radius: 6px; border: 1px solid #d9d8d2; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }}
+    .header {{ background-color: #171b1e; padding: 24px; text-align: center; border-bottom: 4px solid #ef6c23; }}
+    .header h1 {{ color: #ffffff; margin: 0; font-size: 22px; text-transform: uppercase; letter-spacing: 1px; }}
+    .header h1 span {{ color: #ffc72c; }}
+    .content {{ padding: 30px; }}
+    .badge {{ display: inline-block; background-color: #ef6c23; color: #ffffff; font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; letter-spacing: 1px; margin-bottom: 15px; }}
+    .greeting {{ font-size: 18px; font-weight: bold; margin-bottom: 12px; color: #171b1e; }}
+    .message {{ font-size: 14px; line-height: 1.6; color: #4a5259; margin-bottom: 20px; }}
+    .recado-box {{ background: #faf7f0; border-left: 4px solid #ef6c23; border-radius: 4px; padding: 16px; margin: 20px 0; font-size: 14px; line-height: 1.6; color: #2d3748; }}
+    .footer {{ background: #ebe8df; padding: 16px; text-align: center; font-size: 11px; color: #687078; }}
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Academia <span>do Bitelo</span></h1>
+    </div>
+    <div class="content">
+        <div class="badge">Recado da Academia</div>
+        <p class="greeting">Olá, {primeiro_nome}!</p>
+        <p class="message">A administração enviou o seguinte recado:</p>
+
+        <div class="recado-box">{mensagem_html}</div>
+    </div>
+    <div class="footer">
+        © 2026 Academia do Bitelo • Todos os direitos reservados
+    </div>
+</div>
+</body>
+</html>
+"""
+
+    return enviar_email(destinatario, assunto_email, texto, html)
 
 
 def enviar_aviso_status_mensalidade(destinatario, nome_usuario, status):
