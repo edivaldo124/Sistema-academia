@@ -91,6 +91,28 @@
         <section class="secao">
             <div class="section-heading">
                 <div>
+                    <p class="eyebrow">Comunicação</p>
+                    <h2>Enviar recado aos alunos</h2>
+                </div>
+                <p>Envie um comunicado por e-mail para os alunos cadastrados.</p>
+            </div>
+
+            <form action="/admin/recados" method="POST" class="form-recado" data-confirm-modal data-modal-eyebrow="Comunicado" data-modal-title="Enviar recado para todos os alunos?" data-modal-message="O recado será enviado por e-mail para os alunos cadastrados com e-mail válido que aceitam receber recados." data-modal-confirm="Enviar recado" data-loading-text="Enviando…">
+                <div class="field">
+                    <label for="assunto-recado">Assunto (opcional)</label>
+                    <input id="assunto-recado" type="text" name="assunto" placeholder="Ex.: Aviso importante">
+                </div>
+                <div class="field">
+                    <label for="mensagem-recado">Mensagem</label>
+                    <textarea id="mensagem-recado" name="mensagem" rows="4" placeholder="Escreva o recado que será enviado aos alunos..." required></textarea>
+                </div>
+                <button type="submit" class="btn-cadastrar">Enviar recado aos alunos</button>
+            </form>
+        </section>
+
+        <section class="secao">
+            <div class="section-heading">
+                <div>
                     <p class="eyebrow">Cadastros</p>
                     <h2>Alunos</h2>
                 </div>
