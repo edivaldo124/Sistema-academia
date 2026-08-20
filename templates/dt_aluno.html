@@ -119,7 +119,7 @@
                         <select name="plano_id" id="plano-pagamento" required>
                             <option value="">Selecione</option>
                             {% for p in planos %}
-                                <option value="{{ p.id }}" data-valor="{{ p.preco_plano }}" {% if u.plano_id == p.id %}selected{% endif %}>{{ p.nome_plano }}</option>
+                                <option value="{{ p.id }}" data-valor="{{ p.preco_plano }}" data-duracao="{{ p.duracao_dias }}" {% if u.plano_id == p.id %}selected{% endif %}>{{ p.nome_plano }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -131,7 +131,7 @@
 
                     <div class="grupo-input">
                         <label>Vencimento:</label>
-                        <input type="date" name="vencimento" required>
+                        <input type="date" name="vencimento" id="vencimento-pagamento" required>
                     </div>
 
                     <div class="grupo-input">
@@ -146,7 +146,7 @@
 
                     <div class="grupo-input">
                         <label>Data do pagamento:</label>
-                        <input type="date" name="data_pagamento">
+                        <input type="date" name="data_pagamento" id="data-pagamento-pagamento">
                     </div>
 
                     <div class="grupo-input">
@@ -219,12 +219,41 @@
     <script>
         const plano = document.getElementById('plano-pagamento');
         const valor = document.getElementById('valor-pagamento');
+        const vencimento = document.getElementById('vencimento-pagamento');
+        const dataPagamento = document.getElementById('data-pagamento-pagamento');
+
+        function formatarDataISO(data) {
+            const ano = data.getFullYear();
+            const mes = String(data.getMonth() + 1).padStart(2, '0');
+            const dia = String(data.getDate()).padStart(2, '0');
+            return `${ano}-${mes}-${dia}`;
+        }
+
         function preencherValor() {
             const opcao = plano.options[plano.selectedIndex];
             if (opcao && opcao.dataset.valor) valor.value = Number(opcao.dataset.valor).toFixed(2);
         }
-        plano.addEventListener('change', preencherValor);
+
+        function preencherVencimento() {
+            const opcao = plano.options[plano.selectedIndex];
+            if (opcao && opcao.dataset.duracao) {
+                const hoje = new Date();
+                hoje.setDate(hoje.getDate() + Number(opcao.dataset.duracao));
+                vencimento.value = formatarDataISO(hoje);
+            }
+        }
+
+        function preencherDataPagamento() {
+            if (dataPagamento && !dataPagamento.value) dataPagamento.value = formatarDataISO(new Date());
+        }
+
+        plano.addEventListener('change', () => {
+            preencherValor();
+            preencherVencimento();
+        });
         preencherValor();
+        preencherVencimento();
+        preencherDataPagamento();
     </script>
 </body>
 </html>
