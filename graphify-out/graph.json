@@ -67,7 +67,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "AlunoDAO",
+      "community_name": "adm_bp.py",
       "file_type": "code",
       "norm_label": "pagamentodao",
       "source_file": "dao/financeiroDAO.py",
@@ -80,10 +80,23 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "AlunoDAO",
+      "community_name": "adm_bp.py",
       "file_type": "code",
       "norm_label": "planodao",
       "source_file": "dao/planoDAO.py",
+      "source_location": "L4"
+    },
+    {
+      "id": "modelos_pagamento_pagamento",
+      "label": "Pagamento",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "adm_bp.py",
+      "file_type": "code",
+      "norm_label": "pagamento",
+      "source_file": "modelos/pagamento.py",
       "source_location": "L4"
     },
     {
@@ -92,7 +105,7 @@
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 0,
+      "community": 1,
       "community_name": "AlunoDAO",
       "file_type": "code",
       "norm_label": "alunodao",
@@ -100,13 +113,26 @@
       "source_location": "L8"
     },
     {
+      "id": "modelos_plano_plano",
+      "label": "Plano",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "usuarioDAO.py",
+      "file_type": "code",
+      "norm_label": "plano",
+      "source_file": "modelos/plano.py",
+      "source_location": "L3"
+    },
+    {
       "id": "modelos_usuario_aluno",
       "label": "Aluno",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 1,
-      "community_name": "usuario_bp.py",
+      "community": 9,
+      "community_name": "usuarioDAO.py",
       "file_type": "code",
       "norm_label": "aluno",
       "source_file": "modelos/usuario.py",
@@ -118,8 +144,8 @@
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 17,
-      "community_name": "TestAlteracaoCredenciais",
+      "community": 9,
+      "community_name": "usuarioDAO.py",
       "file_type": "code",
       "norm_label": "testalteracaocredenciais",
       "source_file": "tests/test_email_e_perfil.py",
@@ -131,38 +157,12 @@
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 17,
-      "community_name": "TestAlteracaoCredenciais",
+      "community": 9,
+      "community_name": "usuarioDAO.py",
       "file_type": "code",
       "norm_label": "testemailservico",
       "source_file": "tests/test_email_e_perfil.py",
       "source_location": "L95"
-    },
-    {
-      "id": "modelos_pagamento_pagamento",
-      "label": "Pagamento",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "adm_bp.py",
-      "file_type": "code",
-      "norm_label": "pagamento",
-      "source_file": "modelos/pagamento.py",
-      "source_location": "L4"
-    },
-    {
-      "id": "modelos_plano_plano",
-      "label": "Plano",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "adm_bp.py",
-      "file_type": "code",
-      "norm_label": "plano",
-      "source_file": "modelos/plano.py",
-      "source_location": "L3"
     },
     {
       "id": "blueprints_adm_bp_alterar_mensalidade",
@@ -170,11 +170,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "AlunoDAO",
+      "community_name": "adm_bp.py",
       "file_type": "code",
       "norm_label": "alterar_mensalidade()",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L93"
+      "source_location": "L137"
     },
     {
       "id": "blueprints_adm_bp_atualizar_status_pagamento",
@@ -182,11 +182,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "AlunoDAO",
+      "community_name": "adm_bp.py",
       "file_type": "code",
       "norm_label": "atualizar_status_pagamento()",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L226"
+      "source_location": "L270"
     },
     {
       "id": "blueprints_adm_bp_cadastrar_pagamento",
@@ -194,11 +194,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "AlunoDAO",
+      "community_name": "adm_bp.py",
       "file_type": "code",
       "norm_label": "cadastrar_pagamento()",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L170"
+      "source_location": "L214"
     },
     {
       "id": "blueprints_adm_bp_cadastrar_plano",
@@ -206,11 +206,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "AlunoDAO",
+      "community_name": "adm_bp.py",
       "file_type": "code",
       "norm_label": "cadastrar_plano()",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L48"
+      "source_location": "L92"
     },
     {
       "id": "blueprints_adm_bp_detalhes_usuario",
@@ -218,11 +218,23 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "AlunoDAO",
+      "community_name": "adm_bp.py",
       "file_type": "code",
       "norm_label": "detalhes_usuario()",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L123"
+      "source_location": "L167"
+    },
+    {
+      "id": "blueprints_adm_bp_enviar_recado",
+      "label": "enviar_recado()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "adm_bp.py",
+      "file_type": "code",
+      "norm_label": "enviar_recado()",
+      "source_file": "blueprints/adm_bp.py",
+      "source_location": "L49"
     },
     {
       "id": "blueprints_adm_bp_painel_adm",
@@ -230,11 +242,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "AlunoDAO",
+      "community_name": "adm_bp.py",
       "file_type": "code",
       "norm_label": "painel_adm()",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L27"
+      "source_location": "L28"
     },
     {
       "id": "blueprints_adm_bp_remover_plano",
@@ -242,35 +254,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "AlunoDAO",
+      "community_name": "adm_bp.py",
       "file_type": "code",
       "norm_label": "remover_plano()",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L114"
-    },
-    {
-      "id": "blueprints_adm_bp_remover_usuario",
-      "label": "remover_usuario()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "AlunoDAO",
-      "file_type": "code",
-      "norm_label": "remover_usuario()",
-      "source_file": "blueprints/adm_bp.py",
-      "source_location": "L66"
-    },
-    {
-      "id": "blueprints_usuario_bp_pagina_perfil",
-      "label": "pagina_perfil()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "AlunoDAO",
-      "file_type": "code",
-      "norm_label": "pagina_perfil()",
-      "source_file": "blueprints/usuario_bp.py",
-      "source_location": "L125"
+      "source_location": "L158"
     },
     {
       "id": "dao_financeirodao_pagamentodao_atualizar_status",
@@ -278,7 +266,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "AlunoDAO",
+      "community_name": "adm_bp.py",
       "file_type": "code",
       "norm_label": ".atualizar_status()",
       "source_file": "dao/financeiroDAO.py",
@@ -290,7 +278,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "AlunoDAO",
+      "community_name": "adm_bp.py",
       "file_type": "code",
       "norm_label": ".buscar_por_id()",
       "source_file": "dao/financeiroDAO.py",
@@ -302,7 +290,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "AlunoDAO",
+      "community_name": "adm_bp.py",
       "file_type": "code",
       "norm_label": ".listar_por_aluno()",
       "source_file": "dao/financeiroDAO.py",
@@ -314,7 +302,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "AlunoDAO",
+      "community_name": "adm_bp.py",
       "file_type": "code",
       "norm_label": ".salvar()",
       "source_file": "dao/financeiroDAO.py",
@@ -326,7 +314,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "AlunoDAO",
+      "community_name": "adm_bp.py",
       "file_type": "code",
       "norm_label": ".buscar_por_id()",
       "source_file": "dao/planoDAO.py",
@@ -338,7 +326,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "AlunoDAO",
+      "community_name": "adm_bp.py",
       "file_type": "code",
       "norm_label": ".listar_todos()",
       "source_file": "dao/planoDAO.py",
@@ -350,7 +338,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "AlunoDAO",
+      "community_name": "adm_bp.py",
       "file_type": "code",
       "norm_label": ".remover()",
       "source_file": "dao/planoDAO.py",
@@ -362,47 +350,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "AlunoDAO",
+      "community_name": "adm_bp.py",
       "file_type": "code",
       "norm_label": ".salvar()",
       "source_file": "dao/planoDAO.py",
       "source_location": "L6"
-    },
-    {
-      "id": "dao_usuariodao_alunodao_atualizar_credenciais_aluno",
-      "label": ".atualizar_credenciais_aluno()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "AlunoDAO",
-      "file_type": "code",
-      "norm_label": ".atualizar_credenciais_aluno()",
-      "source_file": "dao/usuarioDAO.py",
-      "source_location": "L75"
-    },
-    {
-      "id": "dao_usuariodao_alunodao_atualizar_dados_completos",
-      "label": ".atualizar_dados_completos()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "AlunoDAO",
-      "file_type": "code",
-      "norm_label": ".atualizar_dados_completos()",
-      "source_file": "dao/usuarioDAO.py",
-      "source_location": "L103"
-    },
-    {
-      "id": "dao_usuariodao_alunodao_atualizar_mensalidade",
-      "label": ".atualizar_mensalidade()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "AlunoDAO",
-      "file_type": "code",
-      "norm_label": ".atualizar_mensalidade()",
-      "source_file": "dao/usuarioDAO.py",
-      "source_location": "L52"
     },
     {
       "id": "dao_usuariodao_alunodao_buscar_por_usuario",
@@ -410,23 +362,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "AlunoDAO",
+      "community_name": "adm_bp.py",
       "file_type": "code",
       "norm_label": ".buscar_por_usuario()",
       "source_file": "dao/usuarioDAO.py",
       "source_location": "L37"
-    },
-    {
-      "id": "dao_usuariodao_alunodao_email_em_uso_por_outro",
-      "label": ".email_em_uso_por_outro()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "AlunoDAO",
-      "file_type": "code",
-      "norm_label": ".email_em_uso_por_outro()",
-      "source_file": "dao/usuarioDAO.py",
-      "source_location": "L48"
     },
     {
       "id": "dao_usuariodao_alunodao_listar_todos",
@@ -434,47 +374,131 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "AlunoDAO",
+      "community_name": "adm_bp.py",
       "file_type": "code",
       "norm_label": ".listar_todos()",
       "source_file": "dao/usuarioDAO.py",
       "source_location": "L15"
     },
     {
-      "id": "dao_usuariodao_alunodao_login_em_uso_por_outro",
-      "label": ".login_em_uso_por_outro()",
+      "id": "modelos_pagamento_pagamento_init",
+      "label": ".__init__()",
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "AlunoDAO",
+      "community_name": "adm_bp.py",
       "file_type": "code",
-      "norm_label": ".login_em_uso_por_outro()",
-      "source_file": "dao/usuarioDAO.py",
-      "source_location": "L44"
+      "norm_label": ".__init__()",
+      "source_file": "modelos/pagamento.py",
+      "source_location": "L19"
     },
     {
-      "id": "dao_usuariodao_alunodao_remover",
-      "label": ".remover()",
+      "id": "servicos_email_servico_enviar_aviso_pagamento_atrasado",
+      "label": "enviar_aviso_pagamento_atrasado()",
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "AlunoDAO",
+      "community_name": "adm_bp.py",
       "file_type": "code",
-      "norm_label": ".remover()",
-      "source_file": "dao/usuarioDAO.py",
-      "source_location": "L61"
+      "norm_label": "enviar_aviso_pagamento_atrasado()",
+      "source_file": "servicos/email_servico.py",
+      "source_location": "L558"
     },
     {
-      "id": "dao_usuariodao_alunodao_salvar",
-      "label": ".salvar()",
+      "id": "servicos_email_servico_enviar_aviso_status_mensalidade",
+      "label": "enviar_aviso_status_mensalidade()",
       "_callable": true,
       "_origin": "ast",
       "community": 0,
+      "community_name": "adm_bp.py",
+      "file_type": "code",
+      "norm_label": "enviar_aviso_status_mensalidade()",
+      "source_file": "servicos/email_servico.py",
+      "source_location": "L493"
+    },
+    {
+      "id": "servicos_email_servico_enviar_confirmacao_pagamento",
+      "label": "enviar_confirmacao_pagamento()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "adm_bp.py",
+      "file_type": "code",
+      "norm_label": "enviar_confirmacao_pagamento()",
+      "source_file": "servicos/email_servico.py",
+      "source_location": "L660"
+    },
+    {
+      "id": "servicos_email_servico_enviar_email",
+      "label": "enviar_email()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "adm_bp.py",
+      "file_type": "code",
+      "norm_label": "enviar_email()",
+      "source_file": "servicos/email_servico.py",
+      "source_location": "L85"
+    },
+    {
+      "id": "servicos_email_servico_enviar_notificacao_plano",
+      "label": "enviar_notificacao_plano()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "adm_bp.py",
+      "file_type": "code",
+      "norm_label": "enviar_notificacao_plano()",
+      "source_file": "servicos/email_servico.py",
+      "source_location": "L353"
+    },
+    {
+      "id": "servicos_email_servico_enviar_recado_admin",
+      "label": "enviar_recado_admin()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "adm_bp.py",
+      "file_type": "code",
+      "norm_label": "enviar_recado_admin()",
+      "source_file": "servicos/email_servico.py",
+      "source_location": "L433"
+    },
+    {
+      "id": "servicos_email_servico_formatar_rotulo_forma_pagamento",
+      "label": "_formatar_rotulo_forma_pagamento()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "adm_bp.py",
+      "file_type": "code",
+      "norm_label": "_formatar_rotulo_forma_pagamento()",
+      "source_file": "servicos/email_servico.py",
+      "source_location": "L205"
+    },
+    {
+      "id": "servicos_email_servico_obter_configuracoes_email",
+      "label": "obter_configuracoes_email()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "adm_bp.py",
+      "file_type": "code",
+      "norm_label": "obter_configuracoes_email()",
+      "source_file": "servicos/email_servico.py",
+      "source_location": "L14"
+    },
+    {
+      "id": "blueprints_adm_bp_remover_usuario",
+      "label": "remover_usuario()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
       "community_name": "AlunoDAO",
       "file_type": "code",
-      "norm_label": ".salvar()",
-      "source_file": "dao/usuarioDAO.py",
-      "source_location": "L10"
+      "norm_label": "remover_usuario()",
+      "source_file": "blueprints/adm_bp.py",
+      "source_location": "L110"
     },
     {
       "id": "blueprints_usuario_bp_cancelar_alteracao",
@@ -482,7 +506,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "usuario_bp.py",
+      "community_name": "AlunoDAO",
       "file_type": "code",
       "norm_label": "cancelar_alteracao()",
       "source_file": "blueprints/usuario_bp.py",
@@ -494,7 +518,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "usuario_bp.py",
+      "community_name": "AlunoDAO",
       "file_type": "code",
       "norm_label": "editar_perfil()",
       "source_file": "blueprints/usuario_bp.py",
@@ -506,7 +530,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "usuario_bp.py",
+      "community_name": "AlunoDAO",
       "file_type": "code",
       "norm_label": "mascarar_email()",
       "source_file": "blueprints/usuario_bp.py",
@@ -518,7 +542,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "usuario_bp.py",
+      "community_name": "AlunoDAO",
       "file_type": "code",
       "norm_label": "pagina_cadastro()",
       "source_file": "blueprints/usuario_bp.py",
@@ -530,11 +554,23 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "usuario_bp.py",
+      "community_name": "AlunoDAO",
       "file_type": "code",
       "norm_label": "pagina_login()",
       "source_file": "blueprints/usuario_bp.py",
       "source_location": "L39"
+    },
+    {
+      "id": "blueprints_usuario_bp_pagina_perfil",
+      "label": "pagina_perfil()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "AlunoDAO",
+      "file_type": "code",
+      "norm_label": "pagina_perfil()",
+      "source_file": "blueprints/usuario_bp.py",
+      "source_location": "L125"
     },
     {
       "id": "blueprints_usuario_bp_recuperar_senha",
@@ -542,7 +578,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "usuario_bp.py",
+      "community_name": "AlunoDAO",
       "file_type": "code",
       "norm_label": "recuperar_senha()",
       "source_file": "blueprints/usuario_bp.py",
@@ -554,7 +590,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "usuario_bp.py",
+      "community_name": "AlunoDAO",
       "file_type": "code",
       "norm_label": "reenviar_codigo()",
       "source_file": "blueprints/usuario_bp.py",
@@ -566,11 +602,47 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "usuario_bp.py",
+      "community_name": "AlunoDAO",
       "file_type": "code",
       "norm_label": "verificar_codigo()",
       "source_file": "blueprints/usuario_bp.py",
       "source_location": "L228"
+    },
+    {
+      "id": "dao_usuariodao_alunodao_atualizar_credenciais_aluno",
+      "label": ".atualizar_credenciais_aluno()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "AlunoDAO",
+      "file_type": "code",
+      "norm_label": ".atualizar_credenciais_aluno()",
+      "source_file": "dao/usuarioDAO.py",
+      "source_location": "L75"
+    },
+    {
+      "id": "dao_usuariodao_alunodao_atualizar_dados_completos",
+      "label": ".atualizar_dados_completos()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "AlunoDAO",
+      "file_type": "code",
+      "norm_label": ".atualizar_dados_completos()",
+      "source_file": "dao/usuarioDAO.py",
+      "source_location": "L103"
+    },
+    {
+      "id": "dao_usuariodao_alunodao_atualizar_mensalidade",
+      "label": ".atualizar_mensalidade()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "AlunoDAO",
+      "file_type": "code",
+      "norm_label": ".atualizar_mensalidade()",
+      "source_file": "dao/usuarioDAO.py",
+      "source_location": "L52"
     },
     {
       "id": "dao_usuariodao_alunodao_autenticar",
@@ -578,7 +650,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "usuario_bp.py",
+      "community_name": "AlunoDAO",
       "file_type": "code",
       "norm_label": ".autenticar()",
       "source_file": "dao/usuarioDAO.py",
@@ -590,23 +662,59 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "usuario_bp.py",
+      "community_name": "AlunoDAO",
       "file_type": "code",
       "norm_label": ".buscar_por_id()",
       "source_file": "dao/usuarioDAO.py",
       "source_location": "L19"
     },
     {
-      "id": "modelos_usuario_aluno_init",
-      "label": ".__init__()",
+      "id": "dao_usuariodao_alunodao_email_em_uso_por_outro",
+      "label": ".email_em_uso_por_outro()",
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "usuario_bp.py",
+      "community_name": "AlunoDAO",
       "file_type": "code",
-      "norm_label": ".__init__()",
-      "source_file": "modelos/usuario.py",
-      "source_location": "L23"
+      "norm_label": ".email_em_uso_por_outro()",
+      "source_file": "dao/usuarioDAO.py",
+      "source_location": "L48"
+    },
+    {
+      "id": "dao_usuariodao_alunodao_login_em_uso_por_outro",
+      "label": ".login_em_uso_por_outro()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "AlunoDAO",
+      "file_type": "code",
+      "norm_label": ".login_em_uso_por_outro()",
+      "source_file": "dao/usuarioDAO.py",
+      "source_location": "L44"
+    },
+    {
+      "id": "dao_usuariodao_alunodao_remover",
+      "label": ".remover()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "AlunoDAO",
+      "file_type": "code",
+      "norm_label": ".remover()",
+      "source_file": "dao/usuarioDAO.py",
+      "source_location": "L61"
+    },
+    {
+      "id": "dao_usuariodao_alunodao_salvar",
+      "label": ".salvar()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "AlunoDAO",
+      "file_type": "code",
+      "norm_label": ".salvar()",
+      "source_file": "dao/usuarioDAO.py",
+      "source_location": "L10"
     },
     {
       "id": "servicos_email_servico_enviar_aviso_alteracao_dados",
@@ -614,11 +722,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "usuario_bp.py",
+      "community_name": "AlunoDAO",
       "file_type": "code",
       "norm_label": "enviar_aviso_alteracao_dados()",
       "source_file": "servicos/email_servico.py",
-      "source_location": "L290"
+      "source_location": "L291"
     },
     {
       "id": "servicos_email_servico_enviar_codigo_verificacao",
@@ -626,11 +734,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "usuario_bp.py",
+      "community_name": "AlunoDAO",
       "file_type": "code",
       "norm_label": "enviar_codigo_verificacao()",
       "source_file": "servicos/email_servico.py",
-      "source_location": "L132"
+      "source_location": "L133"
     },
     {
       "id": "servicos_email_servico_enviar_email_boas_vindas",
@@ -638,11 +746,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "usuario_bp.py",
+      "community_name": "AlunoDAO",
       "file_type": "code",
       "norm_label": "enviar_email_boas_vindas()",
       "source_file": "servicos/email_servico.py",
-      "source_location": "L217"
+      "source_location": "L218"
     },
     {
       "id": "servicos_formatacao_formatar_cpf",
@@ -650,7 +758,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "usuario_bp.py",
+      "community_name": "AlunoDAO",
       "file_type": "code",
       "norm_label": "formatar_cpf()",
       "source_file": "servicos/formatacao.py",
@@ -662,7 +770,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "usuario_bp.py",
+      "community_name": "AlunoDAO",
       "file_type": "code",
       "norm_label": "formatar_telefone()",
       "source_file": "servicos/formatacao.py",
@@ -674,7 +782,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "usuario_bp.py",
+      "community_name": "AlunoDAO",
       "file_type": "code",
       "norm_label": "somente_digitos()",
       "source_file": "servicos/formatacao.py",
@@ -686,7 +794,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 1,
-      "community_name": "usuario_bp.py",
+      "community_name": "AlunoDAO",
       "file_type": "code",
       "norm_label": "variantes_cpf()",
       "source_file": "servicos/formatacao.py",
@@ -738,186 +846,6 @@
       "file_type": "code",
       "norm_label": "openmodal()",
       "source_file": "static/js/modal.js",
-      "source_location": "L13"
-    },
-    {
-      "id": "tests_test_email_e_perfil_testalteracaocredenciais_setup",
-      "label": ".setUp()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "TestAlteracaoCredenciais",
-      "file_type": "code",
-      "norm_label": ".setup()",
-      "source_file": "tests/test_email_e_perfil.py",
-      "source_location": "L9"
-    },
-    {
-      "id": "tests_test_email_e_perfil_testalteracaocredenciais_teardown",
-      "label": ".tearDown()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "TestAlteracaoCredenciais",
-      "file_type": "code",
-      "norm_label": ".teardown()",
-      "source_file": "tests/test_email_e_perfil.py",
-      "source_location": "L29"
-    },
-    {
-      "id": "tests_test_email_e_perfil_testalteracaocredenciais_test_editar_perfil_requer_login",
-      "label": ".test_editar_perfil_requer_login()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "TestAlteracaoCredenciais",
-      "file_type": "code",
-      "norm_label": ".test_editar_perfil_requer_login()",
-      "source_file": "tests/test_email_e_perfil.py",
-      "source_location": "L34"
-    },
-    {
-      "id": "tests_test_email_e_perfil_testalteracaocredenciais_test_fluxo_completo_alteracao_credenciais",
-      "label": ".test_fluxo_completo_alteracao_credenciais()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "TestAlteracaoCredenciais",
-      "file_type": "code",
-      "norm_label": ".test_fluxo_completo_alteracao_credenciais()",
-      "source_file": "tests/test_email_e_perfil.py",
-      "source_location": "L40"
-    },
-    {
-      "id": "tests_test_email_e_perfil_testemailservico_test_enviar_email_brevo",
-      "label": ".test_enviar_email_brevo()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "TestAlteracaoCredenciais",
-      "file_type": "code",
-      "norm_label": ".test_enviar_email_brevo()",
-      "source_file": "tests/test_email_e_perfil.py",
-      "source_location": "L97"
-    },
-    {
-      "id": "tests_test_email_e_perfil_testemailservico_test_enviar_email_resend",
-      "label": ".test_enviar_email_resend()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "TestAlteracaoCredenciais",
-      "file_type": "code",
-      "norm_label": ".test_enviar_email_resend()",
-      "source_file": "tests/test_email_e_perfil.py",
-      "source_location": "L116"
-    },
-    {
-      "id": "servicos_email_servico_enviar_aviso_pagamento_atrasado",
-      "label": "enviar_aviso_pagamento_atrasado()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "email_servico.py",
-      "file_type": "code",
-      "norm_label": "enviar_aviso_pagamento_atrasado()",
-      "source_file": "servicos/email_servico.py",
-      "source_location": "L497"
-    },
-    {
-      "id": "servicos_email_servico_enviar_aviso_status_mensalidade",
-      "label": "enviar_aviso_status_mensalidade()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "email_servico.py",
-      "file_type": "code",
-      "norm_label": "enviar_aviso_status_mensalidade()",
-      "source_file": "servicos/email_servico.py",
-      "source_location": "L432"
-    },
-    {
-      "id": "servicos_email_servico_enviar_confirmacao_pagamento",
-      "label": "enviar_confirmacao_pagamento()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "email_servico.py",
-      "file_type": "code",
-      "norm_label": "enviar_confirmacao_pagamento()",
-      "source_file": "servicos/email_servico.py",
-      "source_location": "L599"
-    },
-    {
-      "id": "servicos_email_servico_enviar_email",
-      "label": "enviar_email()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "email_servico.py",
-      "file_type": "code",
-      "norm_label": "enviar_email()",
-      "source_file": "servicos/email_servico.py",
-      "source_location": "L84"
-    },
-    {
-      "id": "servicos_email_servico_enviar_email_brevo",
-      "label": "_enviar_email_brevo()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "email_servico.py",
-      "file_type": "code",
-      "norm_label": "_enviar_email_brevo()",
-      "source_file": "servicos/email_servico.py",
-      "source_location": "L26"
-    },
-    {
-      "id": "servicos_email_servico_enviar_email_resend",
-      "label": "_enviar_email_resend()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "email_servico.py",
-      "file_type": "code",
-      "norm_label": "_enviar_email_resend()",
-      "source_file": "servicos/email_servico.py",
-      "source_location": "L55"
-    },
-    {
-      "id": "servicos_email_servico_enviar_notificacao_plano",
-      "label": "enviar_notificacao_plano()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "email_servico.py",
-      "file_type": "code",
-      "norm_label": "enviar_notificacao_plano()",
-      "source_file": "servicos/email_servico.py",
-      "source_location": "L352"
-    },
-    {
-      "id": "servicos_email_servico_formatar_rotulo_forma_pagamento",
-      "label": "_formatar_rotulo_forma_pagamento()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "email_servico.py",
-      "file_type": "code",
-      "norm_label": "_formatar_rotulo_forma_pagamento()",
-      "source_file": "servicos/email_servico.py",
-      "source_location": "L204"
-    },
-    {
-      "id": "servicos_email_servico_obter_configuracoes_email",
-      "label": "obter_configuracoes_email()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "email_servico.py",
-      "file_type": "code",
-      "norm_label": "obter_configuracoes_email()",
-      "source_file": "servicos/email_servico.py",
       "source_location": "L13"
     },
     {
@@ -981,28 +909,52 @@
       "source_location": "L16"
     },
     {
-      "id": "modelos_pagamento_pagamento_init",
-      "label": ".__init__()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "adm_bp.py",
-      "file_type": "code",
-      "norm_label": ".__init__()",
-      "source_file": "modelos/pagamento.py",
-      "source_location": "L19"
-    },
-    {
       "id": "modelos_plano_plano_init",
       "label": ".__init__()",
       "_callable": true,
       "_origin": "ast",
       "community": 9,
-      "community_name": "adm_bp.py",
+      "community_name": "usuarioDAO.py",
       "file_type": "code",
       "norm_label": ".__init__()",
       "source_file": "modelos/plano.py",
       "source_location": "L12"
+    },
+    {
+      "id": "modelos_usuario_aluno_init",
+      "label": ".__init__()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "usuarioDAO.py",
+      "file_type": "code",
+      "norm_label": ".__init__()",
+      "source_file": "modelos/usuario.py",
+      "source_location": "L23"
+    },
+    {
+      "id": "servicos_email_servico_enviar_email_brevo",
+      "label": "_enviar_email_brevo()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "usuarioDAO.py",
+      "file_type": "code",
+      "norm_label": "_enviar_email_brevo()",
+      "source_file": "servicos/email_servico.py",
+      "source_location": "L27"
+    },
+    {
+      "id": "servicos_email_servico_enviar_email_resend",
+      "label": "_enviar_email_resend()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "usuarioDAO.py",
+      "file_type": "code",
+      "norm_label": "_enviar_email_resend()",
+      "source_file": "servicos/email_servico.py",
+      "source_location": "L56"
     },
     {
       "id": "servidor_home",
@@ -1010,7 +962,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 9,
-      "community_name": "adm_bp.py",
+      "community_name": "usuarioDAO.py",
       "file_type": "code",
       "norm_label": "home()",
       "source_file": "servidor.py",
@@ -1022,7 +974,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 9,
-      "community_name": "adm_bp.py",
+      "community_name": "usuarioDAO.py",
       "file_type": "code",
       "norm_label": "logout()",
       "source_file": "servidor.py",
@@ -1034,7 +986,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 9,
-      "community_name": "adm_bp.py",
+      "community_name": "usuarioDAO.py",
       "file_type": "code",
       "norm_label": "pagina_cadastro()",
       "source_file": "servidor.py",
@@ -1046,29 +998,211 @@
       "_callable": true,
       "_origin": "ast",
       "community": 9,
-      "community_name": "adm_bp.py",
+      "community_name": "usuarioDAO.py",
       "file_type": "code",
       "norm_label": "pagina_login()",
       "source_file": "servidor.py",
       "source_location": "L49"
     },
     {
+      "id": "tests_test_email_e_perfil_testalteracaocredenciais_setup",
+      "label": ".setUp()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "usuarioDAO.py",
+      "file_type": "code",
+      "norm_label": ".setup()",
+      "source_file": "tests/test_email_e_perfil.py",
+      "source_location": "L9"
+    },
+    {
+      "id": "tests_test_email_e_perfil_testalteracaocredenciais_teardown",
+      "label": ".tearDown()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "usuarioDAO.py",
+      "file_type": "code",
+      "norm_label": ".teardown()",
+      "source_file": "tests/test_email_e_perfil.py",
+      "source_location": "L29"
+    },
+    {
+      "id": "tests_test_email_e_perfil_testalteracaocredenciais_test_editar_perfil_requer_login",
+      "label": ".test_editar_perfil_requer_login()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "usuarioDAO.py",
+      "file_type": "code",
+      "norm_label": ".test_editar_perfil_requer_login()",
+      "source_file": "tests/test_email_e_perfil.py",
+      "source_location": "L34"
+    },
+    {
+      "id": "tests_test_email_e_perfil_testalteracaocredenciais_test_fluxo_completo_alteracao_credenciais",
+      "label": ".test_fluxo_completo_alteracao_credenciais()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "usuarioDAO.py",
+      "file_type": "code",
+      "norm_label": ".test_fluxo_completo_alteracao_credenciais()",
+      "source_file": "tests/test_email_e_perfil.py",
+      "source_location": "L40"
+    },
+    {
+      "id": "tests_test_email_e_perfil_testemailservico_test_enviar_email_brevo",
+      "label": ".test_enviar_email_brevo()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "usuarioDAO.py",
+      "file_type": "code",
+      "norm_label": ".test_enviar_email_brevo()",
+      "source_file": "tests/test_email_e_perfil.py",
+      "source_location": "L97"
+    },
+    {
+      "id": "tests_test_email_e_perfil_testemailservico_test_enviar_email_resend",
+      "label": ".test_enviar_email_resend()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "usuarioDAO.py",
+      "file_type": "code",
+      "norm_label": ".test_enviar_email_resend()",
+      "source_file": "tests/test_email_e_perfil.py",
+      "source_location": "L116"
+    },
+    {
+      "id": "blueprints_adm_bp",
+      "label": "adm_bp.py",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "adm_bp.py",
+      "file_type": "code",
+      "norm_label": "adm_bp.py",
+      "source_file": "blueprints/adm_bp.py",
+      "source_location": "L1"
+    },
+    {
       "id": "blueprints_adm_bp_py_route",
       "label": "route",
       "_origin": "ast",
       "community": 0,
-      "community_name": "AlunoDAO",
+      "community_name": "adm_bp.py",
       "file_type": "code",
       "norm_label": "route",
       "source_file": "",
       "source_location": ""
     },
     {
+      "id": "dao_financeirodao",
+      "label": "financeiroDAO.py",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "adm_bp.py",
+      "file_type": "code",
+      "norm_label": "financeirodao.py",
+      "source_file": "dao/financeiroDAO.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "modelos_pagamento",
+      "label": "pagamento.py",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "adm_bp.py",
+      "file_type": "code",
+      "norm_label": "pagamento.py",
+      "source_file": "modelos/pagamento.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "servicos_email_servico",
+      "label": "email_servico.py",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "adm_bp.py",
+      "file_type": "code",
+      "norm_label": "email_servico.py",
+      "source_file": "servicos/email_servico.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "servicos_email_servico_rationale_354",
+      "label": "Dispara o e-mail avisando o aluno que a administra\u00e7\u00e3o alterou o seu plano de\u2026",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "adm_bp.py",
+      "file_type": "rationale",
+      "norm_label": "dispara o e-mail avisando o aluno que a administracao alterou o seu plano de...",
+      "source_file": "servicos/email_servico.py",
+      "source_location": "L354"
+    },
+    {
+      "id": "servicos_email_servico_rationale_434",
+      "label": "Dispara um recado/comunicado da administra\u00e7\u00e3o para o aluno.",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "adm_bp.py",
+      "file_type": "rationale",
+      "norm_label": "dispara um recado/comunicado da administracao para o aluno.",
+      "source_file": "servicos/email_servico.py",
+      "source_location": "L434"
+    },
+    {
+      "id": "servicos_email_servico_rationale_494",
+      "label": "Dispara o e-mail avisando o aluno sobre a altera\u00e7\u00e3o manual do status da\u2026",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "adm_bp.py",
+      "file_type": "rationale",
+      "norm_label": "dispara o e-mail avisando o aluno sobre a alteracao manual do status da...",
+      "source_file": "servicos/email_servico.py",
+      "source_location": "L494"
+    },
+    {
+      "id": "servicos_email_servico_rationale_559",
+      "label": "Dispara o e-mail avisando o aluno que o pagamento da mensalidade est\u00e1 em atraso.",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "adm_bp.py",
+      "file_type": "rationale",
+      "norm_label": "dispara o e-mail avisando o aluno que o pagamento da mensalidade esta em atraso.",
+      "source_file": "servicos/email_servico.py",
+      "source_location": "L559"
+    },
+    {
+      "id": "servicos_email_servico_rationale_661",
+      "label": "Dispara o e-mail de recibo/confirma\u00e7\u00e3o de pagamento da mensalidade, informando\u2026",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "adm_bp.py",
+      "file_type": "rationale",
+      "norm_label": "dispara o e-mail de recibo/confirmacao de pagamento da mensalidade, informando...",
+      "source_file": "servicos/email_servico.py",
+      "source_location": "L661"
+    },
+    {
+      "id": "servicos_email_servico_rationale_86",
+      "label": "Envia um e-mail utilizando Brevo API, Resend API ou smtplib tradicional (SMTP).",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "adm_bp.py",
+      "file_type": "rationale",
+      "norm_label": "envia um e-mail utilizando brevo api, resend api ou smtplib tradicional (smtp).",
+      "source_file": "servicos/email_servico.py",
+      "source_location": "L86"
+    },
+    {
       "id": "blueprints_usuario_bp",
       "label": "usuario_bp.py",
       "_origin": "ast",
       "community": 1,
-      "community_name": "usuario_bp.py",
+      "community_name": "AlunoDAO",
       "file_type": "code",
       "norm_label": "usuario_bp.py",
       "source_file": "blueprints/usuario_bp.py",
@@ -1079,7 +1213,7 @@
       "label": "route",
       "_origin": "ast",
       "community": 1,
-      "community_name": "usuario_bp.py",
+      "community_name": "AlunoDAO",
       "file_type": "code",
       "norm_label": "route",
       "source_file": "",
@@ -1090,44 +1224,44 @@
       "label": "formatacao.py",
       "_origin": "ast",
       "community": 1,
-      "community_name": "usuario_bp.py",
+      "community_name": "AlunoDAO",
       "file_type": "code",
       "norm_label": "formatacao.py",
       "source_file": "servicos/formatacao.py",
       "source_location": "L1"
     },
     {
-      "id": "servicos_email_servico_rationale_133",
+      "id": "servicos_email_servico_rationale_134",
       "label": "Formata e dispara o e-mail com o c\u00f3digo de 6 d\u00edgitos para verifica\u00e7\u00e3o de\u2026",
       "_origin": "ast",
       "community": 1,
-      "community_name": "usuario_bp.py",
+      "community_name": "AlunoDAO",
       "file_type": "rationale",
       "norm_label": "formata e dispara o e-mail com o codigo de 6 digitos para verificacao de...",
       "source_file": "servicos/email_servico.py",
-      "source_location": "L133"
+      "source_location": "L134"
     },
     {
-      "id": "servicos_email_servico_rationale_218",
+      "id": "servicos_email_servico_rationale_219",
       "label": "Dispara o e-mail de boas-vindas ao novo aluno cadastrado na academia.",
       "_origin": "ast",
       "community": 1,
-      "community_name": "usuario_bp.py",
+      "community_name": "AlunoDAO",
       "file_type": "rationale",
       "norm_label": "dispara o e-mail de boas-vindas ao novo aluno cadastrado na academia.",
       "source_file": "servicos/email_servico.py",
-      "source_location": "L218"
+      "source_location": "L219"
     },
     {
-      "id": "servicos_email_servico_rationale_291",
+      "id": "servicos_email_servico_rationale_292",
       "label": "Dispara o e-mail de confirma\u00e7\u00e3o ap\u00f3s a altera\u00e7\u00e3o de dados do perfil ou senha do\u2026",
       "_origin": "ast",
       "community": 1,
-      "community_name": "usuario_bp.py",
+      "community_name": "AlunoDAO",
       "file_type": "rationale",
       "norm_label": "dispara o e-mail de confirmacao apos a alteracao de dados do perfil ou senha do...",
       "source_file": "servicos/email_servico.py",
-      "source_location": "L291"
+      "source_location": "L292"
     },
     {
       "id": "static_js_masks",
@@ -1194,105 +1328,6 @@
       "norm_label": "main.py",
       "source_file": "main.py",
       "source_location": "L1"
-    },
-    {
-      "id": "patch",
-      "label": "patch",
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "TestAlteracaoCredenciais",
-      "file_type": "code",
-      "norm_label": "patch",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "servicos_email_servico",
-      "label": "email_servico.py",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "email_servico.py",
-      "file_type": "code",
-      "norm_label": "email_servico.py",
-      "source_file": "servicos/email_servico.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "servicos_email_servico_rationale_27",
-      "label": "Envia e-mail via API REST HTTPS da Brevo (antigo Sendinblue) - funciona no\u2026",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "email_servico.py",
-      "file_type": "rationale",
-      "norm_label": "envia e-mail via api rest https da brevo (antigo sendinblue) - funciona no...",
-      "source_file": "servicos/email_servico.py",
-      "source_location": "L27"
-    },
-    {
-      "id": "servicos_email_servico_rationale_353",
-      "label": "Dispara o e-mail avisando o aluno que a administra\u00e7\u00e3o alterou o seu plano de\u2026",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "email_servico.py",
-      "file_type": "rationale",
-      "norm_label": "dispara o e-mail avisando o aluno que a administracao alterou o seu plano de...",
-      "source_file": "servicos/email_servico.py",
-      "source_location": "L353"
-    },
-    {
-      "id": "servicos_email_servico_rationale_433",
-      "label": "Dispara o e-mail avisando o aluno sobre a altera\u00e7\u00e3o manual do status da\u2026",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "email_servico.py",
-      "file_type": "rationale",
-      "norm_label": "dispara o e-mail avisando o aluno sobre a alteracao manual do status da...",
-      "source_file": "servicos/email_servico.py",
-      "source_location": "L433"
-    },
-    {
-      "id": "servicos_email_servico_rationale_498",
-      "label": "Dispara o e-mail avisando o aluno que o pagamento da mensalidade est\u00e1 em atraso.",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "email_servico.py",
-      "file_type": "rationale",
-      "norm_label": "dispara o e-mail avisando o aluno que o pagamento da mensalidade esta em atraso.",
-      "source_file": "servicos/email_servico.py",
-      "source_location": "L498"
-    },
-    {
-      "id": "servicos_email_servico_rationale_56",
-      "label": "Envia e-mail via API REST HTTPS da Resend - funciona no Render Free.",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "email_servico.py",
-      "file_type": "rationale",
-      "norm_label": "envia e-mail via api rest https da resend - funciona no render free.",
-      "source_file": "servicos/email_servico.py",
-      "source_location": "L56"
-    },
-    {
-      "id": "servicos_email_servico_rationale_600",
-      "label": "Dispara o e-mail de recibo/confirma\u00e7\u00e3o de pagamento da mensalidade, informando\u2026",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "email_servico.py",
-      "file_type": "rationale",
-      "norm_label": "dispara o e-mail de recibo/confirmacao de pagamento da mensalidade, informando...",
-      "source_file": "servicos/email_servico.py",
-      "source_location": "L600"
-    },
-    {
-      "id": "servicos_email_servico_rationale_85",
-      "label": "Envia um e-mail utilizando Brevo API, Resend API ou smtplib tradicional (SMTP).",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "email_servico.py",
-      "file_type": "rationale",
-      "norm_label": "envia um e-mail utilizando brevo api, resend api ou smtplib tradicional (smtp).",
-      "source_file": "servicos/email_servico.py",
-      "source_location": "L85"
     },
     {
       "id": "static_js_pgadm",
@@ -1438,36 +1473,14 @@
       "source_location": "L1"
     },
     {
-      "id": "blueprints_adm_bp",
-      "label": "adm_bp.py",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "adm_bp.py",
-      "file_type": "code",
-      "norm_label": "adm_bp.py",
-      "source_file": "blueprints/adm_bp.py",
-      "source_location": "L1"
-    },
-    {
       "id": "config",
       "label": "config.py",
       "_origin": "ast",
       "community": 9,
-      "community_name": "adm_bp.py",
+      "community_name": "usuarioDAO.py",
       "file_type": "code",
       "norm_label": "config.py",
       "source_file": "config.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "dao_financeirodao",
-      "label": "financeiroDAO.py",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "adm_bp.py",
-      "file_type": "code",
-      "norm_label": "financeirodao.py",
-      "source_file": "dao/financeiroDAO.py",
       "source_location": "L1"
     },
     {
@@ -1475,7 +1488,7 @@
       "label": "planoDAO.py",
       "_origin": "ast",
       "community": 9,
-      "community_name": "adm_bp.py",
+      "community_name": "usuarioDAO.py",
       "file_type": "code",
       "norm_label": "planodao.py",
       "source_file": "dao/planoDAO.py",
@@ -1486,21 +1499,10 @@
       "label": "usuarioDAO.py",
       "_origin": "ast",
       "community": 9,
-      "community_name": "adm_bp.py",
+      "community_name": "usuarioDAO.py",
       "file_type": "code",
       "norm_label": "usuariodao.py",
       "source_file": "dao/usuarioDAO.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "modelos_pagamento",
-      "label": "pagamento.py",
-      "_origin": "ast",
-      "community": 9,
-      "community_name": "adm_bp.py",
-      "file_type": "code",
-      "norm_label": "pagamento.py",
-      "source_file": "modelos/pagamento.py",
       "source_location": "L1"
     },
     {
@@ -1508,7 +1510,7 @@
       "label": "plano.py",
       "_origin": "ast",
       "community": 9,
-      "community_name": "adm_bp.py",
+      "community_name": "usuarioDAO.py",
       "file_type": "code",
       "norm_label": "plano.py",
       "source_file": "modelos/plano.py",
@@ -1519,18 +1521,29 @@
       "label": "usuario.py",
       "_origin": "ast",
       "community": 9,
-      "community_name": "adm_bp.py",
+      "community_name": "usuarioDAO.py",
       "file_type": "code",
       "norm_label": "usuario.py",
       "source_file": "modelos/usuario.py",
       "source_location": "L1"
     },
     {
+      "id": "patch",
+      "label": "patch",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "usuarioDAO.py",
+      "file_type": "code",
+      "norm_label": "patch",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
       "id": "servidor",
       "label": "servidor.py",
       "_origin": "ast",
       "community": 9,
-      "community_name": "adm_bp.py",
+      "community_name": "usuarioDAO.py",
       "file_type": "code",
       "norm_label": "servidor.py",
       "source_file": "servidor.py",
@@ -1541,7 +1554,7 @@
       "label": "route",
       "_origin": "ast",
       "community": 9,
-      "community_name": "adm_bp.py",
+      "community_name": "usuarioDAO.py",
       "file_type": "code",
       "norm_label": "route",
       "source_file": "",
@@ -1552,11 +1565,33 @@
       "label": "test_email_e_perfil.py",
       "_origin": "ast",
       "community": 9,
-      "community_name": "adm_bp.py",
+      "community_name": "usuarioDAO.py",
       "file_type": "code",
       "norm_label": "test_email_e_perfil.py",
       "source_file": "tests/test_email_e_perfil.py",
       "source_location": "L1"
+    },
+    {
+      "id": "servicos_email_servico_rationale_28",
+      "label": "Envia e-mail via API REST HTTPS da Brevo (antigo Sendinblue) - funciona no\u2026",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "usuarioDAO.py",
+      "file_type": "rationale",
+      "norm_label": "envia e-mail via api rest https da brevo (antigo sendinblue) - funciona no...",
+      "source_file": "servicos/email_servico.py",
+      "source_location": "L28"
+    },
+    {
+      "id": "servicos_email_servico_rationale_57",
+      "label": "Envia e-mail via API REST HTTPS da Resend - funciona no Render Free.",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "usuarioDAO.py",
+      "file_type": "rationale",
+      "norm_label": "envia e-mail via api rest https da resend - funciona no render free.",
+      "source_file": "servicos/email_servico.py",
+      "source_location": "L57"
     },
     {
       "id": "static_imagens_logo_academia_do_bitelo_brand",
@@ -2265,6 +2300,21 @@
       "source_url": null
     },
     {
+      "id": "claude_skills_graphify_skill_step1_ensure_installed",
+      "label": "Step 1: Ensure Graphify Installed",
+      "_origin": "semantic",
+      "author": null,
+      "captured_at": null,
+      "community": 4,
+      "community_name": "/graphify Command",
+      "contributor": null,
+      "file_type": "document",
+      "norm_label": "step 1: ensure graphify installed",
+      "source_file": ".claude/skills/graphify/SKILL.md",
+      "source_location": null,
+      "source_url": null
+    },
+    {
       "id": "claude_skills_graphify_references_query_vocab_expansion",
       "label": "Constrained Query Vocabulary Expansion",
       "_origin": "semantic",
@@ -2413,21 +2463,6 @@
       "file_type": "document",
       "norm_label": "video/audio transcription reference",
       "source_file": ".claude/skills/graphify/references/transcribe.md",
-      "source_location": null,
-      "source_url": null
-    },
-    {
-      "id": "claude_skills_graphify_skill_step1_ensure_installed",
-      "label": "Step 1: Ensure Graphify Installed",
-      "_origin": "semantic",
-      "author": null,
-      "captured_at": null,
-      "community": 5,
-      "community_name": "Exports & Benchmark Reference",
-      "contributor": null,
-      "file_type": "document",
-      "norm_label": "step 1: ensure graphify installed",
-      "source_file": ".claude/skills/graphify/SKILL.md",
       "source_location": null,
       "source_url": null
     },
@@ -2753,18 +2788,6 @@
   "links": [
     {
       "source": "blueprints_adm_bp_alterar_mensalidade",
-      "target": "servicos_email_servico_enviar_aviso_status_mensalidade",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "blueprints/adm_bp.py",
-      "source_location": "L102",
-      "weight": 1.0
-    },
-    {
-      "source": "blueprints_adm_bp_alterar_mensalidade",
       "target": "dao_usuariodao_alunodao_buscar_por_usuario",
       "relation": "calls",
       "_origin": "ast",
@@ -2772,7 +2795,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L97",
+      "source_location": "L141",
       "weight": 1.0
     },
     {
@@ -2784,7 +2807,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L98",
+      "source_location": "L142",
+      "weight": 1.0
+    },
+    {
+      "source": "blueprints_adm_bp_alterar_mensalidade",
+      "target": "servicos_email_servico_enviar_aviso_status_mensalidade",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "blueprints/adm_bp.py",
+      "source_location": "L146",
       "weight": 1.0
     },
     {
@@ -2796,7 +2831,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L230",
+      "source_location": "L274",
       "weight": 1.0
     },
     {
@@ -2808,7 +2843,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L238",
+      "source_location": "L282",
       "weight": 1.0
     },
     {
@@ -2820,7 +2855,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L247",
+      "source_location": "L291",
       "weight": 1.0
     },
     {
@@ -2832,7 +2867,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L260",
+      "source_location": "L304",
       "weight": 1.0
     },
     {
@@ -2844,7 +2879,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L174",
+      "source_location": "L218",
       "weight": 1.0
     },
     {
@@ -2856,7 +2891,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L175",
+      "source_location": "L219",
       "weight": 1.0
     },
     {
@@ -2868,7 +2903,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L194",
+      "source_location": "L238",
       "weight": 1.0
     },
     {
@@ -2880,7 +2915,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L200",
+      "source_location": "L244",
       "weight": 1.0
     },
     {
@@ -2892,7 +2927,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L212",
+      "source_location": "L256",
       "weight": 1.0
     },
     {
@@ -2904,7 +2939,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L58",
+      "source_location": "L102",
       "weight": 1.0
     },
     {
@@ -2916,7 +2951,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L127",
+      "source_location": "L171",
       "weight": 1.0
     },
     {
@@ -2928,7 +2963,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L138",
+      "source_location": "L182",
       "weight": 1.0
     },
     {
@@ -2940,7 +2975,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L146",
+      "source_location": "L190",
       "weight": 1.0
     },
     {
@@ -2952,7 +2987,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L151",
+      "source_location": "L195",
       "weight": 1.0
     },
     {
@@ -2964,7 +2999,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L152",
+      "source_location": "L196",
       "weight": 1.0
     },
     {
@@ -2976,7 +3011,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L164",
+      "source_location": "L208",
       "weight": 1.0
     },
     {
@@ -2988,7 +3023,31 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L165",
+      "source_location": "L209",
+      "weight": 1.0
+    },
+    {
+      "source": "blueprints_adm_bp_enviar_recado",
+      "target": "dao_usuariodao_alunodao_listar_todos",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "blueprints/adm_bp.py",
+      "source_location": "L60",
+      "weight": 1.0
+    },
+    {
+      "source": "blueprints_adm_bp_enviar_recado",
+      "target": "servicos_email_servico_enviar_recado_admin",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "blueprints/adm_bp.py",
+      "source_location": "L66",
       "weight": 1.0
     },
     {
@@ -3000,7 +3059,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L31",
+      "source_location": "L32",
       "weight": 1.0
     },
     {
@@ -3012,7 +3071,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L32",
+      "source_location": "L33",
       "weight": 1.0
     },
     {
@@ -3024,7 +3083,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L118",
+      "source_location": "L162",
       "weight": 1.0
     },
     {
@@ -3036,7 +3095,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L76",
+      "source_location": "L120",
       "weight": 1.0
     },
     {
@@ -3348,7 +3407,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "servicos/email_servico.py",
-      "source_location": "L349",
+      "source_location": "L350",
       "weight": 1.0
     },
     {
@@ -3360,7 +3419,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "servicos/email_servico.py",
-      "source_location": "L596",
+      "source_location": "L657",
       "weight": 1.0
     },
     {
@@ -3372,7 +3431,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "servicos/email_servico.py",
-      "source_location": "L494",
+      "source_location": "L555",
       "weight": 1.0
     },
     {
@@ -3384,7 +3443,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "servicos/email_servico.py",
-      "source_location": "L201",
+      "source_location": "L202",
       "weight": 1.0
     },
     {
@@ -3396,7 +3455,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "servicos/email_servico.py",
-      "source_location": "L621",
+      "source_location": "L682",
       "weight": 1.0
     },
     {
@@ -3408,7 +3467,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "servicos/email_servico.py",
-      "source_location": "L704",
+      "source_location": "L765",
       "weight": 1.0
     },
     {
@@ -3420,7 +3479,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "servicos/email_servico.py",
-      "source_location": "L88",
+      "source_location": "L89",
       "weight": 1.0
     },
     {
@@ -3432,7 +3491,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "servicos/email_servico.py",
-      "source_location": "L92",
+      "source_location": "L93",
       "weight": 1.0
     },
     {
@@ -3444,7 +3503,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "servicos/email_servico.py",
-      "source_location": "L96",
+      "source_location": "L97",
       "weight": 1.0
     },
     {
@@ -3456,7 +3515,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "servicos/email_servico.py",
-      "source_location": "L287",
+      "source_location": "L288",
       "weight": 1.0
     },
     {
@@ -3468,7 +3527,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "servicos/email_servico.py",
-      "source_location": "L429",
+      "source_location": "L430",
+      "weight": 1.0
+    },
+    {
+      "source": "servicos_email_servico_enviar_recado_admin",
+      "target": "servicos_email_servico_enviar_email",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "servicos/email_servico.py",
+      "source_location": "L490",
       "weight": 1.0
     },
     {
@@ -3576,7 +3647,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L92",
+      "source_location": "L136",
       "weight": 1.0
     },
     {
@@ -3588,7 +3659,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L225",
+      "source_location": "L269",
       "weight": 1.0
     },
     {
@@ -3600,7 +3671,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L169",
+      "source_location": "L213",
       "weight": 1.0
     },
     {
@@ -3612,7 +3683,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L47",
+      "source_location": "L91",
       "weight": 1.0
     },
     {
@@ -3624,7 +3695,19 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L122",
+      "source_location": "L166",
+      "weight": 1.0
+    },
+    {
+      "source": "blueprints_adm_bp_enviar_recado",
+      "target": "blueprints_adm_bp_py_route",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "decorator",
+      "source_file": "blueprints/adm_bp.py",
+      "source_location": "L48",
       "weight": 1.0
     },
     {
@@ -3636,7 +3719,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L26",
+      "source_location": "L27",
       "weight": 1.0
     },
     {
@@ -3648,7 +3731,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L113",
+      "source_location": "L157",
       "weight": 1.0
     },
     {
@@ -3660,7 +3743,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L65",
+      "source_location": "L109",
       "weight": 1.0
     },
     {
@@ -3930,6 +4013,18 @@
     {
       "source": "blueprints_adm_bp",
       "target": "servicos_email_servico_enviar_notificacao_plano",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "blueprints/adm_bp.py",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "blueprints_adm_bp",
+      "target": "servicos_email_servico_enviar_recado_admin",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -4601,79 +4696,13 @@
     },
     {
       "source": "blueprints_adm_bp",
-      "target": "blueprints_adm_bp_remover_plano",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "blueprints/adm_bp.py",
-      "source_location": "L114",
-      "weight": 1.0
-    },
-    {
-      "source": "blueprints_adm_bp",
-      "target": "blueprints_adm_bp_detalhes_usuario",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "blueprints/adm_bp.py",
-      "source_location": "L123",
-      "weight": 1.0
-    },
-    {
-      "source": "blueprints_adm_bp",
-      "target": "blueprints_adm_bp_cadastrar_pagamento",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "blueprints/adm_bp.py",
-      "source_location": "L170",
-      "weight": 1.0
-    },
-    {
-      "source": "blueprints_adm_bp",
-      "target": "blueprints_adm_bp_atualizar_status_pagamento",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "blueprints/adm_bp.py",
-      "source_location": "L226",
-      "weight": 1.0
-    },
-    {
-      "source": "blueprints_adm_bp",
-      "target": "blueprints_adm_bp_painel_adm",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "blueprints/adm_bp.py",
-      "source_location": "L27",
-      "weight": 1.0
-    },
-    {
-      "source": "blueprints_adm_bp",
-      "target": "blueprints_adm_bp_cadastrar_plano",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "blueprints/adm_bp.py",
-      "source_location": "L48",
-      "weight": 1.0
-    },
-    {
-      "source": "blueprints_adm_bp",
       "target": "blueprints_adm_bp_remover_usuario",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L66",
+      "source_location": "L110",
       "weight": 1.0
     },
     {
@@ -4684,7 +4713,84 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L93",
+      "source_location": "L137",
+      "weight": 1.0
+    },
+    {
+      "source": "blueprints_adm_bp",
+      "target": "blueprints_adm_bp_remover_plano",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "blueprints/adm_bp.py",
+      "source_location": "L158",
+      "weight": 1.0
+    },
+    {
+      "source": "blueprints_adm_bp",
+      "target": "blueprints_adm_bp_detalhes_usuario",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "blueprints/adm_bp.py",
+      "source_location": "L167",
+      "weight": 1.0
+    },
+    {
+      "source": "blueprints_adm_bp",
+      "target": "blueprints_adm_bp_cadastrar_pagamento",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "blueprints/adm_bp.py",
+      "source_location": "L214",
+      "weight": 1.0
+    },
+    {
+      "source": "blueprints_adm_bp",
+      "target": "blueprints_adm_bp_atualizar_status_pagamento",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "blueprints/adm_bp.py",
+      "source_location": "L270",
+      "weight": 1.0
+    },
+    {
+      "source": "blueprints_adm_bp",
+      "target": "blueprints_adm_bp_painel_adm",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "blueprints/adm_bp.py",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "blueprints_adm_bp",
+      "target": "blueprints_adm_bp_enviar_recado",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "blueprints/adm_bp.py",
+      "source_location": "L49",
+      "weight": 1.0
+    },
+    {
+      "source": "blueprints_adm_bp",
+      "target": "blueprints_adm_bp_cadastrar_plano",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "blueprints/adm_bp.py",
+      "source_location": "L92",
       "weight": 1.0
     },
     {
@@ -4854,24 +4960,24 @@
     },
     {
       "source": "servicos_email_servico",
-      "target": "servicos_email_servico_obter_configuracoes_email",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "servicos/email_servico.py",
-      "source_location": "L13",
-      "weight": 1.0
-    },
-    {
-      "source": "servicos_email_servico",
       "target": "servicos_email_servico_enviar_codigo_verificacao",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "servicos/email_servico.py",
-      "source_location": "L132",
+      "source_location": "L133",
+      "weight": 1.0
+    },
+    {
+      "source": "servicos_email_servico",
+      "target": "servicos_email_servico_obter_configuracoes_email",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "servicos/email_servico.py",
+      "source_location": "L14",
       "weight": 1.0
     },
     {
@@ -4882,7 +4988,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "servicos/email_servico.py",
-      "source_location": "L204",
+      "source_location": "L205",
       "weight": 1.0
     },
     {
@@ -4893,7 +4999,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "servicos/email_servico.py",
-      "source_location": "L217",
+      "source_location": "L218",
       "weight": 1.0
     },
     {
@@ -4904,7 +5010,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "servicos/email_servico.py",
-      "source_location": "L26",
+      "source_location": "L27",
       "weight": 1.0
     },
     {
@@ -4915,7 +5021,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "servicos/email_servico.py",
-      "source_location": "L290",
+      "source_location": "L291",
       "weight": 1.0
     },
     {
@@ -4926,7 +5032,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "servicos/email_servico.py",
-      "source_location": "L352",
+      "source_location": "L353",
+      "weight": 1.0
+    },
+    {
+      "source": "servicos_email_servico",
+      "target": "servicos_email_servico_enviar_recado_admin",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "servicos/email_servico.py",
+      "source_location": "L433",
       "weight": 1.0
     },
     {
@@ -4937,7 +5054,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "servicos/email_servico.py",
-      "source_location": "L432",
+      "source_location": "L493",
       "weight": 1.0
     },
     {
@@ -4948,7 +5065,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "servicos/email_servico.py",
-      "source_location": "L497",
+      "source_location": "L558",
       "weight": 1.0
     },
     {
@@ -4959,7 +5076,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "servicos/email_servico.py",
-      "source_location": "L55",
+      "source_location": "L56",
       "weight": 1.0
     },
     {
@@ -4970,7 +5087,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "servicos/email_servico.py",
-      "source_location": "L599",
+      "source_location": "L660",
       "weight": 1.0
     },
     {
@@ -4981,7 +5098,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "servicos/email_servico.py",
-      "source_location": "L84",
+      "source_location": "L85",
       "weight": 1.0
     },
     {
@@ -5634,113 +5751,124 @@
       "weight": 1.0
     },
     {
-      "source": "servicos_email_servico_rationale_133",
+      "source": "servicos_email_servico_rationale_134",
       "target": "servicos_email_servico_enviar_codigo_verificacao",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "servicos/email_servico.py",
-      "source_location": "L133",
+      "source_location": "L134",
       "weight": 1.0
     },
     {
-      "source": "servicos_email_servico_rationale_218",
+      "source": "servicos_email_servico_rationale_219",
       "target": "servicos_email_servico_enviar_email_boas_vindas",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "servicos/email_servico.py",
-      "source_location": "L218",
+      "source_location": "L219",
       "weight": 1.0
     },
     {
-      "source": "servicos_email_servico_rationale_27",
+      "source": "servicos_email_servico_rationale_28",
       "target": "servicos_email_servico_enviar_email_brevo",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "servicos/email_servico.py",
-      "source_location": "L27",
+      "source_location": "L28",
       "weight": 1.0
     },
     {
-      "source": "servicos_email_servico_rationale_291",
+      "source": "servicos_email_servico_rationale_292",
       "target": "servicos_email_servico_enviar_aviso_alteracao_dados",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "servicos/email_servico.py",
-      "source_location": "L291",
+      "source_location": "L292",
       "weight": 1.0
     },
     {
-      "source": "servicos_email_servico_rationale_353",
+      "source": "servicos_email_servico_rationale_354",
       "target": "servicos_email_servico_enviar_notificacao_plano",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "servicos/email_servico.py",
-      "source_location": "L353",
+      "source_location": "L354",
       "weight": 1.0
     },
     {
-      "source": "servicos_email_servico_rationale_433",
+      "source": "servicos_email_servico_rationale_434",
+      "target": "servicos_email_servico_enviar_recado_admin",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "servicos/email_servico.py",
+      "source_location": "L434",
+      "weight": 1.0
+    },
+    {
+      "source": "servicos_email_servico_rationale_494",
       "target": "servicos_email_servico_enviar_aviso_status_mensalidade",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "servicos/email_servico.py",
-      "source_location": "L433",
+      "source_location": "L494",
       "weight": 1.0
     },
     {
-      "source": "servicos_email_servico_rationale_498",
+      "source": "servicos_email_servico_rationale_559",
       "target": "servicos_email_servico_enviar_aviso_pagamento_atrasado",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "servicos/email_servico.py",
-      "source_location": "L498",
+      "source_location": "L559",
       "weight": 1.0
     },
     {
-      "source": "servicos_email_servico_rationale_56",
+      "source": "servicos_email_servico_rationale_57",
       "target": "servicos_email_servico_enviar_email_resend",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "servicos/email_servico.py",
-      "source_location": "L56",
+      "source_location": "L57",
       "weight": 1.0
     },
     {
-      "source": "servicos_email_servico_rationale_600",
+      "source": "servicos_email_servico_rationale_661",
       "target": "servicos_email_servico_enviar_confirmacao_pagamento",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "servicos/email_servico.py",
-      "source_location": "L600",
+      "source_location": "L661",
       "weight": 1.0
     },
     {
-      "source": "servicos_email_servico_rationale_85",
+      "source": "servicos_email_servico_rationale_86",
       "target": "servicos_email_servico_enviar_email",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "servicos/email_servico.py",
-      "source_location": "L85",
+      "source_location": "L86",
       "weight": 1.0
     },
     {
@@ -5763,7 +5891,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.95,
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L97",
+      "source_location": "L141",
       "weight": 0.8
     },
     {
@@ -5774,7 +5902,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.95,
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L230",
+      "source_location": "L274",
       "weight": 0.8
     },
     {
@@ -5785,7 +5913,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.95,
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L174",
+      "source_location": "L218",
       "weight": 0.8
     },
     {
@@ -5796,7 +5924,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.95,
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L175",
+      "source_location": "L219",
       "weight": 0.8
     },
     {
@@ -5807,7 +5935,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.95,
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L184",
+      "source_location": "L228",
       "weight": 0.8
     },
     {
@@ -5818,7 +5946,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.95,
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L194",
+      "source_location": "L238",
       "weight": 0.8
     },
     {
@@ -5829,7 +5957,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.95,
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L57",
+      "source_location": "L101",
       "weight": 0.8
     },
     {
@@ -5840,7 +5968,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.95,
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L58",
+      "source_location": "L102",
       "weight": 0.8
     },
     {
@@ -5851,7 +5979,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.95,
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L127",
+      "source_location": "L171",
       "weight": 0.8
     },
     {
@@ -5862,7 +5990,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.95,
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L151",
+      "source_location": "L195",
       "weight": 0.8
     },
     {
@@ -5873,7 +6001,18 @@
       "confidence": "INFERRED",
       "confidence_score": 0.95,
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L165",
+      "source_location": "L209",
+      "weight": 0.8
+    },
+    {
+      "source": "blueprints_adm_bp_enviar_recado",
+      "target": "dao_usuariodao_alunodao",
+      "relation": "uses",
+      "_origin": "ast",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "blueprints/adm_bp.py",
+      "source_location": "L60",
       "weight": 0.8
     },
     {
@@ -5884,7 +6023,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.95,
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L31",
+      "source_location": "L32",
       "weight": 0.8
     },
     {
@@ -5895,7 +6034,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.95,
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L32",
+      "source_location": "L33",
       "weight": 0.8
     },
     {
@@ -5906,7 +6045,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.95,
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L118",
+      "source_location": "L162",
       "weight": 0.8
     },
     {
@@ -5917,7 +6056,7 @@
       "confidence": "INFERRED",
       "confidence_score": 0.95,
       "source_file": "blueprints/adm_bp.py",
-      "source_location": "L76",
+      "source_location": "L120",
       "weight": 0.8
     },
     {
@@ -7198,5 +7337,5 @@
       "source_file": "templates/index.html"
     }
   ],
-  "built_at_commit": "906d8ff223881784661202f9d2a63030695a510a"
+  "built_at_commit": "384286ccdcb83ef90c3bb6ca1bd992e380646984"
 }
