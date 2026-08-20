@@ -349,6 +349,253 @@ Equipe Academia do Bitelo
     return enviar_email(destinatario, assunto, texto, html)
 
 
+def enviar_notificacao_plano(destinatario, nome_usuario, nome_plano, data_vencimento=None):
+    """
+    Dispara o e-mail avisando o aluno que a administração alterou o seu plano de treino.
+    """
+    primeiro_nome = nome_usuario.split()[0] if nome_usuario else "Aluno(a)"
+    assunto = "Seu plano foi atualizado - Academia do Bitelo"
+
+    if isinstance(data_vencimento, (date, datetime)):
+        vencimento_formatado = data_vencimento.strftime('%d/%m/%Y')
+    elif isinstance(data_vencimento, str) and data_vencimento:
+        vencimento_formatado = data_vencimento
+    else:
+        vencimento_formatado = None
+
+    linha_vencimento_texto = f"\nVencimento: {vencimento_formatado}" if vencimento_formatado else ""
+    linha_vencimento_html = (
+        f'<div class="info-item"><strong>Vencimento:</strong> {vencimento_formatado}</div>'
+        if vencimento_formatado else ""
+    )
+
+    texto = f"""Olá, {primeiro_nome}!
+
+A administração da Academia do Bitelo atualizou o seu plano de treino.
+
+Novo Plano: {nome_plano}{linha_vencimento_texto}
+
+Se você não esperava essa alteração, entre em contato com a recepção da academia.
+
+Atenciosamente,
+Equipe Academia do Bitelo
+"""
+
+    html = f"""<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<style>
+    body {{ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f1e9; margin: 0; padding: 20px; color: #171b1e; }}
+    .container {{ max-width: 520px; margin: 0 auto; background: #ffffff; border-radius: 6px; border: 1px solid #d9d8d2; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }}
+    .header {{ background-color: #171b1e; padding: 24px; text-align: center; border-bottom: 4px solid #ef6c23; }}
+    .header h1 {{ color: #ffffff; margin: 0; font-size: 22px; text-transform: uppercase; letter-spacing: 1px; }}
+    .header h1 span {{ color: #ffc72c; }}
+    .content {{ padding: 30px; }}
+    .badge {{ display: inline-block; background-color: #ef6c23; color: #ffffff; font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; letter-spacing: 1px; margin-bottom: 15px; }}
+    .greeting {{ font-size: 18px; font-weight: bold; margin-bottom: 12px; color: #171b1e; }}
+    .message {{ font-size: 14px; line-height: 1.6; color: #4a5259; margin-bottom: 20px; }}
+    .info-box {{ background: #faf7f0; border-left: 4px solid #ef6c23; border-radius: 4px; padding: 16px; margin: 20px 0; }}
+    .info-item {{ font-size: 13px; color: #2d3748; margin: 6px 0; }}
+    .info-item strong {{ color: #171b1e; }}
+    .footer {{ background: #ebe8df; padding: 16px; text-align: center; font-size: 11px; color: #687078; }}
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Academia <span>do Bitelo</span></h1>
+    </div>
+    <div class="content">
+        <div class="badge">Plano Atualizado</div>
+        <p class="greeting">Olá, {primeiro_nome}!</p>
+        <p class="message">A administração da Academia do Bitelo atualizou o seu plano de treino.</p>
+
+        <div class="info-box">
+            <div class="info-item"><strong>Novo Plano:</strong> {nome_plano}</div>
+            {linha_vencimento_html}
+        </div>
+
+        <p class="message">Se você não esperava essa alteração, entre em contato com a recepção da academia.</p>
+    </div>
+    <div class="footer">
+        © 2026 Academia do Bitelo • Todos os direitos reservados
+    </div>
+</div>
+</body>
+</html>
+"""
+
+    return enviar_email(destinatario, assunto, texto, html)
+
+
+def enviar_aviso_status_mensalidade(destinatario, nome_usuario, status):
+    """
+    Dispara o e-mail avisando o aluno sobre a alteração manual do status da mensalidade
+    feita pelo admin (ex: Em Dia, Pendente, Inativo).
+    """
+    primeiro_nome = nome_usuario.split()[0] if nome_usuario else "Aluno(a)"
+    status_label = status or "Atualizado"
+    assunto = f"Situação da mensalidade: {status_label} - Academia do Bitelo"
+
+    texto = f"""Olá, {primeiro_nome}!
+
+A situação da sua mensalidade na Academia do Bitelo foi atualizada para: {status_label}.
+
+Se tiver dúvidas sobre essa alteração, entre em contato com a recepção da academia.
+
+Atenciosamente,
+Equipe Academia do Bitelo
+"""
+
+    html = f"""<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<style>
+    body {{ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f1e9; margin: 0; padding: 20px; color: #171b1e; }}
+    .container {{ max-width: 520px; margin: 0 auto; background: #ffffff; border-radius: 6px; border: 1px solid #d9d8d2; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }}
+    .header {{ background-color: #171b1e; padding: 24px; text-align: center; border-bottom: 4px solid #ef6c23; }}
+    .header h1 {{ color: #ffffff; margin: 0; font-size: 22px; text-transform: uppercase; letter-spacing: 1px; }}
+    .header h1 span {{ color: #ffc72c; }}
+    .content {{ padding: 30px; }}
+    .badge {{ display: inline-block; background-color: #2b6cb0; color: #ffffff; font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; letter-spacing: 1px; margin-bottom: 15px; }}
+    .greeting {{ font-size: 18px; font-weight: bold; margin-bottom: 12px; color: #171b1e; }}
+    .message {{ font-size: 14px; line-height: 1.6; color: #4a5259; margin-bottom: 20px; }}
+    .status-box {{ background: #faf7f0; border: 1px solid #e5e0d4; border-radius: 6px; padding: 16px; margin: 20px 0; text-align: center; }}
+    .status-value {{ font-size: 18px; font-weight: 800; color: #171b1e; }}
+    .footer {{ background: #ebe8df; padding: 16px; text-align: center; font-size: 11px; color: #687078; }}
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Academia <span>do Bitelo</span></h1>
+    </div>
+    <div class="content">
+        <div class="badge">Status Atualizado</div>
+        <p class="greeting">Olá, {primeiro_nome}!</p>
+        <p class="message">A situação da sua mensalidade na Academia do Bitelo foi atualizada:</p>
+
+        <div class="status-box">
+            <div class="status-value">{status_label}</div>
+        </div>
+
+        <p class="message">Se tiver dúvidas sobre essa alteração, entre em contato com a recepção da academia.</p>
+    </div>
+    <div class="footer">
+        © 2026 Academia do Bitelo • Todos os direitos reservados
+    </div>
+</div>
+</body>
+</html>
+"""
+
+    return enviar_email(destinatario, assunto, texto, html)
+
+
+def enviar_aviso_pagamento_atrasado(destinatario, nome_usuario, nome_plano, valor, vencimento=None):
+    """
+    Dispara o e-mail avisando o aluno que o pagamento da mensalidade está em atraso.
+    """
+    primeiro_nome = nome_usuario.split()[0] if nome_usuario else "Aluno(a)"
+    assunto = "⚠️ Mensalidade em atraso - Academia do Bitelo"
+
+    if isinstance(vencimento, (date, datetime)):
+        vencimento_formatado = vencimento.strftime('%d/%m/%Y')
+    elif isinstance(vencimento, str) and vencimento:
+        vencimento_formatado = vencimento
+    else:
+        vencimento_formatado = None
+
+    try:
+        valor_float = float(valor)
+        valor_str = f"{valor_float:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
+    except (ValueError, TypeError):
+        valor_str = str(valor)
+
+    linha_vencimento_texto = f"\nVencimento: {vencimento_formatado}" if vencimento_formatado else ""
+    linha_vencimento_html = (
+        f"""<tr>
+                    <td style="padding: 7px 0; color: #687078;">Vencimento:</td>
+                    <td style="padding: 7px 0; font-weight: bold; text-align: right; color: #171b1e;">{vencimento_formatado}</td>
+                </tr>"""
+        if vencimento_formatado else ""
+    )
+
+    texto = f"""Olá, {primeiro_nome}!
+
+Identificamos que a sua mensalidade da Academia do Bitelo está em atraso.
+
+Plano: {nome_plano}
+Valor: R$ {valor_str}{linha_vencimento_texto}
+
+Para regularizar sua situação e manter seu acesso liberado, entre em contato com a recepção da academia o quanto antes.
+
+Atenciosamente,
+Equipe Academia do Bitelo
+"""
+
+    html = f"""<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<style>
+    body {{ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f1e9; margin: 0; padding: 20px; color: #171b1e; }}
+    .container {{ max-width: 520px; margin: 0 auto; background: #ffffff; border-radius: 6px; border: 1px solid #d9d8d2; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }}
+    .header {{ background-color: #171b1e; padding: 24px; text-align: center; border-bottom: 4px solid #ef6c23; }}
+    .header h1 {{ color: #ffffff; margin: 0; font-size: 22px; text-transform: uppercase; letter-spacing: 1px; }}
+    .header h1 span {{ color: #ffc72c; }}
+    .content {{ padding: 30px; }}
+    .badge-atraso {{ display: inline-block; background-color: #c53030; color: #ffffff; font-size: 12px; font-weight: 700; text-transform: uppercase; padding: 5px 12px; border-radius: 20px; letter-spacing: 1px; margin-bottom: 16px; }}
+    .greeting {{ font-size: 18px; font-weight: bold; margin-bottom: 12px; color: #171b1e; }}
+    .message {{ font-size: 14px; line-height: 1.6; color: #4a5259; margin-bottom: 20px; }}
+    .receipt-card {{ background: #faf7f0; border: 1px solid #e5e0d4; border-radius: 6px; padding: 20px; margin: 20px 0; }}
+    .receipt-title {{ font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #c53030; margin-bottom: 14px; border-bottom: 1px solid #e5e0d4; padding-bottom: 8px; }}
+    .action-notice {{ background: #fdecea; border-left: 4px solid #c53030; padding: 12px 16px; border-radius: 4px; font-size: 13px; color: #7a1a1a; margin-top: 20px; }}
+    .footer {{ background: #ebe8df; padding: 16px; text-align: center; font-size: 11px; color: #687078; }}
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Academia <span>do Bitelo</span></h1>
+    </div>
+    <div class="content">
+        <div class="badge-atraso">⚠ Mensalidade em atraso</div>
+        <p class="greeting">Olá, {primeiro_nome}!</p>
+        <p class="message">Identificamos que o pagamento abaixo está em atraso:</p>
+
+        <div class="receipt-card">
+            <div class="receipt-title">Mensalidade em Atraso</div>
+            <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                <tr>
+                    <td style="padding: 7px 0; color: #687078;">Plano:</td>
+                    <td style="padding: 7px 0; font-weight: bold; text-align: right; color: #171b1e;">{nome_plano}</td>
+                </tr>
+                {linha_vencimento_html}
+                <tr style="border-top: 1px solid #e0dbd0;">
+                    <td style="padding: 10px 0 0 0; font-weight: bold; color: #171b1e;">Valor:</td>
+                    <td style="padding: 10px 0 0 0; font-weight: 800; text-align: right; color: #c53030; font-size: 16px;">R$ {valor_str}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="action-notice">
+            <strong>Ação necessária:</strong> Regularize seu pagamento na recepção da academia para manter seu acesso liberado.
+        </div>
+    </div>
+    <div class="footer">
+        © 2026 Academia do Bitelo • Comprovante Gerado Automaticamente
+    </div>
+</div>
+</body>
+</html>
+"""
+
+    return enviar_email(destinatario, assunto, texto, html)
+
+
 def enviar_confirmacao_pagamento(destinatario, nome_usuario, nome_plano, valor, forma_pagamento, data_pagamento=None):
     """
     Dispara o e-mail de recibo/confirmação de pagamento da mensalidade, informando o plano, valor e forma de pagamento.
