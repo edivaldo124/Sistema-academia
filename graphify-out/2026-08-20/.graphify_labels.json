@@ -1,20 +1,18 @@
 {
-  "0": "AlunoDAO",
+  "0": "adm_bp.py",
   "1": "usuario_bp.py",
-  "2": "email_servico.py",
   "3": "Aluno Detail (Admin) Page",
   "4": "/graphify Command",
   "5": "Exports & Benchmark Reference",
   "6": "Python Dependencies (requirements.txt)",
   "7": "pgAdm.js",
   "8": "index.js",
-  "9": "adm_bp.py",
+  "9": "usuarioDAO.py",
   "10": "Academia do Bitelo (brand name)",
   "11": "graphify clone",
   "12": "masks.js",
   "13": "modal.js",
   "14": "pgUsuario.js",
   "15": "main.py",
-  "16": "ProjetoWeb / Sistema-academia",
-  "17": "TestAlteracaoCredenciais"
+  "16": "ProjetoWeb / Sistema-academia"
 }
