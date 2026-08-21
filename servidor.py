@@ -12,7 +12,6 @@ from blueprints.adm_bp import admin_bp
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'chave_secreta_academia-desenvolvimento')
 
-# Mantem a sessao no cookie, mas limita seu tempo de vida e impede acesso via JS.
 app.config.update(
     PERMANENT_SESSION_LIFETIME=timedelta(minutes=30),
     SESSION_COOKIE_HTTPONLY=True,
