@@ -5,53 +5,54 @@
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 211 nodes · 401 edges · 16 communities (14 shown, 2 thin omitted)
-- Extraction: 89% EXTRACTED · 11% INFERRED · 0% AMBIGUOUS · INFERRED: 44 edges (avg confidence: 0.92)
+- 211 nodes · 365 edges · 17 communities (15 shown, 2 thin omitted)
+- Extraction: 95% EXTRACTED · 5% INFERRED · 0% AMBIGUOUS · INFERRED: 19 edges (avg confidence: 0.89)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `0e4688d3`
+- Built from commit: `70584905`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - adm_bp.py
 - usuario_bp.py
+- email_servico.py
 - Aluno Detail (Admin) Page
 - /graphify Command
 - Exports & Benchmark Reference
 - Python Dependencies (requirements.txt)
 - pgAdm.js
 - index.js
-- usuarioDAO.py
+- Aluno
 - Academia do Bitelo (brand name)
 - graphify clone
 - pgUsuario.js
 - ProjetoWeb / Sistema-academia
 
 ## God Nodes (most connected - your core abstractions)
-1. `AlunoDAO` - 30 edges
-2. `PlanoDAO` - 14 edges
-3. `enviar_email()` - 13 edges
-4. `detalhes_usuario()` - 12 edges
-5. `PagamentoDAO` - 12 edges
-6. `cadastrar_pagamento()` - 11 edges
-7. `pagina_cadastro()` - 10 edges
-8. `pagina_perfil()` - 10 edges
-9. `Aluno` - 10 edges
-10. `Python Dependencies (requirements.txt)` - 10 edges
+1. `AlunoDAO` - 15 edges
+2. `enviar_email()` - 13 edges
+3. `Aluno` - 10 edges
+4. `Python Dependencies (requirements.txt)` - 10 edges
+5. `detalhes_usuario()` - 9 edges
+6. `pagina_cadastro()` - 9 edges
+7. `cadastrar_pagamento()` - 8 edges
+8. `pagina_perfil()` - 7 edges
+9. `editar_perfil()` - 7 edges
+10. `enviar_notificacao_plano()` - 7 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `painel_adm()` --uses--> `AlunoDAO`  [INFERRED]
-  blueprints/adm_bp.py → dao/usuarioDAO.py
-- `enviar_recado()` --uses--> `AlunoDAO`  [INFERRED]
-  blueprints/adm_bp.py → dao/usuarioDAO.py
-- `cadastrar_plano()` --uses--> `Plano`  [INFERRED]
-  blueprints/adm_bp.py → modelos/plano.py
-- `alterar_mensalidade()` --uses--> `AlunoDAO`  [INFERRED]
-  blueprints/adm_bp.py → dao/usuarioDAO.py
-- `detalhes_usuario()` --uses--> `AlunoDAO`  [INFERRED]
-  blueprints/adm_bp.py → dao/usuarioDAO.py
+- `pagina_cadastro()` --uses--> `Aluno`  [INFERRED]
+  blueprints/usuario_bp.py → modelos/usuario.py
+- `recuperar_senha()` --uses--> `Aluno`  [INFERRED]
+  blueprints/usuario_bp.py → modelos/usuario.py
+- `AlunoDAO` --uses--> `Aluno`  [INFERRED]
+  dao/usuarioDAO.py → modelos/usuario.py
+- `AlunoDAO` --uses--> `Plano`  [INFERRED]
+  dao/usuarioDAO.py → modelos/plano.py
+- `enviar_recado()` --calls--> `enviar_recado_admin()`  [EXTRACTED]
+  blueprints/adm_bp.py → servicos/email_servico.py
 
 ## Import Cycles
 - None detected.
@@ -62,27 +63,31 @@
 - **Email-Verified Profile Edit Flow** — templates_editar_perfil_page, templates_verificar_codigo_page, templates_pgusuario_page [EXTRACTED 1.00]
 - **Authentication & Onboarding Flow** — templates_index_page, templates_login_page, templates_cadastro_page, templates_recuperar_page [INFERRED 0.85]
 
-## Communities (16 total, 2 thin omitted)
+## Communities (17 total, 2 thin omitted)
 
 ### Community 0 - "adm_bp.py"
-Cohesion: 0.09
-Nodes (32): alterar_mensalidade(), atualizar_status_pagamento(), cadastrar_pagamento(), cadastrar_plano(), detalhes_usuario(), enviar_recado(), painel_adm(), route (+24 more)
+Cohesion: 0.11
+Nodes (14): alterar_mensalidade(), atualizar_status_pagamento(), cadastrar_pagamento(), cadastrar_plano(), detalhes_usuario(), enviar_recado(), painel_adm(), route (+6 more)
 
 ### Community 1 - "usuario_bp.py"
-Cohesion: 0.17
-Nodes (21): remover_usuario(), atualizar_preferencias_email(), cancelar_alteracao(), editar_perfil(), mascarar_email(), pagina_cadastro(), pagina_login(), pagina_perfil() (+13 more)
+Cohesion: 0.16
+Nodes (20): atualizar_preferencias_email(), cancelar_alteracao(), editar_perfil(), mascarar_email(), pagina_cadastro(), pagina_login(), pagina_perfil(), route (+12 more)
+
+### Community 2 - "email_servico.py"
+Cohesion: 0.11
+Nodes (22): patch, enviar_aviso_pagamento_atrasado(), enviar_aviso_status_mensalidade(), enviar_confirmacao_pagamento(), enviar_email(), enviar_email_boas_vindas(), _enviar_email_brevo(), _enviar_email_resend() (+14 more)
 
 ### Community 3 - "Aluno Detail (Admin) Page"
 Cohesion: 0.13
 Nodes (22): Cadastro Form, Cadastro (Registration) Page, Confirm Dialog Component, Aluno Profile Update Form, Mensalidade (Payment) Launch Form, Aluno Detail (Admin) Page, Editar Credenciais Form, Editar Perfil (Edit Profile) Page (+14 more)
 
 ### Community 4 - "/graphify Command"
-Cohesion: 0.15
-Nodes (18): /graphify Trigger (Local Skill Reference), Project Graphify Usage Rules, Add & Watch Reference, /graphify add, --watch Mode, graphify claude install, Commit Hook & CLAUDE.md Integration Reference, graphify hook install (post-commit) (+10 more)
+Cohesion: 0.14
+Nodes (19): /graphify Trigger (Local Skill Reference), Project Graphify Usage Rules, Add & Watch Reference, /graphify add, --watch Mode, graphify claude install, Commit Hook & CLAUDE.md Integration Reference, graphify hook install (post-commit) (+11 more)
 
 ### Community 5 - "Exports & Benchmark Reference"
-Cohesion: 0.11
-Nodes (19): Token Reduction Benchmark, Exports & Benchmark Reference, FalkorDB Export, MCP Server, Neo4j Export, Wiki Export, Confidence Score Rubric, Extraction Subagent Prompt Spec (+11 more)
+Cohesion: 0.12
+Nodes (18): Token Reduction Benchmark, Exports & Benchmark Reference, FalkorDB Export, MCP Server, Neo4j Export, Wiki Export, Confidence Score Rubric, Extraction Subagent Prompt Spec (+10 more)
 
 ### Community 6 - "Python Dependencies (requirements.txt)"
 Cohesion: 0.22
@@ -96,9 +101,9 @@ Nodes (10): atualizarListaDeAlunos(), avisoSemResultados, campoBusca, campoDurac
 Cohesion: 0.29
 Nodes (3): icone_senha, input_senha, modal
 
-### Community 9 - "usuarioDAO.py"
-Cohesion: 0.14
-Nodes (10): Plano, Aluno, patch, home(), logout(), pagina_cadastro(), pagina_login(), route (+2 more)
+### Community 9 - "Aluno"
+Cohesion: 0.21
+Nodes (7): Aluno, home(), logout(), pagina_cadastro(), pagina_login(), route, TestAlteracaoCredenciais
 
 ### Community 10 - "Academia do Bitelo (brand name)"
 Cohesion: 0.70
@@ -109,24 +114,24 @@ Cohesion: 1.00
 Nodes (3): graphify clone, GitHub Clone & Cross-Repo Merge Reference, graphify merge-graphs
 
 ## Knowledge Gaps
-- **31 isolated node(s):** `modal`, `input_senha`, `icone_senha`, `campoBusca`, `linhasDeAlunos` (+26 more)
+- **31 isolated node(s):** `formatadorDePreco`, `gradePlanos`, `avisoSemResultados`, `campoBusca`, `campoDuracao` (+26 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **2 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `AlunoDAO` connect `usuario_bp.py` to `adm_bp.py`, `usuarioDAO.py`?**
-  _High betweenness centrality (0.057) - this node is a cross-community bridge._
-- **Why does `Aluno` connect `usuarioDAO.py` to `usuario_bp.py`?**
-  _High betweenness centrality (0.019) - this node is a cross-community bridge._
-- **Why does `/graphify Command` connect `/graphify Command` to `Exports & Benchmark Reference`?**
-  _High betweenness centrality (0.019) - this node is a cross-community bridge._
-- **Are the 15 inferred relationships involving `AlunoDAO` (e.g. with `alterar_mensalidade()` and `cadastrar_pagamento()`) actually correct?**
-  _`AlunoDAO` has 15 INFERRED edges - model-reasoned connections that need verification._
-- **Are the 7 inferred relationships involving `PlanoDAO` (e.g. with `cadastrar_pagamento()` and `cadastrar_plano()`) actually correct?**
-  _`PlanoDAO` has 7 INFERRED edges - model-reasoned connections that need verification._
-- **Are the 3 inferred relationships involving `detalhes_usuario()` (e.g. with `PagamentoDAO` and `PlanoDAO`) actually correct?**
-  _`detalhes_usuario()` has 3 INFERRED edges - model-reasoned connections that need verification._
-- **Are the 5 inferred relationships involving `PagamentoDAO` (e.g. with `atualizar_status_pagamento()` and `cadastrar_pagamento()`) actually correct?**
-  _`PagamentoDAO` has 5 INFERRED edges - model-reasoned connections that need verification._
+- **Why does `AlunoDAO` connect `usuario_bp.py` to `adm_bp.py`, `Aluno`?**
+  _High betweenness centrality (0.029) - this node is a cross-community bridge._
+- **Why does `Aluno` connect `Aluno` to `adm_bp.py`, `usuario_bp.py`?**
+  _High betweenness centrality (0.021) - this node is a cross-community bridge._
+- **Are the 2 inferred relationships involving `AlunoDAO` (e.g. with `Plano` and `Aluno`) actually correct?**
+  _`AlunoDAO` has 2 INFERRED edges - model-reasoned connections that need verification._
+- **Are the 4 inferred relationships involving `Aluno` (e.g. with `pagina_cadastro()` and `recuperar_senha()`) actually correct?**
+  _`Aluno` has 4 INFERRED edges - model-reasoned connections that need verification._
+- **What connects `formatadorDePreco`, `gradePlanos`, `avisoSemResultados` to the rest of the system?**
+  _31 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `adm_bp.py` be split into smaller, more focused modules?**
+  _Cohesion score 0.1126984126984127 - nodes in this community are weakly interconnected._
+- **Should `email_servico.py` be split into smaller, more focused modules?**
+  _Cohesion score 0.11384615384615385 - nodes in this community are weakly interconnected._
