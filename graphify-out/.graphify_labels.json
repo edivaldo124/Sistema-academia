@@ -1,7 +1,7 @@
 {
   "0": "adm_bp.py",
-  "1": "usuario_bp.py",
-  "2": "email_servico.py",
+  "1": "AlunoDAO",
+  "2": "usuario_bp.py",
   "3": "Aluno Detail (Admin) Page",
   "4": "/graphify Command",
   "5": "Exports & Benchmark Reference",
@@ -15,5 +15,6 @@
   "13": "modal.js",
   "14": "pgUsuario.js",
   "15": "main.py",
-  "16": "ProjetoWeb / Sistema-academia"
+  "16": "ProjetoWeb / Sistema-academia",
+  "17": "route"
 }

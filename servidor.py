@@ -1,5 +1,5 @@
 from flask import *
-from config import db
+from config import db, opcoes_engine, preparar_url_banco
 import os
 from datetime import timedelta
 from dotenv import load_dotenv
@@ -20,16 +20,14 @@ app.config.update(
     SESSION_REFRESH_EACH_REQUEST=True,
 )
 
-db_url = os.environ.get(
+db_url = preparar_url_banco(os.environ.get(
     'DATABASE_URL',
     'postgresql+psycopg2://edivaldo:senha123@localhost/academia3_db'
-)
-if db_url.startswith("postgres://"):
-    db_url = db_url.replace("postgres://", "postgresql://", 1)
+))
 
 app.config['SQLALCHEMY_DATABASE_URI'] = db_url
-
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_ENGINE_OPTIONS'] = opcoes_engine(db_url)
 
 db.init_app(app)
 
