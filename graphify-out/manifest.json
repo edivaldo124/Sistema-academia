@@ -78,10 +78,10 @@
     "semantic_hash": "3827f23b6cb8728e3d92402bb5023b88"
   },
   "servidor.py": {
-    "mtime": 1787099792.5824306,
-    "seen": 1787193389.494462,
-    "ast_hash": "1069be0c1ac4cdfab8d84a4fa523ac25",
-    "semantic_hash": "1069be0c1ac4cdfab8d84a4fa523ac25"
+    "mtime": 1787272117.8337166,
+    "seen": 1787273555.5811794,
+    "ast_hash": "34cc3921248a9ddffbe078c2a13d4132",
+    "semantic_hash": ""
   },
   "static/js/index.js": {
     "mtime": 1786858031.0578475,
