@@ -1,12 +1,12 @@
 # Graph Report - webAcademia  (2026-09-03)
 
 ## Corpus Check
-- 39 files · ~121,465 words
+- 44 files · ~123,346 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 309 nodes · 464 edges · 24 communities (21 shown, 3 thin omitted)
-- Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 19 edges (avg confidence: 0.89)
+- 337 nodes · 593 edges · 23 communities (21 shown, 2 thin omitted)
+- Extraction: 90% EXTRACTED · 10% INFERRED · 0% AMBIGUOUS · INFERRED: 59 edges (avg confidence: 0.93)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
@@ -17,19 +17,18 @@
 ## Community Hubs (Navigation)
 - adm_bp.py
 - usuario_bp.py
-- email_servico.py
+- ProfessorDAO
 - Aluno Detail (Admin) Page
 - /graphify Command
 - Exports & Benchmark Reference
 - Python Dependencies (requirements.txt)
 - pgAdm.js
 - index.js
-- servidor.py
+- config.py
 - Academia do Bitelo (brand name)
 - graphify clone
 - pgUsuario.js
 - ProjetoWeb / Sistema-academia
-- route
 - Writing apps with Prisma Composer
 - Writing apps with Prisma Composer
 - Writing apps with Prisma Composer
@@ -37,28 +36,28 @@
 - package.json
 
 ## God Nodes (most connected - your core abstractions)
-1. `Writing apps with Prisma Composer` - 15 edges
-2. `Writing apps with Prisma Composer` - 15 edges
+1. `AlunoDAO` - 33 edges
+2. `ProfessorDAO` - 16 edges
 3. `Writing apps with Prisma Composer` - 15 edges
 4. `Writing apps with Prisma Composer` - 15 edges
-5. `AlunoDAO` - 15 edges
-6. `enviar_email()` - 13 edges
-7. `Aluno` - 10 edges
-8. `Python Dependencies (requirements.txt)` - 10 edges
-9. `detalhes_usuario()` - 9 edges
-10. `pagina_cadastro()` - 9 edges
+5. `Writing apps with Prisma Composer` - 15 edges
+6. `Writing apps with Prisma Composer` - 15 edges
+7. `detalhes_usuario()` - 14 edges
+8. `PlanoDAO` - 14 edges
+9. `enviar_email()` - 13 edges
+10. `PagamentoDAO` - 12 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `AlunoDAO` --uses--> `Aluno`  [INFERRED]
-  dao/usuarioDAO.py → modelos/usuario.py
-- `PagamentoDAO` --uses--> `Pagamento`  [INFERRED]
-  dao/financeiroDAO.py → modelos/pagamento.py
-- `PlanoDAO` --uses--> `Plano`  [INFERRED]
-  dao/planoDAO.py → modelos/plano.py
-- `AlunoDAO` --uses--> `Plano`  [INFERRED]
-  dao/usuarioDAO.py → modelos/plano.py
-- `pagina_cadastro()` --uses--> `Aluno`  [INFERRED]
-  blueprints/usuario_bp.py → modelos/usuario.py
+- `painel_adm()` --uses--> `ProfessorDAO`  [INFERRED]
+  blueprints/adm_bp.py → dao/professorDAO.py
+- `cadastrar_plano()` --uses--> `Plano`  [INFERRED]
+  blueprints/adm_bp.py → modelos/plano.py
+- `cadastrar_professor()` --uses--> `ProfessorDAO`  [INFERRED]
+  blueprints/adm_bp.py → dao/professorDAO.py
+- `cadastrar_professor()` --uses--> `Professor`  [INFERRED]
+  blueprints/adm_bp.py → modelos/professor.py
+- `detalhes_usuario()` --uses--> `ProfessorDAO`  [INFERRED]
+  blueprints/adm_bp.py → dao/professorDAO.py
 
 ## Import Cycles
 - None detected.
@@ -69,19 +68,19 @@
 - **Email-Verified Profile Edit Flow** — templates_editar_perfil_page, templates_verificar_codigo_page, templates_pgusuario_page [EXTRACTED 1.00]
 - **Authentication & Onboarding Flow** — templates_index_page, templates_login_page, templates_cadastro_page, templates_recuperar_page [INFERRED 0.85]
 
-## Communities (24 total, 3 thin omitted)
+## Communities (23 total, 2 thin omitted)
 
 ### Community 0 - "adm_bp.py"
-Cohesion: 0.10
-Nodes (20): alterar_mensalidade(), atualizar_status_pagamento(), cadastrar_pagamento(), cadastrar_plano(), detalhes_usuario(), enviar_recado(), painel_adm(), route (+12 more)
+Cohesion: 0.11
+Nodes (22): alterar_mensalidade(), atualizar_status_pagamento(), cadastrar_pagamento(), cadastrar_plano(), detalhes_usuario(), enviar_recado(), painel_adm(), route (+14 more)
 
 ### Community 1 - "usuario_bp.py"
-Cohesion: 0.13
-Nodes (20): atualizar_preferencias_email(), cancelar_alteracao(), editar_perfil(), mascarar_email(), pagina_cadastro(), pagina_login(), route, recuperar_senha() (+12 more)
+Cohesion: 0.12
+Nodes (32): cadastrar_professor(), atualizar_preferencias_email(), cancelar_alteracao(), editar_perfil(), mascarar_email(), pagina_cadastro(), pagina_login(), route (+24 more)
 
-### Community 2 - "email_servico.py"
-Cohesion: 0.13
-Nodes (18): patch, enviar_aviso_status_mensalidade(), enviar_confirmacao_pagamento(), enviar_email(), enviar_email_boas_vindas(), _enviar_email_brevo(), _enviar_email_resend(), enviar_recado_admin() (+10 more)
+### Community 2 - "ProfessorDAO"
+Cohesion: 0.16
+Nodes (11): remover_professor(), cadastrar_avaliacao(), detalhes_aluno_professor(), _guard(), painel_professor(), route, remover_avaliacao(), AvaliacaoDAO (+3 more)
 
 ### Community 3 - "Aluno Detail (Admin) Page"
 Cohesion: 0.13
@@ -107,9 +106,9 @@ Nodes (10): atualizarListaDeAlunos(), avisoSemResultados, campoBusca, campoDurac
 Cohesion: 0.29
 Nodes (3): icone_senha, input_senha, modal
 
-### Community 9 - "servidor.py"
-Cohesion: 0.19
-Nodes (10): opcoes_engine(), preparar_url_banco(), Evita conexões inativas após pausas ou reciclagens do pool remoto., Normaliza a URL do PostgreSQL e habilita SSL para o Supabase., route, home(), logout(), pagina_cadastro() (+2 more)
+### Community 9 - "config.py"
+Cohesion: 0.10
+Nodes (15): opcoes_engine(), preparar_url_banco(), Evita conexões inativas após pausas ou reciclagens do pool remoto., Normaliza a URL do PostgreSQL e habilita SSL para o Supabase., Plano, Aluno, patch, home() (+7 more)
 
 ### Community 10 - "Academia do Bitelo (brand name)"
 Cohesion: 0.70
@@ -140,24 +139,24 @@ Cohesion: 0.33
 Nodes (5): devDependencies, prisma, scripts, postinstall, prisma
 
 ## Knowledge Gaps
-- **97 isolated node(s):** `tsconfig and import specifiers`, `Anatomy of a service`, `The root module`, `Builds are yours`, `Deploy config` (+92 more)
+- **97 isolated node(s):** `prisma`, `postinstall`, `modal`, `input_senha`, `icone_senha` (+92 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **3 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **2 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `AlunoDAO` connect `adm_bp.py` to `usuario_bp.py`?**
-  _High betweenness centrality (0.015) - this node is a cross-community bridge._
-- **Why does `Aluno` connect `usuario_bp.py` to `adm_bp.py`?**
+- **Why does `AlunoDAO` connect `adm_bp.py` to `usuario_bp.py`, `ProfessorDAO`, `config.py`?**
+  _High betweenness centrality (0.041) - this node is a cross-community bridge._
+- **Why does `ProfessorDAO` connect `ProfessorDAO` to `adm_bp.py`, `usuario_bp.py`?**
+  _High betweenness centrality (0.013) - this node is a cross-community bridge._
+- **Why does `Aluno` connect `config.py` to `adm_bp.py`, `usuario_bp.py`?**
   _High betweenness centrality (0.010) - this node is a cross-community bridge._
-- **Why does `preparar_url_banco()` connect `servidor.py` to `usuario_bp.py`?**
-  _High betweenness centrality (0.009) - this node is a cross-community bridge._
-- **Are the 2 inferred relationships involving `AlunoDAO` (e.g. with `Plano` and `Aluno`) actually correct?**
-  _`AlunoDAO` has 2 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `tsconfig and import specifiers`, `Anatomy of a service`, `The root module` to the rest of the system?**
+- **Are the 17 inferred relationships involving `AlunoDAO` (e.g. with `alterar_mensalidade()` and `cadastrar_pagamento()`) actually correct?**
+  _`AlunoDAO` has 17 INFERRED edges - model-reasoned connections that need verification._
+- **Are the 7 inferred relationships involving `ProfessorDAO` (e.g. with `cadastrar_professor()` and `detalhes_usuario()`) actually correct?**
+  _`ProfessorDAO` has 7 INFERRED edges - model-reasoned connections that need verification._
+- **What connects `prisma`, `postinstall`, `modal` to the rest of the system?**
   _97 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `adm_bp.py` be split into smaller, more focused modules?**
-  _Cohesion score 0.0975609756097561 - nodes in this community are weakly interconnected._
-- **Should `usuario_bp.py` be split into smaller, more focused modules?**
-  _Cohesion score 0.12605042016806722 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.10676532769556026 - nodes in this community are weakly interconnected._

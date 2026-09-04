@@ -2,19 +2,19 @@
   ".claude/settings.json": {
     "mtime": 1787196598.450387,
     "seen": 1787244570.7338004,
-    "ast_hash": "f4307b16ff1dd13013344312670c8c8c",
+    "ast_hash": "",
     "semantic_hash": ""
   },
   "blueprints/adm_bp.py": {
-    "mtime": 1787244394.138723,
-    "seen": 1787244437.1232083,
-    "ast_hash": "07a7f6980fc29e2c8c34ec56fdad6e6b",
+    "mtime": 1788437218.1938493,
+    "seen": 1788489197.8401313,
+    "ast_hash": "4378cc5054c3860a5f8255fcaee71f4f",
     "semantic_hash": ""
   },
   "blueprints/usuario_bp.py": {
-    "mtime": 1787244200.3804107,
-    "seen": 1787244437.123219,
-    "ast_hash": "fcde8cfe9a1bf20de41c899efc799e7b",
+    "mtime": 1788437218.1940086,
+    "seen": 1788489197.840144,
+    "ast_hash": "93bc26d0cfc4e814b7ae0184c812d1af",
     "semantic_hash": ""
   },
   "config.py": {
@@ -36,10 +36,10 @@
     "semantic_hash": "4b40f2a7c756394e90260cb3d91964b4"
   },
   "dao/usuarioDAO.py": {
-    "mtime": 1787071188.3367472,
-    "seen": 1787193389.494447,
-    "ast_hash": "11df27f134655e2e0c866a07eeb119db",
-    "semantic_hash": "11df27f134655e2e0c866a07eeb119db"
+    "mtime": 1788437218.1941297,
+    "seen": 1788489197.8403687,
+    "ast_hash": "077949e916cb5aca73768257130d5c8d",
+    "semantic_hash": ""
   },
   "main.py": {
     "mtime": 1779889810.457584,
@@ -60,9 +60,9 @@
     "semantic_hash": "0747d92ad64f64eabb8c55d8d6d737c6"
   },
   "modelos/usuario.py": {
-    "mtime": 1787244192.5265503,
-    "seen": 1787244437.1237943,
-    "ast_hash": "2053dd334b0e198149ee180b13eae89f",
+    "mtime": 1788437218.1969068,
+    "seen": 1788489197.840509,
+    "ast_hash": "bbf80243eb02c83ab592b5fc2762af36",
     "semantic_hash": ""
   },
   "servicos/email_servico.py": {
@@ -78,9 +78,9 @@
     "semantic_hash": "3827f23b6cb8728e3d92402bb5023b88"
   },
   "servidor.py": {
-    "mtime": 1788432806.292052,
-    "seen": 1788435492.3840716,
-    "ast_hash": "ed5560b261539f1d418782a472f6cb84",
+    "mtime": 1788437218.1970024,
+    "seen": 1788489197.8406825,
+    "ast_hash": "2e90690e56c3ebc4cd5e1bca96c8695d",
     "semantic_hash": ""
   },
   "static/js/index.js": {
@@ -210,9 +210,9 @@
     "semantic_hash": "dd407c9f736d23ff10c114264c7ee43e"
   },
   "templates/dt_aluno.html": {
-    "mtime": 1787225410.8808043,
-    "seen": 1787244009.8795772,
-    "ast_hash": "6f961d9b2b3785dcedb3166b9c10dc36",
+    "mtime": 1788437218.1971273,
+    "seen": 1788489197.8420877,
+    "ast_hash": "2130e4881b6a1a5c63f0be176019f0b1",
     "semantic_hash": ""
   },
   "templates/editar_perfil.html": {
@@ -234,9 +234,9 @@
     "semantic_hash": "33e412b8d926b5d82a9faa6d548111ad"
   },
   "templates/pgAdm.html": {
-    "mtime": 1787244406.1727428,
-    "seen": 1787244437.1259775,
-    "ast_hash": "436e7f29f20815c47ab3fb3f1f55cd45",
+    "mtime": 1788488950.7306545,
+    "seen": 1788489197.8422344,
+    "ast_hash": "004ce4d0661f65605f4f0990ee717a69",
     "semantic_hash": ""
   },
   "templates/pgUsuario.html": {
@@ -309,6 +309,48 @@
     "mtime": 1788435273.0989351,
     "seen": 1788435492.384137,
     "ast_hash": "f58711fbc328007e48213f57192c829f",
+    "semantic_hash": ""
+  },
+  "blueprints/professor_bp.py": {
+    "mtime": 1788437055.4635327,
+    "seen": 1788489197.8401396,
+    "ast_hash": "7e01234f36dd57f9545d22ff072afce5",
+    "semantic_hash": ""
+  },
+  "dao/avaliacaoDAO.py": {
+    "mtime": 1788437019.7151616,
+    "seen": 1788489197.8402612,
+    "ast_hash": "ea03bfb4a44f631d5bb902195079635d",
+    "semantic_hash": ""
+  },
+  "dao/professorDAO.py": {
+    "mtime": 1788437014.984172,
+    "seen": 1788489197.8403661,
+    "ast_hash": "eb0e32a376e2cbdd0017424465a99b3e",
+    "semantic_hash": ""
+  },
+  "modelos/avaliacao.py": {
+    "mtime": 1788437009.3923676,
+    "seen": 1788489197.840413,
+    "ast_hash": "0df6f05fc608fcdf77571f7554020a99",
+    "semantic_hash": ""
+  },
+  "modelos/professor.py": {
+    "mtime": 1788437001.928202,
+    "seen": 1788489197.8405066,
+    "ast_hash": "ae4e476f7419d3e9ab258a48921e0026",
+    "semantic_hash": ""
+  },
+  "templates/dt_aluno_professor.html": {
+    "mtime": 1788437179.3144848,
+    "seen": 1788489197.8420908,
+    "ast_hash": "e9e310c9eb292bfe0091c8964a467716",
+    "semantic_hash": ""
+  },
+  "templates/painel_professor.html": {
+    "mtime": 1788437155.1886125,
+    "seen": 1788489197.842232,
+    "ast_hash": "001943c40287763e2e2821691beac32d",
     "semantic_hash": ""
   }
 }

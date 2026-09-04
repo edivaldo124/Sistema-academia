@@ -1,8 +1,11 @@
 import logging
 import secrets
 import time
+import base64
+from io import BytesIO
 from datetime import date, timedelta
 from flask import Blueprint, render_template, request, session, redirect, flash, url_for
+from PIL import Image, ImageOps, UnidentifiedImageError
 from sqlalchemy.exc import IntegrityError
 from config import db
 from modelos.usuario import Aluno
@@ -188,6 +191,54 @@ def atualizar_preferencias_email():
     aluno.receber_recados = 'receber_recados' in request.form
     db.session.commit()
     flash('Preferência de e-mail atualizada.', 'sucesso')
+
+    return redirect('/perfil')
+
+
+@auth_bp.route("/perfil/foto", methods=["POST"])
+def atualizar_foto_perfil():
+    if session.get('tipo_usuario') != 'aluno' or not session.get('aluno_id'):
+        return redirect('/login')
+
+    aluno = AlunoDAO.buscar_por_id(session['aluno_id'])
+    if not aluno:
+        session.clear()
+        return redirect('/logout')
+
+    if request.form.get('remover') == '1':
+        aluno.foto_perfil = None
+        db.session.commit()
+        flash('Foto de perfil removida.', 'sucesso')
+        return redirect('/perfil')
+
+    arquivo = request.files.get('foto')
+    if not arquivo or not arquivo.filename:
+        flash('Escolha uma imagem para atualizar sua foto.', 'erro')
+        return redirect('/perfil')
+
+    try:
+        arquivo.stream.seek(0, 2)
+        tamanho = arquivo.stream.tell()
+        arquivo.stream.seek(0)
+        if tamanho > 5 * 1024 * 1024:
+            raise ValueError('A imagem deve ter no máximo 5 MB.')
+
+        with Image.open(arquivo.stream) as imagem:
+            imagem = ImageOps.exif_transpose(imagem).convert('RGB')
+            imagem.thumbnail((640, 640), Image.Resampling.LANCZOS)
+            lado = min(imagem.size)
+            esquerda = (imagem.width - lado) // 2
+            topo = (imagem.height - lado) // 2
+            imagem = imagem.crop((esquerda, topo, esquerda + lado, topo + lado))
+            saida = BytesIO()
+            imagem.save(saida, format='WEBP', quality=84, method=6)
+        aluno.foto_perfil = 'data:image/webp;base64,' + base64.b64encode(saida.getvalue()).decode('ascii')
+        db.session.commit()
+        flash('Foto de perfil atualizada.', 'sucesso')
+    except (UnidentifiedImageError, OSError):
+        flash('O arquivo enviado não é uma imagem válida.', 'erro')
+    except ValueError as erro:
+        flash(str(erro), 'erro')
 
     return redirect('/perfil')
 

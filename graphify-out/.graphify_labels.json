@@ -1,14 +1,14 @@
 {
   "0": "adm_bp.py",
-  "1": "usuario_bp.py",
-  "2": "ProfessorDAO",
+  "1": "AlunoDAO",
+  "2": "professor_bp.py",
   "3": "Aluno Detail (Admin) Page",
   "4": "/graphify Command",
   "5": "Exports & Benchmark Reference",
   "6": "Python Dependencies (requirements.txt)",
   "7": "pgAdm.js",
   "8": "index.js",
-  "9": "config.py",
+  "9": "preparar_url_banco",
   "10": "Academia do Bitelo (brand name)",
   "11": "graphify clone",
   "12": "masks.js",
@@ -16,10 +16,12 @@
   "14": "pgUsuario.js",
   "15": "main.py",
   "16": "ProjetoWeb / Sistema-academia",
+  "17": "email_servico.py",
   "18": "Writing apps with Prisma Composer",
   "19": "Writing apps with Prisma Composer",
   "20": "Writing apps with Prisma Composer",
   "21": "Writing apps with Prisma Composer",
   "22": "package.json",
-  "23": "prisma.config.ts"
+  "23": "prisma.config.ts",
+  "24": "TestAlteracaoCredenciais"
 }
