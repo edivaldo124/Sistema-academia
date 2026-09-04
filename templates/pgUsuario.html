@@ -51,7 +51,14 @@
                     </a>
                 </div>
             </div>
-            <div class="profile-mark" aria-hidden="true">{{ usuario.nome[0]|upper }}</div>
+            <button class="profile-photo-button" type="button" data-open-dialog="photo-dialog" aria-label="Alterar foto de perfil">
+                {% if usuario.foto_perfil %}
+                    <img src="{{ usuario.foto_perfil }}" alt="Foto de perfil de {{ usuario.nome }}">
+                {% else %}
+                    <span aria-hidden="true">{{ usuario.nome[0]|upper }}</span>
+                {% endif %}
+                <small>Alterar foto</small>
+            </button>
         </section>
 
         <section class="summary-grid" aria-label="Resumo da conta">
@@ -100,6 +107,7 @@
                             <th>Pagamento</th>
                             <th>Status</th>
                             <th>Forma</th>
+                            <th class="payment-mobile-action"><span class="sr-only">Ação</span></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -111,10 +119,19 @@
                                 <td>{{ pagamento.data_pagamento.strftime('%d/%m/%Y') if pagamento.data_pagamento else '—' }}</td>
                                 <td><span class="status status-{{ pagamento.status }}">{{ pagamento.status }}</span></td>
                                 <td>{{ (pagamento.forma_pagamento or '—')|replace('_', ' ')|title }}</td>
+                                <td class="payment-mobile-action">
+                                    <button type="button" class="table-action" data-payment-details
+                                        data-plan="{{ pagamento.plano.nome_plano }}"
+                                        data-value="R$ {{ '%.2f'|format(pagamento.valor)|replace('.', ',') }}"
+                                        data-due="{{ pagamento.vencimento.strftime('%d/%m/%Y') }}"
+                                        data-paid="{{ pagamento.data_pagamento.strftime('%d/%m/%Y') if pagamento.data_pagamento else 'Não pago' }}"
+                                        data-status="{{ pagamento.status }}"
+                                        data-method="{{ (pagamento.forma_pagamento or 'Não informada')|replace('_', ' ')|title }}">Ver detalhes</button>
+                                </td>
                             </tr>
                         {% else %}
                             <tr>
-                                <td colspan="6" class="empty-state">Nenhuma mensalidade registrada.</td>
+                                <td colspan="7" class="empty-state">Nenhuma mensalidade registrada.</td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -170,6 +187,42 @@
         <span>© 2026 Academia do Bitelo</span>
         <a href="/">Voltar ao início</a>
     </footer>
+
+    <dialog class="sheet-dialog" id="photo-dialog" aria-labelledby="photo-dialog-title">
+        <div class="dialog-accent"></div>
+        <button type="button" class="dialog-close" data-close-dialog aria-label="Fechar">×</button>
+        <p class="eyebrow">Identidade do aluno</p>
+        <h2 id="photo-dialog-title">Sua foto de perfil</h2>
+        <p class="dialog-copy">Use uma foto nítida, de frente. Ela será recortada em formato quadrado.</p>
+        <form action="/perfil/foto" method="POST" enctype="multipart/form-data" class="photo-form">
+            <label class="photo-picker" for="foto-perfil">
+                <span class="photo-preview" id="photo-preview">
+                    {% if usuario.foto_perfil %}<img src="{{ usuario.foto_perfil }}" alt="Prévia atual">{% else %}{{ usuario.nome[0]|upper }}{% endif %}
+                </span>
+                <span><strong>Escolher imagem</strong><small>JPG, PNG ou WEBP · até 5 MB</small></span>
+            </label>
+            <input id="foto-perfil" class="sr-only" type="file" name="foto" accept="image/jpeg,image/png,image/webp" required>
+            <div class="dialog-actions">
+                {% if usuario.foto_perfil %}<button class="button-secondary" type="submit" name="remover" value="1" formnovalidate>Remover foto</button>{% endif %}
+                <button class="button-primary" type="submit">Salvar foto</button>
+            </div>
+        </form>
+    </dialog>
+
+    <dialog class="sheet-dialog payment-dialog" id="payment-dialog" aria-labelledby="payment-dialog-title">
+        <div class="dialog-accent"></div>
+        <button type="button" class="dialog-close" data-close-dialog aria-label="Fechar">×</button>
+        <p class="eyebrow">Detalhes da mensalidade</p>
+        <h2 id="payment-dialog-title" data-detail="plan">Mensalidade</h2>
+        <div class="payment-receipt">
+            <div><span>Valor</span><strong data-detail="value"></strong></div>
+            <div><span>Status</span><strong data-detail="status"></strong></div>
+            <div><span>Vencimento</span><strong data-detail="due"></strong></div>
+            <div><span>Pagamento</span><strong data-detail="paid"></strong></div>
+            <div><span>Forma</span><strong data-detail="method"></strong></div>
+        </div>
+        <button type="button" class="button-primary dialog-done" data-close-dialog>Entendi</button>
+    </dialog>
 
     {% include 'components/confirm_modal.html' %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/modal.css') }}">

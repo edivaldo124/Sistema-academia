@@ -14,6 +14,7 @@ class Aluno(db.Model):
     mensalidade = db.Column(db.String(50), default='pendente', nullable=False)
     senha = db.Column(db.String(255), nullable=False)
     descricao = db.Column(db.String(255), nullable=True)
+    foto_perfil = db.Column(db.Text, nullable=True)
 
     plano_id = db.Column(db.Integer, db.ForeignKey('planos.id'), nullable=True)
 

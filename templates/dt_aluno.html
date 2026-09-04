@@ -6,6 +6,7 @@
     <title>{{ u.nome }} | Administração</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/dt_aluno.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dt_aluno_enhanced.css') }}">
 </head>
 <body>
     <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
@@ -26,7 +27,9 @@
                     <h1>{{ u.nome }}</h1>
                     <p>Atualize dados pessoais, plano e situação financeira.</p>
                 </div>
-                <span aria-hidden="true">{{ u.nome[0]|upper }}</span>
+                <div class="student-photo" aria-label="Foto do aluno">
+                    {% if u.foto_perfil %}<img src="{{ u.foto_perfil }}" alt="Foto de {{ u.nome }}">{% else %}<span aria-hidden="true">{{ u.nome[0]|upper }}</span>{% endif %}
+                </div>
             </div>
 
             {% with mensagens = get_flashed_messages(with_categories=true) %}
@@ -44,7 +47,19 @@
                     </div>
                 </div>
 
-                <form action="/admin/usuario/{{ u.cpf }}" method="POST" class="form-detalhes">
+                <div class="profile-overview">
+                    <div><span>E-mail</span><strong>{{ u.email }}</strong></div>
+                    <div><span>Telefone</span><strong>{{ u.telefone or 'Não informado' }}</strong></div>
+                    <div><span>Plano atual</span><strong>{{ u.plano.nome_plano if u.plano else 'Sem plano' }}</strong></div>
+                    <div><span>Professor</span><strong>{{ u.professor.nome if u.professor else 'Não definido' }}</strong></div>
+                </div>
+                <button type="button" class="btn-salvar section-action" data-open-dialog="profile-dialog">Editar dados do aluno</button>
+
+                <dialog class="admin-dialog" id="profile-dialog" aria-labelledby="profile-dialog-title">
+                    <button type="button" class="dialog-close" data-close-dialog aria-label="Fechar">×</button>
+                    <p class="eyebrow">Cadastro do aluno</p>
+                    <h2 id="profile-dialog-title">Editar perfil</h2>
+                <form action="/admin/usuario/{{ u.cpf }}" method="POST" class="form-detalhes dialog-form">
                     <div class="grupo-input">
                         <label>Nome Completo:</label>
                         <input type="text" name="nome" value="{{ u.nome }}" required>
@@ -112,6 +127,7 @@
                     <button type="submit" class="btn-salvar">Salvar Alterações</button>
                     <a href="/admin" class="btn-voltar">Voltar ao Painel</a>
                 </form>
+                </dialog>
             </section>
 
             <section class="secao-pagamentos">
@@ -123,7 +139,17 @@
                     </div>
                 </div>
 
-                <form action="/admin/usuario/{{ u.cpf }}/pagamentos" method="POST" class="form-pagamento">
+                <div class="finance-toolbar">
+                    <div><span>Total de lançamentos</span><strong>{{ pagamentos|length }}</strong></div>
+                    <button type="button" class="btn-salvar" data-open-dialog="new-payment-dialog">+ Nova mensalidade</button>
+                </div>
+
+                <dialog class="admin-dialog" id="new-payment-dialog" aria-labelledby="new-payment-title">
+                    <button type="button" class="dialog-close" data-close-dialog aria-label="Fechar">×</button>
+                    <p class="eyebrow">Financeiro</p>
+                    <h2 id="new-payment-title">Nova mensalidade</h2>
+                    <p class="dialog-copy">Registre a cobrança e defina sua situação atual.</p>
+                <form action="/admin/usuario/{{ u.cpf }}/pagamentos" method="POST" class="form-pagamento dialog-form">
                     <div class="grupo-input">
                         <label>Plano:</label>
                         <select name="plano_id" id="plano-pagamento" required>
@@ -173,6 +199,7 @@
 
                     <button type="submit" class="btn-salvar">Lançar mensalidade</button>
                 </form>
+                </dialog>
 
                 <div class="tabela-pagamentos">
                     <table>
@@ -197,20 +224,7 @@
                                     <td><span class="status status-{{ pagamento.status }}">{{ pagamento.status }}</span></td>
                                     <td>{{ (pagamento.forma_pagamento or '—')|replace('_', ' ') }}</td>
                                     <td>
-                                        <form action="/admin/pagamentos/{{ pagamento.id }}/status" method="POST" class="form-status">
-                                            <select name="status">
-                                                {% for status in ['pendente', 'pago', 'atrasado', 'cancelado'] %}
-                                                    <option value="{{ status }}" {% if pagamento.status == status %}selected{% endif %}>{{ status|capitalize }}</option>
-                                                {% endfor %}
-                                            </select>
-                                            <select name="forma_pagamento">
-                                                <option value="">Forma</option>
-                                                {% for forma, rotulo in [('pix', 'PIX'), ('dinheiro', 'Dinheiro'), ('cartao_credito', 'Crédito'), ('cartao_debito', 'Débito'), ('boleto', 'Boleto')] %}
-                                                    <option value="{{ forma }}" {% if pagamento.forma_pagamento == forma %}selected{% endif %}>{{ rotulo }}</option>
-                                                {% endfor %}
-                                            </select>
-                                            <button type="submit">Atualizar</button>
-                                        </form>
+                                        <button type="button" class="table-action" data-edit-payment data-action="/admin/pagamentos/{{ pagamento.id }}/status" data-plan="{{ pagamento.plano.nome_plano }}" data-status="{{ pagamento.status }}" data-method="{{ pagamento.forma_pagamento or '' }}">Atualizar</button>
                                     </td>
                                 </tr>
                             {% else %}
@@ -224,6 +238,17 @@
             </section>
         </div>
     </main>
+
+    <dialog class="admin-dialog compact-dialog" id="edit-payment-dialog" aria-labelledby="edit-payment-title">
+        <button type="button" class="dialog-close" data-close-dialog aria-label="Fechar">×</button>
+        <p class="eyebrow">Atualizar lançamento</p>
+        <h2 id="edit-payment-title">Mensalidade</h2>
+        <form method="POST" id="edit-payment-form" class="dialog-form">
+            <div class="grupo-input"><label for="edit-status">Novo status</label><select name="status" id="edit-status"><option value="pendente">Pendente</option><option value="pago">Pago</option><option value="atrasado">Atrasado</option><option value="cancelado">Cancelado</option></select></div>
+            <div class="grupo-input"><label for="edit-method">Forma de pagamento</label><select name="forma_pagamento" id="edit-method"><option value="">Não informada</option><option value="pix">PIX</option><option value="dinheiro">Dinheiro</option><option value="cartao_credito">Cartão de crédito</option><option value="cartao_debito">Cartão de débito</option><option value="boleto">Boleto</option></select></div>
+            <button type="submit" class="btn-salvar">Salvar atualização</button>
+        </form>
+    </dialog>
 
     <script src="{{ url_for('static', filename='js/masks.js') }}"></script>
     <script>
@@ -264,6 +289,26 @@
         preencherValor();
         preencherVencimento();
         preencherDataPagamento();
+
+        document.addEventListener('click', (event) => {
+            const opener = event.target.closest('[data-open-dialog]');
+            if (opener) document.getElementById(opener.dataset.openDialog)?.showModal();
+            const closer = event.target.closest('[data-close-dialog]');
+            if (closer) closer.closest('dialog')?.close();
+            const edit = event.target.closest('[data-edit-payment]');
+            if (edit) {
+                const dialog = document.getElementById('edit-payment-dialog');
+                document.getElementById('edit-payment-title').textContent = edit.dataset.plan;
+                document.getElementById('edit-payment-form').action = edit.dataset.action;
+                document.getElementById('edit-status').value = edit.dataset.status;
+                document.getElementById('edit-method').value = edit.dataset.method;
+                dialog.showModal();
+            }
+        });
+        document.querySelectorAll('dialog').forEach((dialog) => dialog.addEventListener('click', (event) => {
+            const box = dialog.getBoundingClientRect();
+            if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) dialog.close();
+        }));
     </script>
 </body>
 </html>

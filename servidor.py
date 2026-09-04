@@ -1,5 +1,6 @@
 from flask import *
 from config import db, opcoes_engine, preparar_url_banco
+from sqlalchemy import inspect, text
 import os
 from datetime import timedelta
 from dotenv import load_dotenv
@@ -14,6 +15,7 @@ app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'chave_secreta_academia-desenvolvimento')
 
 app.config.update(
+    MAX_CONTENT_LENGTH=6 * 1024 * 1024,
     PERMANENT_SESSION_LIFETIME=timedelta(minutes=30),
     SESSION_COOKIE_HTTPONLY=True,
     SESSION_COOKIE_SAMESITE='Lax',
@@ -38,6 +40,10 @@ app.register_blueprint(professor_bp)
 
 with app.app_context():
     db.create_all()
+    # Compatibilidade com bancos criados antes da foto de perfil.
+    if 'foto_perfil' not in {coluna['name'] for coluna in inspect(db.engine).get_columns('alunos')}:
+        with db.engine.begin() as conexao:
+            conexao.execute(text('ALTER TABLE alunos ADD COLUMN foto_perfil TEXT'))
 
 
 @app.route("/")

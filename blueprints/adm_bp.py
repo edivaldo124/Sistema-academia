@@ -294,7 +294,8 @@ def detalhes_usuario(cpf):
             except Exception as e:
                 logger.error(f"Erro ao enviar notificação de novo plano por e-mail: {e}")
 
-        return redirect('/admin')
+        flash('Dados do aluno atualizados com sucesso.', 'sucesso')
+        return redirect(f'/admin/usuario/{cpf}')
 
 
     planos = PlanoDAO.listar_todos()
@@ -331,6 +332,7 @@ def cadastrar_pagamento(cpf):
         PagamentoDAO.salvar(novo_pagamento)
         aluno.mensalidade = 'Em Dia' if status == 'pago' else status.capitalize()
         db.session.commit()
+        flash('Mensalidade lançada com sucesso.', 'sucesso')
 
         if status == 'pago' and aluno.email:
             try:
@@ -375,6 +377,7 @@ def atualizar_status_pagamento(pagamento_id):
     PagamentoDAO.atualizar_status(pagamento_id, status, forma_pagamento)
     pagamento.aluno.mensalidade = 'Em Dia' if status == 'pago' else status.capitalize()
     db.session.commit()
+    flash('Pagamento atualizado com sucesso.', 'sucesso')
 
     if status == 'pago' and pagamento.aluno and pagamento.aluno.email:
         try:
