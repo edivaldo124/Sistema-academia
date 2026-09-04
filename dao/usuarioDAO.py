@@ -136,6 +136,12 @@ class AlunoDAO:
                 aluno.plano_id = None
                 aluno.data_vencimento = None  # Sem plano, sem vencimento
 
+            professor_escolhido = dados.get('professor_id')
+            if professor_escolhido and professor_escolhido != 'Nenhum':
+                aluno.professor_id = int(professor_escolhido)
+            else:
+                aluno.professor_id = None
+
             db.session.commit()
             return True
         return False

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ u.nome }} | Painel do Professor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dt_aluno.css') }}">
+</head>
+<body>
+    <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+
+    <header class="detail-header">
+        <a class="site-brand" href="/painel_professor">
+            <img src="{{ url_for('static', filename='imagens/logo.png') }}" alt="">
+            <span>Academia<br><strong>do Bitelo</strong></span>
+        </a>
+        <a href="/painel_professor">← Voltar ao painel</a>
+    </header>
+
+    <main id="conteudo">
+        <div class="container-detalhes">
+            <div class="detail-intro">
+                <div>
+                    <p class="eyebrow">Aluno vinculado</p>
+                    <h1>{{ u.nome }}</h1>
+                    <p>Registre e acompanhe as avaliações físicas deste aluno.</p>
+                </div>
+                <span aria-hidden="true">{{ u.nome[0]|upper }}</span>
+            </div>
+
+            {% with mensagens = get_flashed_messages(with_categories=true) %}
+                {% for categoria, mensagem in mensagens %}
+                    <div class="msg msg-{{ categoria }}">{{ mensagem }}</div>
+                {% endfor %}
+            {% endwith %}
+
+            <section class="detail-section">
+                <div class="section-title">
+                    <span>01</span>
+                    <div>
+                        <h2>Dados do aluno</h2>
+                        <p>Informações cadastrais (edição exclusiva da administração).</p>
+                    </div>
+                </div>
+
+                <div class="form-detalhes">
+                    <div class="grupo-input">
+                        <label>Nome Completo:</label>
+                        <input type="text" value="{{ u.nome }}" readonly class="input-bloqueado">
+                    </div>
+
+                    <div class="grupo-input">
+                        <label>E-mail:</label>
+                        <input type="text" value="{{ u.email }}" readonly class="input-bloqueado">
+                    </div>
+
+                    <div class="grupo-input">
+                        <label>Telefone:</label>
+                        <input type="text" value="{{ u.telefone }}" readonly class="input-bloqueado">
+                    </div>
+                </div>
+            </section>
+
+            <section class="secao-pagamentos">
+                <div class="section-title">
+                    <span>02</span>
+                    <div>
+                        <h2>Nova avaliação física</h2>
+                        <p>Registre peso, medidas e observações da avaliação de hoje.</p>
+                    </div>
+                </div>
+
+                <form action="/professor/aluno/{{ u.id }}/avaliacoes" method="POST" class="form-pagamento">
+                    <div class="grupo-input">
+                        <label>Data:</label>
+                        <input type="date" name="data" id="data-avaliacao" required>
+                    </div>
+
+                    <div class="grupo-input">
+                        <label>Peso (kg):</label>
+                        <input type="number" name="peso" min="0" step="0.1" placeholder="70.0">
+                    </div>
+
+                    <div class="grupo-input">
+                        <label>Altura (m):</label>
+                        <input type="number" name="altura" min="0" step="0.01" placeholder="1.75">
+                    </div>
+
+                    <div class="grupo-input">
+                        <label>% de gordura:</label>
+                        <input type="number" name="percentual_gordura" min="0" step="0.1" placeholder="18.5">
+                    </div>
+
+                    <div class="grupo-input">
+                        <label>Peito (cm):</label>
+                        <input type="number" name="medida_peito" min="0" step="0.1">
+                    </div>
+
+                    <div class="grupo-input">
+                        <label>Cintura (cm):</label>
+                        <input type="number" name="medida_cintura" min="0" step="0.1">
+                    </div>
+
+                    <div class="grupo-input">
+                        <label>Quadril (cm):</label>
+                        <input type="number" name="medida_quadril" min="0" step="0.1">
+                    </div>
+
+                    <div class="grupo-input">
+                        <label>Braço (cm):</label>
+                        <input type="number" name="medida_braco" min="0" step="0.1">
+                    </div>
+
+                    <div class="grupo-input">
+                        <label>Coxa (cm):</label>
+                        <input type="number" name="medida_coxa" min="0" step="0.1">
+                    </div>
+
+                    <div class="grupo-input">
+                        <label>Objetivo:</label>
+                        <input type="text" name="objetivo" placeholder="Ex.: Hipertrofia">
+                    </div>
+
+                    <div class="grupo-input">
+                        <label>Observações:</label>
+                        <textarea name="observacoes" rows="3" placeholder="Observações da avaliação..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-salvar">Lançar avaliação</button>
+                </form>
+
+                <div class="tabela-pagamentos">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Peso</th>
+                                <th>Altura</th>
+                                <th>IMC</th>
+                                <th>% Gordura</th>
+                                <th>Objetivo</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for avaliacao in avaliacoes %}
+                                <tr>
+                                    <td>{{ avaliacao.data.strftime('%d/%m/%Y') }}</td>
+                                    <td>{{ avaliacao.peso if avaliacao.peso is not none else '—' }}</td>
+                                    <td>{{ avaliacao.altura if avaliacao.altura is not none else '—' }}</td>
+                                    <td>{{ avaliacao.imc if avaliacao.imc is not none else '—' }}</td>
+                                    <td>{{ avaliacao.percentual_gordura if avaliacao.percentual_gordura is not none else '—' }}</td>
+                                    <td>{{ avaliacao.objetivo or '—' }}</td>
+                                    <td>
+                                        <form action="/professor/avaliacoes/{{ avaliacao.id }}/remover" method="POST" data-confirm-modal data-modal-variant="danger" data-modal-eyebrow="Excluir avaliação" data-modal-title="Remover esta avaliação?" data-modal-message="Esta avaliação será removida do histórico do aluno. Esta ação não pode ser desfeita." data-modal-confirm="Excluir avaliação">
+                                            <button type="submit" class="btn btn-remover">Excluir</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="7">Nenhuma avaliação registrada.</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    {% include 'components/confirm_modal.html' %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modal.css') }}">
+    <script src="{{ url_for('static', filename='js/modal.js') }}"></script>
+    <script>
+        const dataAvaliacao = document.getElementById('data-avaliacao');
+
+        function formatarDataISO(data) {
+            const ano = data.getFullYear();
+            const mes = String(data.getMonth() + 1).padStart(2, '0');
+            const dia = String(data.getDate()).padStart(2, '0');
+            return `${ano}-${mes}-${dia}`;
+        }
+
+        if (dataAvaliacao && !dataAvaliacao.value) {
+            dataAvaliacao.value = formatarDataISO(new Date());
+        }
+    </script>
+</body>
+</html>

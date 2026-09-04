@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do Professor | Academia do Bitelo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pgAdm.css') }}">
+    <script src="{{ url_for('static', filename='js/pgAdm.js') }}" defer></script>
+</head>
+<body>
+    <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+
+    <header class="admin-header">
+        <a class="site-brand" href="/">
+            <img src="{{ url_for('static', filename='imagens/logo.png') }}" alt="">
+            <span>Academia<br><strong>do Bitelo</strong></span>
+        </a>
+        <div>
+            <span>Professor(a) {{ professor.nome }}</span>
+            <a href="/logout" class="link-logout" data-confirm-modal data-modal-eyebrow="Encerrar sessão" data-modal-title="Sair do painel?" data-modal-message="Você precisará entrar novamente para acessar o painel." data-modal-confirm="Sim, sair">Sair</a>
+        </div>
+    </header>
+
+    <main id="conteudo" class="container-admin">
+        <section class="admin-intro">
+            <div>
+                <p class="eyebrow">Visão geral</p>
+                <h1>Painel do professor</h1>
+                <p>Acompanhe seus alunos vinculados e registre avaliações físicas.</p>
+            </div>
+            <div class="admin-metrics">
+                <article>
+                    <strong>{{ alunos|length }}</strong>
+                    <span>Alunos vinculados</span>
+                </article>
+            </div>
+        </section>
+
+        {% with mensagens = get_flashed_messages(with_categories=true) %}
+            {% for categoria, mensagem in mensagens %}
+                <div class="msg msg-{{ categoria }}" role="status">{{ mensagem }}</div>
+            {% endfor %}
+        {% endwith %}
+
+        <section class="secao">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">Alunos</p>
+                    <h2>Seus alunos</h2>
+                </div>
+                <span id="contador-alunos">{{ alunos|length }} aluno(s)</span>
+            </div>
+
+            <div class="ferramentas-alunos">
+                <label class="sr-only" for="busca-aluno">Buscar aluno</label>
+                <input type="search" id="busca-aluno" placeholder="Buscar por nome…" autocomplete="off">
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Aluno</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="lista-alunos">
+                        {% for u in alunos %}
+                            <tr class="aluno-item" data-nome="{{ u.nome }}">
+                                <td>
+                                    <span class="student-avatar">{{ u.nome[0]|upper }}</span>
+                                    <strong>{{ u.nome }}</strong>
+                                </td>
+                                <td>
+                                    <a href="/professor/aluno/{{ u.id }}" class="btn btn-status">Ver avaliações</a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="2" class="empty-state">Nenhum aluno vinculado a você ainda.</td>
+                            </tr>
+                        {% endfor %}
+                        <tr id="sem-resultados" hidden>
+                            <td colspan="2">Nenhum aluno encontrado.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    {% include 'components/confirm_modal.html' %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modal.css') }}">
+    <script src="{{ url_for('static', filename='js/modal.js') }}"></script>
+</body>
+</html>

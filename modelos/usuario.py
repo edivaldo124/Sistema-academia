@@ -21,7 +21,10 @@ class Aluno(db.Model):
     data_vencimento = db.Column(db.String(10), nullable=True)
     receber_recados = db.Column(db.Boolean, nullable=False, default=True)
 
-    def __init__(self, nome, login,datanascimento, cpf, email, telefone, senha, descricao, mensalidade='pendente', plano_id=None, data_vencimento=None, receber_recados=True):
+    professor_id = db.Column(db.Integer, db.ForeignKey('professores.id'), nullable=True)
+    professor = db.relationship('Professor', backref='alunos_vinculados', lazy=True)
+
+    def __init__(self, nome, login,datanascimento, cpf, email, telefone, senha, descricao, mensalidade='pendente', plano_id=None, data_vencimento=None, receber_recados=True, professor_id=None):
         self.nome = nome
         self.login = login
         self.datanascimento = datanascimento
@@ -34,3 +37,4 @@ class Aluno(db.Model):
         self.plano_id = plano_id
         self.data_vencimento = data_vencimento
         self.receber_recados = receber_recados
+        self.professor_id = professor_id
