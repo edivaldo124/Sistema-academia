@@ -4,19 +4,23 @@ import secrets
 from datetime import date
 
 from flask import Blueprint, abort, flash, redirect, render_template, request, session
+from sqlalchemy.exc import IntegrityError
 from config import db
 from modelos.plano import Plano
+from modelos.professor import Professor
 from dao.usuarioDAO import AlunoDAO
 from dao.planoDAO import PlanoDAO
 from dao.financeiroDAO import PagamentoDAO
+from dao.professorDAO import ProfessorDAO
 from modelos.pagamento import Pagamento
-from servicos.formatacao import formatar_telefone
+from servicos.formatacao import formatar_cpf, formatar_telefone, variantes_cpf
 from servicos.email_servico import (
     enviar_confirmacao_pagamento,
     enviar_notificacao_plano,
     enviar_aviso_status_mensalidade,
     enviar_aviso_pagamento_atrasado,
     enviar_recado_admin,
+    enviar_email_boas_vindas,
 )
 
 logger = logging.getLogger(__name__)
@@ -31,6 +35,7 @@ def painel_adm():
 
     lista_usuarios = AlunoDAO.listar_todos()
     lista_planos = PlanoDAO.listar_todos()
+    lista_professores = ProfessorDAO.listar_todos()
     token_exclusao = session.get('token_exclusao')
 
     if not token_exclusao:
@@ -41,6 +46,7 @@ def painel_adm():
         "pgAdm.html",
         usuarios=lista_usuarios,
         planos=lista_planos,
+        professores=lista_professores,
         token_exclusao=token_exclusao
     )
 
@@ -100,6 +106,91 @@ def cadastrar_plano():
     if nome_plano and preco_plano and duracao_dias:
         novo_plano = Plano(nome_plano=nome_plano, preco_plano=float(preco_plano),duracao_dias=int(duracao_dias))
         PlanoDAO.salvar(novo_plano)
+
+    return redirect('/admin')
+
+
+@admin_bp.route("/admin/cadastrar_professor", methods=["POST"])
+def cadastrar_professor():
+    if session.get('tipo_usuario') != 'admin' or session.get('usuario') != 'admin':
+        return redirect('/login')
+
+    nome = (request.form.get("nome") or "").strip()
+    login = (request.form.get("login") or "").strip()
+    cpf = formatar_cpf(request.form.get("cpf"))
+    email = (request.form.get("email") or "").strip().lower()
+    telefone = formatar_telefone(request.form.get("telefone"))
+    senha = request.form.get("senha") or ""
+    especialidade = (request.form.get("especialidade") or "").strip() or None
+    cref = (request.form.get("cref") or "").strip() or None
+
+    if not all([nome, login, cpf, email, telefone, senha]):
+        flash('Preencha todos os campos obrigatórios do professor.', 'erro')
+        return redirect('/admin')
+
+    if Professor.query.filter(Professor.cpf.in_(variantes_cpf(cpf))).first():
+        flash('Este CPF já está cadastrado para outro professor.', 'erro')
+        return redirect('/admin')
+
+    if Professor.query.filter_by(login=login).first():
+        flash('Este usuário já está em uso por outro professor.', 'erro')
+        return redirect('/admin')
+
+    if Professor.query.filter_by(email=email).first():
+        flash('Este e-mail já está cadastrado para outro professor.', 'erro')
+        return redirect('/admin')
+
+    novo_professor = Professor(
+        nome=nome,
+        login=login,
+        cpf=cpf,
+        email=email,
+        telefone=telefone,
+        senha=senha,
+        especialidade=especialidade,
+        cref=cref
+    )
+
+    try:
+        ProfessorDAO.salvar(novo_professor)
+    except IntegrityError:
+        db.session.rollback()
+        flash('Não foi possível cadastrar o professor. Verifique se os dados já estão em uso.', 'erro')
+        return redirect('/admin')
+
+    try:
+        enviar_email_boas_vindas(
+            destinatario=novo_professor.email,
+            nome_usuario=novo_professor.nome,
+            login=novo_professor.login
+        )
+    except Exception as e:
+        logger.error(f"Erro ao enviar e-mail de boas-vindas ao professor: {e}")
+
+    flash('Professor cadastrado com sucesso.', 'sucesso')
+    return redirect('/admin')
+
+
+@admin_bp.route("/admin/remover_professor/<int:professor_id>", methods=["POST"])
+def remover_professor(professor_id):
+    if session.get('tipo_usuario') != 'admin' or session.get('usuario') != 'admin':
+        return redirect('/login')
+
+    token_formulario = request.form.get('token_exclusao', '')
+    token_sessao = session.get('token_exclusao', '')
+
+    if not token_sessao or not hmac.compare_digest(token_formulario, token_sessao):
+        abort(400)
+
+    resultado = ProfessorDAO.remover(professor_id)
+    session['token_exclusao'] = secrets.token_urlsafe(32)
+
+    if resultado is True:
+        flash('Professor removido com sucesso.', 'sucesso')
+    elif resultado is None:
+        flash('Professor não encontrado.', 'erro')
+    else:
+        flash('Não foi possível remover o professor porque existem dados vinculados.', 'erro')
 
     return redirect('/admin')
 
@@ -182,6 +273,7 @@ def detalhes_usuario(cpf):
             'telefone': formatar_telefone(request.form.get("telefone")),
             'mensalidade': request.form.get("mensalidade"),
             'plano_id': request.form.get("plano_id"),
+            'professor_id': request.form.get("professor_id"),
             'descricao': request.form.get('descricao')
         }
 
@@ -206,8 +298,9 @@ def detalhes_usuario(cpf):
 
 
     planos = PlanoDAO.listar_todos()
+    professores = ProfessorDAO.listar_todos()
     pagamentos = PagamentoDAO.listar_por_aluno(aluno.id)
-    return render_template("dt_aluno.html", u=aluno, planos=planos, pagamentos=pagamentos)
+    return render_template("dt_aluno.html", u=aluno, planos=planos, professores=professores, pagamentos=pagamentos)
 
 
 @admin_bp.route("/admin/usuario/<cpf>/pagamentos", methods=["POST"])

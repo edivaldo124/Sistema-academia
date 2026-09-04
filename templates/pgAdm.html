@@ -38,6 +38,10 @@
                     <strong>{{ planos|length }}</strong>
                     <span>Planos ativos</span>
                 </article>
+                <article>
+                    <strong>{{ professores|length }}</strong>
+                    <span>Professores</span>
+                </article>
             </div>
         </section>
 
@@ -84,6 +88,70 @@
                     </article>
                 {% else %}
                     <p class="empty-state">Nenhum plano cadastrado.</p>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="secao">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">Equipe</p>
+                    <h2>Professores</h2>
+                </div>
+                <p>Cadastre os professores que poderão acessar o painel próprio e lançar avaliações.</p>
+            </div>
+
+            <form action="/admin/cadastrar_professor" method="POST" class="form-plano" id="form-professor">
+                <div class="field">
+                    <label for="nome-professor">Nome</label>
+                    <input id="nome-professor" type="text" name="nome" placeholder="Nome completo" required>
+                </div>
+                <div class="field">
+                    <label for="login-professor">Usuário (login)</label>
+                    <input id="login-professor" type="text" name="login" placeholder="Login de acesso" required>
+                </div>
+                <div class="field">
+                    <label for="cpf-professor">CPF</label>
+                    <input id="cpf-professor" type="text" name="cpf" maxlength="14" data-mask="cpf" placeholder="000.000.000-00" required>
+                </div>
+                <div class="field">
+                    <label for="email-professor">E-mail</label>
+                    <input id="email-professor" type="email" name="email" placeholder="email@exemplo.com" required>
+                </div>
+                <div class="field">
+                    <label for="telefone-professor">Telefone</label>
+                    <input id="telefone-professor" type="tel" name="telefone" maxlength="15" data-mask="phone" placeholder="(00) 00000-0000" required>
+                </div>
+                <div class="field">
+                    <label for="senha-professor">Senha</label>
+                    <input id="senha-professor" type="password" name="senha" placeholder="Senha de acesso" required>
+                </div>
+                <div class="field">
+                    <label for="especialidade-professor">Especialidade</label>
+                    <input id="especialidade-professor" type="text" name="especialidade" placeholder="Ex.: Musculação">
+                </div>
+                <div class="field">
+                    <label for="cref-professor">CREF</label>
+                    <input id="cref-professor" type="text" name="cref" placeholder="Registro profissional">
+                </div>
+                <button type="submit" class="btn-cadastrar">Cadastrar professor</button>
+            </form>
+
+            <div class="plan-list">
+                {% for professor in professores %}
+                    <article>
+                        <div>
+                            <span>Professor 0{{ loop.index }}</span>
+                            <strong>{{ professor.nome }}</strong>
+                            <p>{{ professor.especialidade or 'Sem especialidade informada' }} · {{ professor.email }}</p>
+                        </div>
+                        <form action="{{ url_for('admin_blueprint.remover_professor', professor_id=professor.id) }}" method="POST" class="form-remover" data-confirm-modal data-modal-variant="danger" data-modal-eyebrow="Excluir professor" data-modal-title="Remover {{ professor.nome }}?" data-modal-message="O acesso deste professor será removido. Esta ação não pode ser desfeita." data-modal-confirm="Excluir professor">
+                            <input type="hidden" name="token_exclusao" value="{{ token_exclusao }}">
+                            <button type="submit" class="btn btn-remover">Excluir</button>
+                        </form>
+                    </article>
+                {% else %}
+                    <p class="empty-state">Nenhum professor cadastrado.</p>
                 {% endfor %}
             </div>
         </section>
@@ -161,6 +229,7 @@
         </section>
     </main>
 
+    <script src="{{ url_for('static', filename='js/masks.js') }}"></script>
     {% include 'components/confirm_modal.html' %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/modal.css') }}">
     <script src="{{ url_for('static', filename='js/modal.js') }}"></script>

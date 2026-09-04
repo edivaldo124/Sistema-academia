@@ -99,6 +99,16 @@
                         </select>
                     </div>
 
+                    <div class="grupo-input">
+                        <label>Professor Responsável:</label>
+                        <select name="professor_id">
+                            <option value="Nenhum">Sem professor</option>
+                            {% for p in professores %}
+                                <option value="{{ p.id }}" {% if u.professor_id == p.id %}selected{% endif %}>{{ p.nome }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
                     <button type="submit" class="btn-salvar">Salvar Alterações</button>
                     <a href="/admin" class="btn-voltar">Voltar ao Painel</a>
                 </form>

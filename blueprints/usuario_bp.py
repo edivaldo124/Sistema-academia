@@ -7,6 +7,7 @@ from sqlalchemy.exc import IntegrityError
 from config import db
 from modelos.usuario import Aluno
 from dao.usuarioDAO import AlunoDAO
+from dao.professorDAO import ProfessorDAO
 from dao.planoDAO import PlanoDAO
 from dao.financeiroDAO import PagamentoDAO
 from servicos.formatacao import formatar_cpf, formatar_telefone, somente_digitos, variantes_cpf
@@ -58,6 +59,15 @@ def pagina_login():
             session['tipo_usuario'] = "aluno"
             session.permanent = True
             return redirect('/perfil')
+
+        professor = ProfessorDAO.autenticar(login, senha)
+        if professor:
+            session.clear()
+            session['usuario'] = professor.login
+            session['professor_id'] = professor.id
+            session['tipo_usuario'] = "professor"
+            session.permanent = True
+            return redirect('/painel_professor')
 
         return render_template('login.html', msg=MSG_ERRO)
 

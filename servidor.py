@@ -8,6 +8,7 @@ load_dotenv()
 
 from blueprints.usuario_bp import auth_bp
 from blueprints.adm_bp import admin_bp
+from blueprints.professor_bp import professor_bp
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'chave_secreta_academia-desenvolvimento')
@@ -33,6 +34,7 @@ db.init_app(app)
 
 app.register_blueprint(auth_bp)
 app.register_blueprint(admin_bp)
+app.register_blueprint(professor_bp)
 
 with app.app_context():
     db.create_all()
