@@ -29,3 +29,7 @@ instance/
 # Logs
 *.log
 node_modules
+
+# Understand Anything (arquivos locais; o resto de .ua/ deve ser commitado)
+.ua/intermediate/
+.ua/diff-overlay.json
